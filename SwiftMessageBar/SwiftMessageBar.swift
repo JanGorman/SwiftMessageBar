@@ -97,7 +97,7 @@ public class SwiftMessageBar {
         dismissMessage(message, fromGesture: false)
     }
     
-    func didTapMessage(gesture: UITapGestureRecognizer) {
+    @objc func didTapMessage(gesture: UITapGestureRecognizer) {
         let message = gesture.view as! Message
         dismissMessage(message, fromGesture: true)
     }
@@ -218,7 +218,6 @@ private class Message: UIView {
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.alignment = .Left
         if let title = title {
-            UIColor.whiteColor().set()
             let attributes = [
                 NSFontAttributeName : titleFont,
                 NSForegroundColorAttributeName: UIColor.blackColor(),
@@ -230,10 +229,9 @@ private class Message: UIView {
             yOffset += titleSize.height
         }
         if let message = message {
-            UIColor.whiteColor().set()
             let attributes = [
-                NSFontAttributeName : titleFont,
-                NSForegroundColorAttributeName: UIColor.whiteColor(),
+                NSFontAttributeName : messageFont,
+                NSForegroundColorAttributeName: UIColor.blackColor(),
                 NSParagraphStyleAttributeName: paragraphStyle
             ]
             let rect = CGRect(x: xOffset, y: yOffset, width: messageSize.width, height: messageSize.height)
