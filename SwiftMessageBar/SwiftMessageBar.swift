@@ -5,57 +5,102 @@
 
 import UIKit
 
+public struct MessageBarConfig {
+    
+    public var errorColor: UIColor
+    public var successColor: UIColor
+    public var infoColor: UIColor
+    public var titleColor: UIColor
+    public var messageColor: UIColor
+    public var statusBarHidden: Bool
+    
+    public init(errorColor: UIColor = UIColor.redColor(), successColor: UIColor = UIColor.greenColor(), infoColor: UIColor = UIColor.yellowColor(), titleColor: UIColor = UIColor.blackColor(), messageColor: UIColor = UIColor.blackColor(), statusBarHidden: Bool = false) {
+        self.errorColor = errorColor
+        self.successColor = successColor
+        self.infoColor = infoColor
+        self.titleColor = titleColor
+        self.messageColor = messageColor
+        self.statusBarHidden = statusBarHidden
+    }
+}
+
 public typealias Callback = () -> Void
 
 public class SwiftMessageBar {
+    
+    var config: MessageBarConfig
 
     public enum MessageType {
         case Error
         case Success
         case Info
+        
+        func backgroundColor(fromConfig config: MessageBarConfig) -> UIColor {
+            switch self {
+            case Error:
+                return config.errorColor
+            case Info:
+                return config.infoColor
+            case Success:
+                return config.successColor
+            }
+        }
     }
 
     public static let SharedMessageBar = SwiftMessageBar()
     
     private static let ShowHideDuration: NSTimeInterval = 0.25
     
-    private lazy var messageWindow: MessageWindow? = {
+    private var messageWindow: MessageWindow?
+    
+    private func newMessageWindow() -> MessageWindow {
         let messageWindow = MessageWindow()
         messageWindow.frame = UIApplication.sharedApplication().keyWindow!.frame
         messageWindow.hidden = false
         messageWindow.windowLevel = UIWindowLevelNormal
         messageWindow.backgroundColor = UIColor.clearColor()
-        messageWindow.rootViewController = MessageBarController()
+        let controller = MessageBarController()
+        controller.statusBarHidden = config.statusBarHidden
+        messageWindow.rootViewController = controller
         return messageWindow
-    }()
+    }
     
-    private lazy var messageBarView: UIView? = {
-        [unowned self] in
-        return (self.messageWindow?.rootViewController as! MessageBarController).view
-    }()
+    private var messageBarView: UIView {
+        if messageWindow == nil {
+            messageWindow = newMessageWindow()
+        }
+        return (messageWindow?.rootViewController as! MessageBarController).view
+    }
     
     private var messageQueue: Queue<Message>
     private var isMessageVisible = false
 
     private init() {
         messageQueue = Queue<Message>()
+        config = MessageBarConfig()
+    }
+    
+    public static func setSharedConfig(config: MessageBarConfig) {
+        SharedMessageBar.config = config
+    }
+    
+    public static func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
+        duration: NSTimeInterval = 3, callback: Callback? = nil) {
+        SharedMessageBar.showMessageWithTitle(title, message: message, type: type, duration: duration, callback: callback)
     }
 
-    public func showMessageWithTitle(title: String? = nil, message: String? = nil, type: MessageType,
+    public func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
         duration: NSTimeInterval = 3, callback: Callback? = nil) {
-        let message = Message(title: title, message: message, duration: duration, callback: callback)
-        messageQueue.enqueue(message)
-        messageBarView?.addSubview(message)
-        messageBarView?.bringSubviewToFront(message)
-        if !isMessageVisible {
-            dequeueNextMessage()
+            let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(fromConfig: config), duration: duration, callback: callback)
+            messageQueue.enqueue(message)
+            messageBarView.addSubview(message)
+            messageBarView.bringSubviewToFront(message)
+            if !isMessageVisible {
+                dequeueNextMessage()
         }
     }
     
     private func dequeueNextMessage() {
-        if messageQueue.isEmpty() {
-            return
-        }
         if let message = messageQueue.dequeue() {
             isMessageVisible = true
             // TODO ask if message wants to hide status bar
@@ -80,7 +125,7 @@ public class SwiftMessageBar {
         dismissMessage(message, fromGesture: false)
     }
     
-    func didTapMessage(gesture: UITapGestureRecognizer) {
+    @objc func didTapMessage(gesture: UITapGestureRecognizer) {
         let message = gesture.view as! Message
         dismissMessage(message, fromGesture: true)
     }
@@ -155,17 +200,19 @@ private class Message: UIView {
     var title: String?
     var message: String?
     var duration: NSTimeInterval!
+    var color: UIColor!
     var callback: Callback?
     var isHit: Bool = false
     
     var titleFont: UIFont!
     var messageFont: UIFont!
     
-    init(title: String?, message: String?, duration: NSTimeInterval, callback: Callback?) {
+    init(title: String?, message: String?, backgroundColor: UIColor, duration: NSTimeInterval, callback: Callback?) {
         self.title = title
         self.message = message
         self.duration = duration
         self.callback = callback
+        self.color = backgroundColor
         titleFont = UIFont.boldSystemFontOfSize(16)
         messageFont = UIFont.systemFontOfSize(14)
         super.init(frame: CGRectZero)
@@ -180,7 +227,7 @@ private class Message: UIView {
         let context = UIGraphicsGetCurrentContext()
         // TODO check appearance proxy
         CGContextSaveGState(context)
-        UIColor.greenColor().set()
+        color!.set()
         CGContextFillRect(context, rect)
         CGContextRestoreGState(context)
         
@@ -199,10 +246,9 @@ private class Message: UIView {
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.alignment = .Left
         if let title = title {
-            UIColor.whiteColor().set()
             let attributes = [
                 NSFontAttributeName : titleFont,
-                NSForegroundColorAttributeName: UIColor.whiteColor(),
+                NSForegroundColorAttributeName: UIColor.blackColor(),
                 NSParagraphStyleAttributeName: paragraphStyle
             ]
             let rect = CGRect(x: xOffset, y: yOffset, width: titleSize.width, height: titleSize.height)
@@ -211,10 +257,9 @@ private class Message: UIView {
             yOffset += titleSize.height
         }
         if let message = message {
-            UIColor.whiteColor().set()
             let attributes = [
-                NSFontAttributeName : titleFont,
-                NSForegroundColorAttributeName: UIColor.whiteColor(),
+                NSFontAttributeName : messageFont,
+                NSForegroundColorAttributeName: UIColor.blackColor(),
                 NSParagraphStyleAttributeName: paragraphStyle
             ]
             let rect = CGRect(x: xOffset, y: yOffset, width: messageSize.width, height: messageSize.height)
@@ -230,7 +275,7 @@ private class Message: UIView {
     }
     
     var titleSize: CGSize {
-        let boundedSize = CGSize(width: availableWdith, height: CGFloat.max)
+        let boundedSize = CGSize(width: availableWidth, height: CGFloat.max)
         let titleFontAttributes = [NSFontAttributeName: titleFont]
         if let size = title?.boundingRectWithSize(boundedSize, options: .TruncatesLastVisibleLine | .UsesLineFragmentOrigin, attributes: titleFontAttributes, context: nil).size {
             return CGSize(width: ceil(size.width), height: ceil(size.height))
@@ -239,7 +284,7 @@ private class Message: UIView {
     }
     
     var messageSize: CGSize {
-        let boundedSize = CGSize(width: availableWdith, height: CGFloat.max)
+        let boundedSize = CGSize(width: availableWidth, height: CGFloat.max)
         let titleFontAttributes = [NSFontAttributeName: messageFont]
         if let size = title?.boundingRectWithSize(boundedSize, options: .TruncatesLastVisibleLine | .UsesLineFragmentOrigin, attributes: titleFontAttributes, context: nil).size {
             return CGSize(width: ceil(size.width), height: ceil(size.height))
@@ -261,7 +306,7 @@ private class Message: UIView {
         return CGRectGetWidth(statusBarFrame)
     }
     
-    var availableWdith: CGFloat {
+    var availableWidth: CGFloat {
         return width - Message.Padding * 3 // - size for icon
     }
     
