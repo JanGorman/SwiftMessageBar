@@ -13,6 +13,17 @@ public class SwiftMessageBar {
         case Error
         case Success
         case Info
+        
+        func backgroundColor() -> UIColor {
+            switch self {
+            case Error:
+                return UIColor.redColor()
+            case Info:
+                return UIColor.yellowColor()
+            case Success:
+                return UIColor.greenColor()
+            }
+        }
     }
 
     public static let SharedMessageBar = SwiftMessageBar()
@@ -43,12 +54,12 @@ public class SwiftMessageBar {
 
     public func showMessageWithTitle(title: String? = nil, message: String? = nil, type: MessageType,
         duration: NSTimeInterval = 3, callback: Callback? = nil) {
-        let message = Message(title: title, message: message, duration: duration, callback: callback)
-        messageQueue.enqueue(message)
-        messageBarView?.addSubview(message)
-        messageBarView?.bringSubviewToFront(message)
-        if !isMessageVisible {
-            dequeueNextMessage()
+            let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(), duration: duration, callback: callback)
+            messageQueue.enqueue(message)
+            messageBarView?.addSubview(message)
+            messageBarView?.bringSubviewToFront(message)
+            if !isMessageVisible {
+                dequeueNextMessage()
         }
     }
     
@@ -155,17 +166,19 @@ private class Message: UIView {
     var title: String?
     var message: String?
     var duration: NSTimeInterval!
+    var color: UIColor!
     var callback: Callback?
     var isHit: Bool = false
     
     var titleFont: UIFont!
     var messageFont: UIFont!
     
-    init(title: String?, message: String?, duration: NSTimeInterval, callback: Callback?) {
+    init(title: String?, message: String?, backgroundColor: UIColor, duration: NSTimeInterval, callback: Callback?) {
         self.title = title
         self.message = message
         self.duration = duration
         self.callback = callback
+        self.color = backgroundColor
         titleFont = UIFont.boldSystemFontOfSize(16)
         messageFont = UIFont.systemFontOfSize(14)
         super.init(frame: CGRectZero)
@@ -180,7 +193,7 @@ private class Message: UIView {
         let context = UIGraphicsGetCurrentContext()
         // TODO check appearance proxy
         CGContextSaveGState(context)
-        UIColor.greenColor().set()
+        color!.set()
         CGContextFillRect(context, rect)
         CGContextRestoreGState(context)
         
@@ -202,7 +215,7 @@ private class Message: UIView {
             UIColor.whiteColor().set()
             let attributes = [
                 NSFontAttributeName : titleFont,
-                NSForegroundColorAttributeName: UIColor.whiteColor(),
+                NSForegroundColorAttributeName: UIColor.blackColor(),
                 NSParagraphStyleAttributeName: paragraphStyle
             ]
             let rect = CGRect(x: xOffset, y: yOffset, width: titleSize.width, height: titleSize.height)
@@ -230,7 +243,7 @@ private class Message: UIView {
     }
     
     var titleSize: CGSize {
-        let boundedSize = CGSize(width: availableWdith, height: CGFloat.max)
+        let boundedSize = CGSize(width: availableWidth, height: CGFloat.max)
         let titleFontAttributes = [NSFontAttributeName: titleFont]
         if let size = title?.boundingRectWithSize(boundedSize, options: .TruncatesLastVisibleLine | .UsesLineFragmentOrigin, attributes: titleFontAttributes, context: nil).size {
             return CGSize(width: ceil(size.width), height: ceil(size.height))
@@ -239,7 +252,7 @@ private class Message: UIView {
     }
     
     var messageSize: CGSize {
-        let boundedSize = CGSize(width: availableWdith, height: CGFloat.max)
+        let boundedSize = CGSize(width: availableWidth, height: CGFloat.max)
         let titleFontAttributes = [NSFontAttributeName: messageFont]
         if let size = title?.boundingRectWithSize(boundedSize, options: .TruncatesLastVisibleLine | .UsesLineFragmentOrigin, attributes: titleFontAttributes, context: nil).size {
             return CGSize(width: ceil(size.width), height: ceil(size.height))
@@ -261,7 +274,7 @@ private class Message: UIView {
         return CGRectGetWidth(statusBarFrame)
     }
     
-    var availableWdith: CGFloat {
+    var availableWidth: CGFloat {
         return width - Message.Padding * 3 // - size for icon
     }
     
