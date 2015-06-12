@@ -8,6 +8,12 @@ import SwiftMessageBar
 
 class ViewController: UIViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        var messageBarConfig = MessageBarConfig(successColor: UIColor.orangeColor(), statusBarHidden: true)
+        SwiftMessageBar.setSharedConfig(messageBarConfig)
+    }
+    
     @IBAction func showSuccess(sender: AnyObject) {
         SwiftMessageBar.showMessageWithTitle("Success", message: "bar", type: .Success, duration: 3) {
             println("oh hai")

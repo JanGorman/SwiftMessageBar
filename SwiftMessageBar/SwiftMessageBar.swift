@@ -5,23 +5,44 @@
 
 import UIKit
 
+public struct MessageBarConfig {
+    
+    public var errorColor: UIColor
+    public var successColor: UIColor
+    public var infoColor: UIColor
+    public var titleColor: UIColor
+    public var messageColor: UIColor
+    public var statusBarHidden: Bool
+    
+    public init(errorColor: UIColor = UIColor.redColor(), successColor: UIColor = UIColor.greenColor(), infoColor: UIColor = UIColor.yellowColor(), titleColor: UIColor = UIColor.blackColor(), messageColor: UIColor = UIColor.blackColor(), statusBarHidden: Bool = false) {
+        self.errorColor = errorColor
+        self.successColor = successColor
+        self.infoColor = infoColor
+        self.titleColor = titleColor
+        self.messageColor = messageColor
+        self.statusBarHidden = statusBarHidden
+    }
+}
+
 public typealias Callback = () -> Void
 
 public class SwiftMessageBar {
+    
+    var config: MessageBarConfig
 
     public enum MessageType {
         case Error
         case Success
         case Info
         
-        func backgroundColor() -> UIColor {
+        func backgroundColor(fromConfig config: MessageBarConfig) -> UIColor {
             switch self {
             case Error:
-                return UIColor.redColor()
+                return config.errorColor
             case Info:
-                return UIColor.yellowColor()
+                return config.infoColor
             case Success:
-                return UIColor.greenColor()
+                return config.successColor
             }
         }
     }
@@ -38,7 +59,9 @@ public class SwiftMessageBar {
         messageWindow.hidden = false
         messageWindow.windowLevel = UIWindowLevelNormal
         messageWindow.backgroundColor = UIColor.clearColor()
-        messageWindow.rootViewController = MessageBarController()
+        let controller = MessageBarController()
+        controller.statusBarHidden = config.statusBarHidden
+        messageWindow.rootViewController = controller
         return messageWindow
     }
     
@@ -54,6 +77,11 @@ public class SwiftMessageBar {
 
     private init() {
         messageQueue = Queue<Message>()
+        config = MessageBarConfig()
+    }
+    
+    public static func setSharedConfig(config: MessageBarConfig) {
+        SharedMessageBar.config = config
     }
     
     public static func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
@@ -63,7 +91,7 @@ public class SwiftMessageBar {
 
     public func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
         duration: NSTimeInterval = 3, callback: Callback? = nil) {
-            let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(), duration: duration, callback: callback)
+            let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(fromConfig: config), duration: duration, callback: callback)
             messageQueue.enqueue(message)
             messageBarView.addSubview(message)
             messageBarView.bringSubviewToFront(message)
