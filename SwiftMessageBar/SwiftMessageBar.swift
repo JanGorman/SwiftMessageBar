@@ -30,7 +30,9 @@ public class SwiftMessageBar {
     
     private static let ShowHideDuration: NSTimeInterval = 0.25
     
-    private lazy var messageWindow: MessageWindow? = {
+    private var messageWindow: MessageWindow?
+    
+    private func newMessageWindow() -> MessageWindow {
         let messageWindow = MessageWindow()
         messageWindow.frame = UIApplication.sharedApplication().keyWindow!.frame
         messageWindow.hidden = false
@@ -38,12 +40,14 @@ public class SwiftMessageBar {
         messageWindow.backgroundColor = UIColor.clearColor()
         messageWindow.rootViewController = MessageBarController()
         return messageWindow
-    }()
+    }
     
-    private lazy var messageBarView: UIView? = {
-        [unowned self] in
-        return (self.messageWindow?.rootViewController as! MessageBarController).view
-    }()
+    private var messageBarView: UIView {
+        if messageWindow == nil {
+            messageWindow = newMessageWindow()
+        }
+        return (messageWindow?.rootViewController as! MessageBarController).view
+    }
     
     private var messageQueue: Queue<Message>
     private var isMessageVisible = false
@@ -61,17 +65,14 @@ public class SwiftMessageBar {
         duration: NSTimeInterval = 3, callback: Callback? = nil) {
             let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(), duration: duration, callback: callback)
             messageQueue.enqueue(message)
-            messageBarView?.addSubview(message)
-            messageBarView?.bringSubviewToFront(message)
+            messageBarView.addSubview(message)
+            messageBarView.bringSubviewToFront(message)
             if !isMessageVisible {
                 dequeueNextMessage()
         }
     }
     
     private func dequeueNextMessage() {
-        if messageQueue.isEmpty() {
-            return
-        }
         if let message = messageQueue.dequeue() {
             isMessageVisible = true
             // TODO ask if message wants to hide status bar
