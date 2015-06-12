@@ -51,8 +51,13 @@ public class SwiftMessageBar {
     private init() {
         messageQueue = Queue<Message>()
     }
+    
+    public static func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
+        duration: NSTimeInterval = 3, callback: Callback? = nil) {
+        SharedMessageBar.showMessageWithTitle(title, message: message, type: type, duration: duration, callback: callback)
+    }
 
-    public func showMessageWithTitle(title: String? = nil, message: String? = nil, type: MessageType,
+    public func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
         duration: NSTimeInterval = 3, callback: Callback? = nil) {
             let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(), duration: duration, callback: callback)
             messageQueue.enqueue(message)
