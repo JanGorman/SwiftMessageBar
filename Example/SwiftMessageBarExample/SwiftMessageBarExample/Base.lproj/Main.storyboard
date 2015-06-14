@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="15A178w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -46,15 +46,41 @@
                                     <action selector="showError:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="dfc-Cu-ILl"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tgG-aC-S2q">
+                                <rect key="frame" x="245" y="511" width="110" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Clear Messages">
+                                    <color key="titleColor" red="0.96326452493667603" green="0.096623696386814117" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clearAll:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="pqO-1x-qOR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EGE-TM-z4L">
+                                <rect key="frame" x="254" y="549" width="92" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Clear Current">
+                                    <color key="titleColor" red="0.96326452493667603" green="0.096623696386814117" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clearCurrent:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Zc0-4F-4Rk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="vTD-O1-rRw" secondAttribute="centerX" id="2Pw-Rj-x4i"/>
+                            <constraint firstItem="tgG-aC-S2q" firstAttribute="top" secondItem="vTD-O1-rRw" secondAttribute="bottom" constant="8" id="47L-d1-JEj"/>
+                            <constraint firstAttribute="centerX" secondItem="tgG-aC-S2q" secondAttribute="centerX" id="Cgc-7g-gSd"/>
                             <constraint firstAttribute="centerX" secondItem="g3H-aA-9F1" secondAttribute="centerX" id="GXu-Nk-VNn"/>
+                            <constraint firstItem="EGE-TM-z4L" firstAttribute="top" secondItem="tgG-aC-S2q" secondAttribute="bottom" constant="8" id="H3Y-hp-4gv"/>
                             <constraint firstAttribute="centerX" secondItem="tfK-dL-iQe" secondAttribute="centerX" id="MZv-wF-YQk"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="vTD-O1-rRw" secondAttribute="bottom" constant="97" id="RX8-LJ-8Gq"/>
                             <constraint firstItem="vTD-O1-rRw" firstAttribute="top" secondItem="tfK-dL-iQe" secondAttribute="bottom" constant="8" id="fUI-GQ-Zoy"/>
+                            <constraint firstAttribute="centerX" secondItem="EGE-TM-z4L" secondAttribute="centerX" id="hj6-wm-cik"/>
                             <constraint firstItem="tfK-dL-iQe" firstAttribute="top" secondItem="g3H-aA-9F1" secondAttribute="bottom" constant="8" id="lZg-Nx-Cwn"/>
                         </constraints>
                     </view>

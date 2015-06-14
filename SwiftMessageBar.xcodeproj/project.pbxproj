@@ -11,6 +11,15 @@
 		F2AB58EE1B28B33D001DCC74 /* SwiftMessageBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2AB58E21B28B33C001DCC74 /* SwiftMessageBar.framework */; };
 		F2AB58F51B28B33D001DCC74 /* SwiftMessageBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AB58F41B28B33D001DCC74 /* SwiftMessageBarTests.swift */; };
 		F2AB593A1B28B45A001DCC74 /* SwiftMessageBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AB59391B28B45A001DCC74 /* SwiftMessageBar.swift */; };
+		F2ABF2E21B2DD123005CB292 /* icon-success@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ABF2DC1B2DD123005CB292 /* icon-success@1x.png */; };
+		F2ABF2E31B2DD123005CB292 /* icon-success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ABF2DD1B2DD123005CB292 /* icon-success@2x.png */; };
+		F2ABF2E41B2DD123005CB292 /* icon-success@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ABF2DE1B2DD123005CB292 /* icon-success@3x.png */; };
+		F2ABF2E51B2DD123005CB292 /* icon-error.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ABF2DF1B2DD123005CB292 /* icon-error.png */; };
+		F2ABF2E61B2DD123005CB292 /* icon-error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ABF2E01B2DD123005CB292 /* icon-error@2x.png */; };
+		F2ABF2E71B2DD123005CB292 /* icon-error@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ABF2E11B2DD123005CB292 /* icon-error@3x.png */; };
+		F2ABF2EB1B2DD166005CB292 /* icon-info@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ABF2E81B2DD166005CB292 /* icon-info@3x.png */; };
+		F2ABF2EC1B2DD166005CB292 /* icon-info.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ABF2E91B2DD166005CB292 /* icon-info.png */; };
+		F2ABF2ED1B2DD166005CB292 /* icon-info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ABF2EA1B2DD166005CB292 /* icon-info@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +40,15 @@
 		F2AB58F31B28B33D001DCC74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2AB58F41B28B33D001DCC74 /* SwiftMessageBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMessageBarTests.swift; sourceTree = "<group>"; };
 		F2AB59391B28B45A001DCC74 /* SwiftMessageBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMessageBar.swift; sourceTree = "<group>"; };
+		F2ABF2DC1B2DD123005CB292 /* icon-success@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-success@1x.png"; sourceTree = "<group>"; };
+		F2ABF2DD1B2DD123005CB292 /* icon-success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-success@2x.png"; sourceTree = "<group>"; };
+		F2ABF2DE1B2DD123005CB292 /* icon-success@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-success@3x.png"; sourceTree = "<group>"; };
+		F2ABF2DF1B2DD123005CB292 /* icon-error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error.png"; sourceTree = "<group>"; };
+		F2ABF2E01B2DD123005CB292 /* icon-error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error@2x.png"; sourceTree = "<group>"; };
+		F2ABF2E11B2DD123005CB292 /* icon-error@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error@3x.png"; sourceTree = "<group>"; };
+		F2ABF2E81B2DD166005CB292 /* icon-info@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-info@3x.png"; sourceTree = "<group>"; };
+		F2ABF2E91B2DD166005CB292 /* icon-info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-info.png"; sourceTree = "<group>"; };
+		F2ABF2EA1B2DD166005CB292 /* icon-info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-info@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +101,15 @@
 		F2AB58E51B28B33C001DCC74 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F2ABF2DC1B2DD123005CB292 /* icon-success@1x.png */,
+				F2ABF2E81B2DD166005CB292 /* icon-info@3x.png */,
+				F2ABF2E91B2DD166005CB292 /* icon-info.png */,
+				F2ABF2EA1B2DD166005CB292 /* icon-info@2x.png */,
+				F2ABF2DD1B2DD123005CB292 /* icon-success@2x.png */,
+				F2ABF2DE1B2DD123005CB292 /* icon-success@3x.png */,
+				F2ABF2DF1B2DD123005CB292 /* icon-error.png */,
+				F2ABF2E01B2DD123005CB292 /* icon-error@2x.png */,
+				F2ABF2E11B2DD123005CB292 /* icon-error@3x.png */,
 				F2AB58E61B28B33C001DCC74 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -195,6 +222,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2ABF2E51B2DD123005CB292 /* icon-error.png in Resources */,
+				F2ABF2EB1B2DD166005CB292 /* icon-info@3x.png in Resources */,
+				F2ABF2EC1B2DD166005CB292 /* icon-info.png in Resources */,
+				F2ABF2ED1B2DD166005CB292 /* icon-info@2x.png in Resources */,
+				F2ABF2E31B2DD123005CB292 /* icon-success@2x.png in Resources */,
+				F2ABF2E71B2DD123005CB292 /* icon-error@3x.png in Resources */,
+				F2ABF2E41B2DD123005CB292 /* icon-success@3x.png in Resources */,
+				F2ABF2E21B2DD123005CB292 /* icon-success@1x.png in Resources */,
+				F2ABF2E61B2DD123005CB292 /* icon-error@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
