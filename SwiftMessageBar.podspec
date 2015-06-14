@@ -15,7 +15,6 @@ Pod::Spec.new do |s|
 
   s.homepage     = "https://github.com/JanGorman/SwiftMessageBar"
   s.license      = "MIT"
-  s.author             = { "Jan Gorman" => "https://github.com/JanGorman/" }
   s.authors            = { "Jan Gorman" => "https://github.com/JanGorman/", "Ramy Kfoury" => "https://github.com/ramy-kfoury/" }
   s.social_media_url   = "http://twitter.com/JanGorman"
 
