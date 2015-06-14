@@ -25,7 +25,7 @@ pod 'SwiftMessageBar'
 
 ## Usage
 
-The includes sample code shows how to use the message bar. There are three different message types:
+The included sample code shows how to use the message bar. There are three different message types:
 
 ```swift
 enum MessageType {
