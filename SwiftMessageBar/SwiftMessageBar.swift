@@ -38,9 +38,7 @@ public final class SwiftMessageBar {
     private var config: MessageBarConfig
 
     public enum MessageType {
-        case Error
-        case Success
-        case Info
+        case Error, Success, Info
         
         func backgroundColor(fromConfig config: MessageBarConfig) -> UIColor {
             switch self {

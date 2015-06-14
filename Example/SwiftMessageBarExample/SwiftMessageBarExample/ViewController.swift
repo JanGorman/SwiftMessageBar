@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var messageBarConfig = MessageBarConfig(successColor: UIColor.orangeColor(), statusBarHidden: true)
+        let messageBarConfig = MessageBarConfig(successColor: UIColor.orangeColor(), statusBarHidden: true)
         SwiftMessageBar.setSharedConfig(messageBarConfig)
     }
     
