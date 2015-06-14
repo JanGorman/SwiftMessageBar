@@ -43,7 +43,7 @@ import SwiftMessageBar
 }
 ```
 
-You can customize the duration of each message and also pass in a tap handler block that is executed when a user taps on the message.
+You can customize the duration of each message and also pass in a tap handler closure that is executed when a user taps on the message.
 
 To customize the look of the messages, create a custom `MessageBarConfig` and set it on the shared messagebar. You can adjust the background and font colors, and pass in custom images to display.
 
