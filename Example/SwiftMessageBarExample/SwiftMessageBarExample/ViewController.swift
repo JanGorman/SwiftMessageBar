@@ -17,19 +17,19 @@ class ViewController: UIViewController {
     }
     
     @IBAction func showSuccess(sender: AnyObject) {
-        uuid = SwiftMessageBar.showMessageWithTitle("Success", message: "bar", type: .Success, duration: 3) {
+        uuid = SwiftMessageBar.showMessageWithTitle(nil, message: "A really long message can go here, to provide a description for the user", type: .Success, duration: 3) {
             println("oh hai")
         }
     }
 
     @IBAction func showError(sender: AnyObject) {
-        uuid = SwiftMessageBar.showMessageWithTitle("Error", message: "bar", type: .Error, duration: 3) {
+        uuid = SwiftMessageBar.showMessageWithTitle("Error", message: "A really long message can go here, to provide a description for the user", type: .Error, duration: 3) {
             println("oh hai")
         }
     }
 
     @IBAction func showInfo(sender: AnyObject) {
-        uuid = SwiftMessageBar.showMessageWithTitle("Info", message: "bar", type: .Info, duration: 3) {
+        uuid = SwiftMessageBar.showMessageWithTitle("Info", message: "A really long message can go here, to provide a description for the user", type: .Info, duration: 3) {
             println("oh hai")
         }
     }

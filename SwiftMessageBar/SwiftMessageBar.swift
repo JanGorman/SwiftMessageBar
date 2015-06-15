@@ -322,8 +322,8 @@ private class Message: UIView, Identifiable {
                 NSForegroundColorAttributeName: titleFontColor,
                 NSParagraphStyleAttributeName: paragraphStyle
             ]
-            let rect = CGRect(x: xOffset, y: yOffset, width: titleSize.width, height: titleSize.height)
-            title.drawWithRect(rect, options: .UsesLineFragmentOrigin | .TruncatesLastVisibleLine, attributes: attributes, context: nil)
+            let paragraphRect = CGRect(x: xOffset, y: yOffset, width: titleSize.width, height: titleSize.height)
+            title.drawWithRect(paragraphRect, options: .UsesLineFragmentOrigin | .TruncatesLastVisibleLine, attributes: attributes, context: nil)
             
             yOffset += titleSize.height
         }
@@ -333,8 +333,8 @@ private class Message: UIView, Identifiable {
                 NSForegroundColorAttributeName: messageFontColor,
                 NSParagraphStyleAttributeName: paragraphStyle
             ]
-            let rect = CGRect(x: xOffset, y: yOffset, width: messageSize.width, height: messageSize.height)
-            message.drawWithRect(rect, options: .UsesLineFragmentOrigin | .TruncatesLastVisibleLine, attributes: attributes, context: nil)
+            let messageRect = CGRect(x: xOffset, y: yOffset, width: messageSize.width, height: messageSize.height)
+            message.drawWithRect(messageRect, options: .UsesLineFragmentOrigin | .TruncatesLastVisibleLine, attributes: attributes, context: nil)
             
             yOffset += titleSize.height
         }
@@ -361,7 +361,7 @@ private class Message: UIView, Identifiable {
     var messageSize: CGSize {
         let boundedSize = CGSize(width: availableWidth, height: CGFloat.max)
         let titleFontAttributes = [NSFontAttributeName: messageFont]
-        if let size = title?.boundingRectWithSize(boundedSize, options: .TruncatesLastVisibleLine | .UsesLineFragmentOrigin, attributes: titleFontAttributes, context: nil).size {
+        if let size = message?.boundingRectWithSize(boundedSize, options: .TruncatesLastVisibleLine | .UsesLineFragmentOrigin, attributes: titleFontAttributes, context: nil).size {
             return CGSize(width: ceil(size.width), height: ceil(size.height))
         }
         return CGSizeZero
@@ -382,7 +382,7 @@ private class Message: UIView, Identifiable {
     }
     
     var availableWidth: CGFloat {
-        return width - Message.Padding * 3 // - size for icon
+        return width - Message.Padding * 2 - Message.IconSize
     }
     
     // MARK: Identifiable
