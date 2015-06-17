@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func showSuccess(sender: AnyObject) {
-        uuid = SwiftMessageBar.showMessageWithTitle(nil, message: "A really long message can go here, to provide a description for the user", type: .Success, duration: 3) {
+        uuid = SwiftMessageBar.showMessageWithTitle(nil, message: "A really long message can go here, to provide a description for the user", type: .Success, duration: 3, dismiss: false) {
             println("oh hai")
         }
     }
