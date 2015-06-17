@@ -102,13 +102,13 @@ public final class SwiftMessageBar {
     }
     
     public static func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
-        duration: NSTimeInterval = 3, callback: Callback? = nil) -> NSUUID {
-        return SharedMessageBar.showMessageWithTitle(title, message: message, type: type, duration: duration, callback: callback)
+        duration: NSTimeInterval = 3, dismiss: Bool = true, callback: Callback? = nil) -> NSUUID {
+            return SharedMessageBar.showMessageWithTitle(title, message: message, type: type, duration: duration, dismiss: dismiss, callback: callback)
     }
 
     public func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
-        duration: NSTimeInterval = 3, callback: Callback? = nil) -> NSUUID {
-            let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(fromConfig: config), titleFontColor: config.titleColor, messageFontColor: config.messageColor, icon: type.image(fromConfig: config), duration: duration, callback: callback)
+        duration: NSTimeInterval = 3, dismiss: Bool = true, callback: Callback? = nil) -> NSUUID {
+            let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(fromConfig: config), titleFontColor: config.titleColor, messageFontColor: config.messageColor, icon: type.image(fromConfig: config), duration: duration, dismiss: dismiss, callback: callback)
             messageQueue.enqueue(message)
             messageBarView.addSubview(message)
             messageBarView.bringSubviewToFront(message)
@@ -149,9 +149,12 @@ public final class SwiftMessageBar {
                 animations: {
                 message.frame = CGRect(x: CGRectGetMinX(message.frame), y: CGRectGetMinY(message.frame) + message.height, width: message.width, height: message.height)
             }, completion: nil)
-            let time = dispatch_time(DISPATCH_TIME_NOW, (Int64)(message.duration * Double(NSEC_PER_SEC)))
-            dispatch_after(time, dispatch_get_main_queue()) {
-                self.dismissMessage(message)
+            
+            if message.dismiss {
+                let time = dispatch_time(DISPATCH_TIME_NOW, (Int64)(message.duration * Double(NSEC_PER_SEC)))
+                dispatch_after(time, dispatch_get_main_queue()) {
+                    self.dismissMessage(message)
+                }
             }
         }
     }
@@ -253,12 +256,13 @@ private class Message: UIView, Identifiable {
     var icon: UIImage?
     var callback: Callback?
     var isHit: Bool = false
+    var dismiss: Bool = true
     
     var titleFont: UIFont!
     var messageFont: UIFont!
     
     init(title: String?, message: String?, backgroundColor: UIColor, titleFontColor: UIColor, messageFontColor: UIColor,
-        icon: UIImage?, duration: NSTimeInterval, callback: Callback?) {
+        icon: UIImage?, duration: NSTimeInterval, dismiss: Bool = true, callback: Callback?) {
         self.title = title
         self.message = message
         self.duration = duration
@@ -267,6 +271,7 @@ private class Message: UIView, Identifiable {
         self.titleFontColor = titleFontColor
         self.messageFontColor = messageFontColor
         self.icon = icon
+        self.dismiss = dismiss
         titleFont = UIFont.boldSystemFontOfSize(16)
         messageFont = UIFont.systemFontOfSize(14)
         super.init(frame: CGRectZero)
