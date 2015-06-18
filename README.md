@@ -16,6 +16,10 @@ You can use [Carthage](https://github.com/Carthage/Carthage):
 ```ogdl
 github "JanGorman/SwiftMessageBar"
 ```
+for Swift 2.0
+```ogdl
+github "JanGorman/SwiftMessageBar" "swift-2.0"
+```
 
 or [CocoaPods](http://cocoapods.org):
 
