@@ -119,6 +119,9 @@ public final class SwiftMessageBar {
     }
     
     public func cancelAll() {
+        if !isMessageVisible && messageQueue.isEmpty() {
+            return
+        }
         if let message = messageBarView.subviews.filter({ $0 is Message }).first as? Message {
             dismissMessage(message)
         }
