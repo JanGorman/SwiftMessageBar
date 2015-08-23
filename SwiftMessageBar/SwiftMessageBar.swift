@@ -289,9 +289,7 @@ private class Message: UIView, Identifiable {
         super.init(frame: CGRectZero)
         
         self.backgroundColor = backgroundColor
-        contentMode = .Redraw
         usesAutoLayout(true)
-        
         initSubviews()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("didChangeOrientation:"), name: UIDeviceOrientationDidChangeNotification, object: nil)
