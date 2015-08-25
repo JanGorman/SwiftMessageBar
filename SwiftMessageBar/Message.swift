@@ -28,8 +28,8 @@ internal final class Message: UIView, Identifiable {
     internal private(set) var duration: NSTimeInterval!
     internal private(set) var dismiss: Bool = true
     
-    private var titleFont = UIFont.boldSystemFontOfSize(16)
-    private var messageFont = UIFont.systemFontOfSize(14)
+    private let titleFont = UIFont.boldSystemFontOfSize(16)
+    private let messageFont = UIFont.systemFontOfSize(14)
     
     private var paragraphStyle: NSMutableParagraphStyle {
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
