@@ -74,19 +74,19 @@ internal final class Message: UIView, Identifiable {
             "height": Message.IconSize
         ]
         
-        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[icon(==width)]", options: .allZeros,
+        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[icon(==width)]", options: [],
             metrics: metrics, views: views))
-        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[icon(==height)]", options: .allZeros,
+        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[icon(==height)]", options: [],
             metrics: metrics, views: views))
         
         addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-iconLeft-[icon]-messageLeft-[title]-right-|",
-            options: .allZeros, metrics: metrics, views: views))
+            options: [], metrics: metrics, views: views))
         addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-iconLeft-[icon]-messageLeft-[message]-right-|",
-            options: .allZeros, metrics: metrics, views: views))
+            options: [], metrics: metrics, views: views))
         addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-titleTop-[title]-padding-[message]-bottom-|",
-            options: .allZeros, metrics: metrics, views: views))
+            options: [], metrics: metrics, views: views))
         addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-iconTop-[icon]",
-            options: .allZeros, metrics: metrics, views: views))
+            options: [], metrics: metrics, views: views))
     }
 
     private func initIcon() -> UIImageView {
@@ -131,12 +131,12 @@ internal final class Message: UIView, Identifiable {
         return messageLabel
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     override func updateConstraints() {
-        superview?.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[view]-0-|", options: .allZeros,
+        superview?.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[view]-0-|", options: [],
             metrics: nil, views: ["view": self]))
         super.updateConstraints()
     }
@@ -157,7 +157,7 @@ internal final class Message: UIView, Identifiable {
     var titleSize: CGSize {
         let boundedSize = CGSize(width: availableWidth, height: CGFloat.max)
         let titleFontAttributes = [NSFontAttributeName: titleFont]
-        if let size = title?.boundingRectWithSize(boundedSize, options: .TruncatesLastVisibleLine | .UsesLineFragmentOrigin, attributes: titleFontAttributes, context: nil).size {
+        if let size = title?.boundingRectWithSize(boundedSize, options: [.TruncatesLastVisibleLine, .UsesLineFragmentOrigin], attributes: titleFontAttributes, context: nil).size {
             return CGSize(width: ceil(size.width), height: ceil(size.height))
         }
         return CGSizeZero
@@ -166,7 +166,7 @@ internal final class Message: UIView, Identifiable {
     var messageSize: CGSize {
         let boundedSize = CGSize(width: availableWidth, height: CGFloat.max)
         let titleFontAttributes = [NSFontAttributeName: messageFont]
-        if let size = message?.boundingRectWithSize(boundedSize, options: .TruncatesLastVisibleLine | .UsesLineFragmentOrigin, attributes: titleFontAttributes, context: nil).size {
+        if let size = message?.boundingRectWithSize(boundedSize, options: [.TruncatesLastVisibleLine, .UsesLineFragmentOrigin], attributes: titleFontAttributes, context: nil).size {
             return CGSize(width: ceil(size.width), height: ceil(size.height))
         }
         return CGSizeZero
@@ -201,7 +201,7 @@ internal final class Message: UIView, Identifiable {
 extension UIView {
     
     func usesAutoLayout(usesAutoLayout: Bool) {
-        setTranslatesAutoresizingMaskIntoConstraints(!usesAutoLayout)
+        translatesAutoresizingMaskIntoConstraints = !usesAutoLayout
     }
     
 }

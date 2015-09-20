@@ -7,7 +7,8 @@ A Swift Message Bar Implementation.
 ## Requirements
 
 - iOS 8+
-- Xcode 6.3+
+- Swift 2 (For Swift 1.2 use a build tagged with 1.x.x)
+- Xcode 7.0+
 
 ## Installation
 
@@ -15,10 +16,6 @@ You can use [Carthage](https://github.com/Carthage/Carthage):
 
 ```ogdl
 github "JanGorman/SwiftMessageBar"
-```
-for Swift 2.0
-```ogdl
-github "JanGorman/SwiftMessageBar" "swift-2.0"
 ```
 
 or [CocoaPods](http://cocoapods.org):

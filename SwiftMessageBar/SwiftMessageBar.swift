@@ -102,12 +102,12 @@ public final class SwiftMessageBar {
         SharedMessageBar.config = config
     }
     
-    public static func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
+    public static func showMessageWithTitle(title: String? = nil, message: String? = nil, type: MessageType,
             duration: NSTimeInterval = 3, dismiss: Bool = true, callback: Callback? = nil) -> NSUUID {
         return SharedMessageBar.showMessageWithTitle(title, message: message, type: type, duration: duration, dismiss: dismiss, callback: callback)
     }
 
-    public func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
+    public func showMessageWithTitle(title: String? = nil, message: String? = nil, type: MessageType,
             duration: NSTimeInterval = 3, dismiss: Bool = true, callback: Callback? = nil) -> NSUUID {
         let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(fromConfig: config), titleFontColor: config.titleColor, messageFontColor: config.messageColor, icon: type.image(fromConfig: config), duration: duration, dismiss: dismiss, callback: callback)
         messageQueue.enqueue(message)
@@ -118,7 +118,7 @@ public final class SwiftMessageBar {
     }
     
     public func cancelAll() {
-        if !isMessageVisible && messageQueue.isEmpty() {
+        guard !isMessageVisible && messageQueue.isEmpty() else {
             return
         }
         if let message = messageBarView.subviews.filter({ $0 is Message }).first as? Message {
@@ -136,30 +136,31 @@ public final class SwiftMessageBar {
     }
 
     private func dequeueNextMessage() {
-        if let message = messageQueue.dequeue() {
-            messageBarView.addSubview(message)
-            messageBarView.bringSubviewToFront(message)
-            isMessageVisible = true
-            message.frame = CGRect(x: 0, y: -message.estimatedHeight, width: message.width, height: message.estimatedHeight)
-            message.hidden = false
-            message.setNeedsUpdateConstraints()
-            
-            let gesture = UITapGestureRecognizer(target: self, action: Selector("didTapMessage:"))
-            message.addGestureRecognizer(gesture)
-            
-            UIView.animateWithDuration(SwiftMessageBar.ShowHideDuration,
-                delay: 0,
-                options: .CurveEaseInOut,
-                animations: {
-                    message.frame = CGRect(x: message.frame.minX, y: message.frame.minY + message.estimatedHeight,
-                        width: message.width, height: message.estimatedHeight)
-                }, completion: nil)
-            
-            if message.dismiss {
-                let time = dispatch_time(DISPATCH_TIME_NOW, (Int64)(message.duration * Double(NSEC_PER_SEC)))
-                dispatch_after(time, dispatch_get_main_queue()) {
-                    self.dismissMessage(message)
-                }
+        guard let message = messageQueue.dequeue() else {
+            return
+        }
+        messageBarView.addSubview(message)
+        messageBarView.bringSubviewToFront(message)
+        isMessageVisible = true
+        message.frame = CGRect(x: 0, y: -message.estimatedHeight, width: message.width, height: message.estimatedHeight)
+        message.hidden = false
+        message.setNeedsUpdateConstraints()
+        
+        let gesture = UITapGestureRecognizer(target: self, action: Selector("didTapMessage:"))
+        message.addGestureRecognizer(gesture)
+        
+        UIView.animateWithDuration(SwiftMessageBar.ShowHideDuration,
+            delay: 0,
+            options: .CurveEaseInOut,
+            animations: {
+                message.frame = CGRect(x: message.frame.minX, y: message.frame.minY + message.estimatedHeight,
+                    width: message.width, height: message.estimatedHeight)
+            }, completion: nil)
+        
+        if message.dismiss {
+            let time = dispatch_time(DISPATCH_TIME_NOW, (Int64)(message.duration * Double(NSEC_PER_SEC)))
+            dispatch_after(time, dispatch_get_main_queue()) {
+                self.dismissMessage(message)
             }
         }
     }
@@ -267,7 +268,7 @@ private struct Queue<T: Identifiable> {
     }
     
     private func findElementIndexWithId(id: NSUUID) -> Int? {
-        for (i, element) in enumerate(queue) {
+        for (i, element) in queue.enumerate() {
             if element.id() == id {
                 return i
             }
