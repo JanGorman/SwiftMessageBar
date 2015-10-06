@@ -85,8 +85,24 @@ internal final class Message: UIView, Identifiable {
             options: [], metrics: metrics, views: views))
         addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-titleTop-[title]-padding-[message]-bottom-|",
             options: [], metrics: metrics, views: views))
-        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-iconTop-[icon]",
-            options: [], metrics: metrics, views: views))
+        
+        if let message = message where !message.isEmpty {
+            addConstraint(NSLayoutConstraint(item: iconImageView,
+                attribute: NSLayoutAttribute.CenterY,
+                relatedBy: NSLayoutRelation.Equal,
+                toItem: messageLabel,
+                attribute: NSLayoutAttribute.CenterY,
+                multiplier: (title?.isEmpty ?? true) ? 1 : 0.8,
+                constant: 0))
+        } else if let title = title where !title.isEmpty {
+            addConstraint(NSLayoutConstraint(item: iconImageView,
+                attribute: NSLayoutAttribute.CenterY,
+                relatedBy: NSLayoutRelation.Equal,
+                toItem: titleLabel,
+                attribute: NSLayoutAttribute.CenterY,
+                multiplier: 1.0,
+                constant: 0))
+        }
     }
 
     private func initIcon() -> UIImageView {
