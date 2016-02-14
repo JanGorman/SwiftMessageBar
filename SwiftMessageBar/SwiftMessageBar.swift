@@ -71,7 +71,7 @@ public final class SwiftMessageBar {
     
     private var messageWindow: MessageWindow?
     
-    public var tappedHandler : () -> () = {}
+    public var tapHandler : (() -> Void)?
     
     private func newMessageWindow() -> MessageWindow {
         let messageWindow = MessageWindow()
@@ -174,7 +174,7 @@ public final class SwiftMessageBar {
     @objc func didTapMessage(gesture: UITapGestureRecognizer) {
         let message = gesture.view as! Message
         dismissMessage(message, fromGesture: true)
-        self.tappedHandler()
+        tapHandler?()
     }
     
     private func dismissMessage(message: Message, fromGesture: Bool) {
