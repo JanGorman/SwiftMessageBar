@@ -111,6 +111,7 @@ public final class SwiftMessageBar {
 
     public func showMessageWithTitle(title: String? = nil, message: String? = nil, type: MessageType,
             duration: NSTimeInterval = 3, dismiss: Bool = true, callback: Callback? = nil) -> NSUUID {
+                messageQueue.queue.last
         let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(fromConfig: config), titleFontColor: config.titleColor, messageFontColor: config.messageColor, icon: type.image(fromConfig: config), duration: duration, dismiss: dismiss, callback: callback)
         messageQueue.enqueue(message)
         if !isMessageVisible {
@@ -119,11 +120,12 @@ public final class SwiftMessageBar {
         return message.id()
     }
     
-    public func cancelAll() {
-        guard !isMessageVisible && messageQueue.isEmpty() else {
+    public func cancelAll(force force: Bool = false) {
+        guard !isMessageVisible && messageQueue.isEmpty() || force else {
             return
         }
-        if let message = messageBarView.subviews.filter({ $0 is Message }).first as? Message {
+        
+        if let message = visibleMessage {
             dismissMessage(message)
         }
         isMessageVisible = false
@@ -131,10 +133,14 @@ public final class SwiftMessageBar {
     }
 
     public func cancelWithId(id: NSUUID) {
-        if let message = messageBarView.subviews.filter({ $0 is Message }).first as? Message where message.id() == id {
+        if let message = visibleMessage where message.id() == id {
             dismissMessage(message)
         }
         messageQueue.removeWithId(id)
+    }
+    
+    private var visibleMessage: Message? {
+        return messageBarView.subviews.filter({ $0 is Message }).first as? Message
     }
 
     private func dequeueNextMessage() {
@@ -178,32 +184,35 @@ public final class SwiftMessageBar {
     }
     
     private func dismissMessage(message: Message, fromGesture: Bool) {
-        if !message.isHit {
-            message.isHit = true
-            
-            UIView.animateWithDuration(SwiftMessageBar.ShowHideDuration,
-                delay: 0,
-                options: .CurveEaseInOut,
-                animations: {
-                    message.frame = CGRect(x: message.frame.minX, y: message.frame.minY - message.estimatedHeight,
-                        width: message.width, height: message.estimatedHeight)
-                },
-                completion: {
-                    [weak self] _ in
-                    self?.isMessageVisible = false
-                    message.removeFromSuperview()
-                    
-                    if fromGesture {
-                        message.callback?()
-                    }
-                    
-                    if let messageBar = self where !messageBar.messageQueue.isEmpty() {
-                        messageBar.dequeueNextMessage()
-                    } else {
-                        self?.messageWindow = nil
-                    }
-                })
+        if message.isHit {
+            return
         }
+
+        message.isHit = true
+        
+        UIView.animateWithDuration(SwiftMessageBar.ShowHideDuration,
+            delay: 0,
+            options: .CurveEaseInOut,
+            animations: {
+                message.frame = CGRect(x: message.frame.minX, y: message.frame.minY - message.estimatedHeight,
+                    width: message.width, height: message.estimatedHeight)
+            },
+            completion: {
+                [weak self] _ in
+                self?.isMessageVisible = false
+                message.removeFromSuperview()
+                
+                if fromGesture {
+                    message.callback?()
+                }
+                
+                if let messageBar = self where !messageBar.messageQueue.isEmpty() {
+                    messageBar.dequeueNextMessage()
+                } else {
+                    self?.messageWindow = nil
+                }
+            }
+        )
     }
 
 }
