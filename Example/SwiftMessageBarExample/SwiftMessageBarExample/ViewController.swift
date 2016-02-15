@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func clearAll(sender: AnyObject) {
-        SwiftMessageBar.SharedMessageBar.cancelAll()
+        SwiftMessageBar.SharedMessageBar.cancelAll(force: true)
         uuid = nil
     }
 
