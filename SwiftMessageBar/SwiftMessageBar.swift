@@ -111,7 +111,6 @@ public final class SwiftMessageBar {
 
     public func showMessageWithTitle(title: String? = nil, message: String? = nil, type: MessageType,
             duration: NSTimeInterval = 3, dismiss: Bool = true, callback: Callback? = nil) -> NSUUID {
-                messageQueue.queue.last
         let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(fromConfig: config), titleFontColor: config.titleColor, messageFontColor: config.messageColor, icon: type.image(fromConfig: config), duration: duration, dismiss: dismiss, callback: callback)
         messageQueue.enqueue(message)
         if !isMessageVisible {
@@ -121,10 +120,8 @@ public final class SwiftMessageBar {
     }
     
     public func cancelAll(force force: Bool = false) {
-        guard !isMessageVisible && messageQueue.isEmpty() || force else {
-            return
-        }
-        
+        guard !isMessageVisible && messageQueue.isEmpty || force else { return }
+      
         if let message = visibleMessage {
             dismissMessage(message)
         }
@@ -206,7 +203,7 @@ public final class SwiftMessageBar {
                     message.callback?()
                 }
                 
-                if let messageBar = self where !messageBar.messageQueue.isEmpty() {
+                if let messageBar = self where !messageBar.messageQueue.isEmpty {
                     messageBar.dequeueNextMessage()
                 } else {
                     self?.messageWindow = nil
@@ -254,38 +251,53 @@ private class MessageBarController: UIViewController {
 }
 
 private struct Queue<T: Identifiable> {
-    
-    private var queue = [T]()
-    
+  
+    private var left: [T]
+    private var right: [T]
+  
+    var isEmpty: Bool {
+      return left.isEmpty && right.isEmpty
+    }
+
+    init() {
+      left = []
+      right = []
+    }
+
     mutating func dequeue() -> T? {
-        return !queue.isEmpty ? queue.removeAtIndex(0) : nil
+        guard !(left.isEmpty && right.isEmpty) else { return nil }
+        
+        if left.isEmpty {
+          left = right.reverse()
+          right.removeAll(keepCapacity: true)
+        }
+        return left.removeLast()
     }
     
     mutating func enqueue(newElement: T) {
-        queue.append(newElement)
+        right.append(newElement)
     }
-    
-    func isEmpty() -> Bool {
-        return queue.isEmpty
-    }
-    
+  
     mutating func removeAll() {
-        queue.removeAll(keepCapacity: false)
+      left.removeAll()
+      right.removeAll()
     }
     
     mutating func removeWithId(id: NSUUID) {
-        if let idx = findElementIndexWithId(id) {
-            queue.removeAtIndex(idx)
-        }
+      if let idx = left.findWithId(id) {
+        left.removeAtIndex(idx)
+      }
+      if let idx = right.findWithId(id) {
+        right.removeAtIndex(idx)
+      }
     }
-    
-    private func findElementIndexWithId(id: NSUUID) -> Int? {
-        for (i, element) in queue.enumerate() {
-            if element.id() == id {
-                return i
-            }
-        }
-        return nil
+
+}
+
+private extension Array where Element: Identifiable {
+  
+    func findWithId(id: NSUUID) -> Int? {
+      return enumerate().lazy.filter({ $1.id() == id }).first?.0
     }
-    
+
 }

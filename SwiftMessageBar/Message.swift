@@ -11,7 +11,7 @@ internal protocol Identifiable {
     
 }
 
-internal final class Message: UIView, Identifiable {
+internal final class Message: UIView {
     
     private static let Padding: CGFloat = 10
     private static let MessageOffset: CGFloat = 2
@@ -205,13 +205,15 @@ internal final class Message: UIView, Identifiable {
     var availableWidth: CGFloat {
         return width - Message.Padding * 2 - Message.IconSize
     }
-    
-    // MARK: Identifiable
-    
+  
+}
+
+extension Message: Identifiable {
+  
     internal func id() -> NSUUID {
-        return uuid
+      return uuid
     }
-    
+  
 }
 
 extension UIView {
