@@ -5,7 +5,9 @@
 
 # SwiftMessageBar
 
-A Swift Message Bar Implementation.
+An iOS message bar, written in Swift
+
+![image](https://dl.dropboxusercontent.com/u/512759/SwiftMessageBar-2016.06.08.gif)
 
 ## Requirements
 
