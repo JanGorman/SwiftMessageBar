@@ -154,7 +154,7 @@ public final class SwiftMessageBar {
         message.hidden = false
         message.setNeedsUpdateConstraints()
         
-        let gesture = UITapGestureRecognizer(target: self, action: Selector("didTapMessage:"))
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapMessage))
         message.addGestureRecognizer(gesture)
         
         UIView.animateWithDuration(SwiftMessageBar.ShowHideDuration,
