@@ -7,7 +7,7 @@ import UIKit
 
 internal protocol Identifiable {
     
-    func id() -> NSUUID
+    func id() -> UUID
     
 }
 
@@ -17,7 +17,7 @@ internal final class Message: UIView {
     private static let MessageOffset: CGFloat = 2
     private static let IconSize: CGFloat = 36
     
-    private let uuid = NSUUID()
+    private let uuid = UUID()
     private var title: String?
     private var message: String?
     private var titleFontColor: UIColor!
@@ -25,20 +25,20 @@ internal final class Message: UIView {
     private var icon: UIImage?
     internal var isHit: Bool = false
     internal private(set) var callback: Callback?
-    internal private(set) var duration: NSTimeInterval!
+    internal private(set) var duration: TimeInterval!
     internal private(set) var dismiss: Bool = true
     
-    private let titleFont = UIFont.boldSystemFontOfSize(16)
-    private let messageFont = UIFont.systemFontOfSize(14)
+    private let titleFont = .boldSystemFont(ofSize: 16)
+    private let messageFont = .systemFont(ofSize: 14)
     
     private var paragraphStyle: NSMutableParagraphStyle {
-        let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
-        paragraphStyle.alignment = .Left
+        let paragraphStyle = NSParagraphStyle.default().mutableCopy() as! NSMutableParagraphStyle
+        paragraphStyle.alignment = .left
         return paragraphStyle
     }
     
     init(title: String?, message: String?, backgroundColor: UIColor, titleFontColor: UIColor, messageFontColor: UIColor,
-        icon: UIImage?, duration: NSTimeInterval, dismiss: Bool = true, callback: Callback?) {
+        icon: UIImage?, duration: TimeInterval, dismiss: Bool = true, callback: Callback?) {
             self.title = title
             self.message = message
             self.duration = duration
@@ -48,7 +48,7 @@ internal final class Message: UIView {
             self.icon = icon
             self.dismiss = dismiss
             
-            super.init(frame: CGRectZero)
+            super.init(frame: CGRect.zero)
             
             self.backgroundColor = backgroundColor
             usesAutoLayout(true)
@@ -74,34 +74,34 @@ internal final class Message: UIView {
             "height": Message.IconSize
         ]
         
-        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[icon(==width)]", options: [],
-            metrics: metrics, views: views))
-        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[icon(==height)]", options: [],
-            metrics: metrics, views: views))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[icon(==width)]", options: [],
+                                                      metrics: metrics, views: views))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[icon(==height)]", options: [],
+                                                      metrics: metrics, views: views))
         
-        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-iconLeft-[icon]-messageLeft-[title]-right-|",
-            options: [], metrics: metrics, views: views))
-        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-iconLeft-[icon]-messageLeft-[message]-right-|",
-            options: [], metrics: metrics, views: views))
-        addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-titleTop-[title]-padding-[message]-bottom-|",
-            options: [], metrics: metrics, views: views))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-iconLeft-[icon]-messageLeft-[title]-right-|",
+                                                      options: [], metrics: metrics, views: views))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-iconLeft-[icon]-messageLeft-[message]-right-|",
+                                                      options: [], metrics: metrics, views: views))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-titleTop-[title]-padding-[message]-bottom-|",
+                                                      options: [], metrics: metrics, views: views))
         
         if let message = message where !message.isEmpty {
             addConstraint(NSLayoutConstraint(item: iconImageView,
-                attribute: NSLayoutAttribute.CenterY,
-                relatedBy: NSLayoutRelation.Equal,
-                toItem: messageLabel,
-                attribute: NSLayoutAttribute.CenterY,
-                multiplier: (title?.isEmpty ?? true) ? 1 : 0.8,
-                constant: 0))
+                                             attribute: NSLayoutAttribute.centerY,
+                                             relatedBy: NSLayoutRelation.equal,
+                                             toItem: messageLabel,
+                                             attribute: NSLayoutAttribute.centerY,
+                                             multiplier: (title?.isEmpty ?? true) ? 1 : 0.8,
+                                             constant: 0))
         } else if let title = title where !title.isEmpty {
             addConstraint(NSLayoutConstraint(item: iconImageView,
-                attribute: NSLayoutAttribute.CenterY,
-                relatedBy: NSLayoutRelation.Equal,
-                toItem: titleLabel,
-                attribute: NSLayoutAttribute.CenterY,
-                multiplier: 1.0,
-                constant: 0))
+                                             attribute: NSLayoutAttribute.centerY,
+                                             relatedBy: NSLayoutRelation.equal,
+                                             toItem: titleLabel,
+                                             attribute: NSLayoutAttribute.centerY,
+                                             multiplier: 1.0,
+                                             constant: 0))
         }
     }
 
@@ -125,7 +125,7 @@ internal final class Message: UIView {
                 NSForegroundColorAttributeName: titleFontColor,
                 NSParagraphStyleAttributeName: paragraphStyle
             ]
-            titleLabel.attributedText = NSAttributedString(string: title, attributes: attributes)
+            titleLabel.attributedText = AttributedString(string: title, attributes: attributes)
         }
         return titleLabel
     }
@@ -142,7 +142,7 @@ internal final class Message: UIView {
                 NSForegroundColorAttributeName: messageFontColor,
                 NSParagraphStyleAttributeName: paragraphStyle
             ]
-            messageLabel.attributedText = NSAttributedString(string: message, attributes: attributes)
+            messageLabel.attributedText = AttributedString(string: message, attributes: attributes)
         }
         return messageLabel
     }
@@ -152,8 +152,8 @@ internal final class Message: UIView {
     }
     
     override func updateConstraints() {
-        superview?.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[view]-0-|", options: [],
-            metrics: nil, views: ["view": self]))
+        superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: [],
+                                                                 metrics: nil, views: ["view": self]))
         super.updateConstraints()
     }
     
@@ -163,7 +163,8 @@ internal final class Message: UIView {
     
     var estimatedHeight: CGFloat {
         if icon != nil {
-            return max(Message.Padding * 2 + titleSize.height + messageSize.height + statusBarOffset, Message.Padding * 2 + Message.IconSize + statusBarOffset)
+            return max(Message.Padding * 2 + titleSize.height + messageSize.height + statusBarOffset,
+                       Message.Padding * 2 + Message.IconSize + statusBarOffset)
             
         } else {
             return Message.Padding * 2 + titleSize.height + messageSize.height + statusBarOffset
@@ -171,21 +172,25 @@ internal final class Message: UIView {
     }
     
     var titleSize: CGSize {
-        let boundedSize = CGSize(width: availableWidth, height: CGFloat.max)
+        let boundedSize = CGSize(width: availableWidth, height: CGFloat.greatestFiniteMagnitude)
         let titleFontAttributes = [NSFontAttributeName: titleFont]
-        if let size = title?.boundingRectWithSize(boundedSize, options: [.TruncatesLastVisibleLine, .UsesLineFragmentOrigin], attributes: titleFontAttributes, context: nil).size {
+        if let size = title?.boundingRect(with: boundedSize,
+                                          options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin],
+                                          attributes: titleFontAttributes, context: nil).size {
             return CGSize(width: ceil(size.width), height: ceil(size.height))
         }
-        return CGSizeZero
+        return CGSize.zero
     }
     
     var messageSize: CGSize {
-        let boundedSize = CGSize(width: availableWidth, height: CGFloat.max)
+        let boundedSize = CGSize(width: availableWidth, height: CGFloat.greatestFiniteMagnitude)
         let titleFontAttributes = [NSFontAttributeName: messageFont]
-        if let size = message?.boundingRectWithSize(boundedSize, options: [.TruncatesLastVisibleLine, .UsesLineFragmentOrigin], attributes: titleFontAttributes, context: nil).size {
+        if let size = message?.boundingRect(with: boundedSize,
+                                            options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin],
+                                            attributes: titleFontAttributes, context: nil).size {
             return CGSize(width: ceil(size.width), height: ceil(size.height))
         }
-        return CGSizeZero
+        return CGSize.zero
     }
     
     var statusBarOffset: CGFloat {
@@ -197,8 +202,8 @@ internal final class Message: UIView {
     }
     
     var statusBarFrame: CGRect {
-        let windowFrame = UIApplication.sharedApplication().keyWindow!.frame
-        let statusFrame = UIApplication.sharedApplication().statusBarFrame
+        let windowFrame = UIApplication.shared().keyWindow!.frame
+        let statusFrame = UIApplication.shared().statusBarFrame
         return CGRect(x: windowFrame.minX, y: windowFrame.minY, width: windowFrame.width, height: statusFrame.height)
     }
     
@@ -210,7 +215,7 @@ internal final class Message: UIView {
 
 extension Message: Identifiable {
   
-    internal func id() -> NSUUID {
+    internal func id() -> UUID {
       return uuid
     }
   
@@ -218,7 +223,7 @@ extension Message: Identifiable {
 
 extension UIView {
     
-    func usesAutoLayout(usesAutoLayout: Bool) {
+    func usesAutoLayout(_ usesAutoLayout: Bool) {
         translatesAutoresizingMaskIntoConstraints = !usesAutoLayout
     }
     

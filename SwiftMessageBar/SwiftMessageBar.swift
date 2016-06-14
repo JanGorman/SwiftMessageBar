@@ -17,17 +17,19 @@ public struct MessageBarConfig {
     let infoIcon: UIImage?
     let errorIcon: UIImage?
     
-    public init(errorColor: UIColor = UIColor.redColor(), successColor: UIColor = UIColor.greenColor(), infoColor: UIColor = UIColor.blueColor(), titleColor: UIColor = UIColor.whiteColor(), messageColor: UIColor = UIColor.whiteColor(), statusBarHidden: Bool = false, successIcon: UIImage? = nil, infoIcon: UIImage? = nil, errorIcon: UIImage? = nil) {
+    public init(errorColor: UIColor = UIColor.red(), successColor: UIColor = .green(), infoColor: UIColor = .blue(),
+                titleColor: UIColor = .white(), messageColor: UIColor = .white(), statusBarHidden: Bool = false,
+                successIcon: UIImage? = nil, infoIcon: UIImage? = nil, errorIcon: UIImage? = nil) {
         self.errorColor = errorColor
         self.successColor = successColor
         self.infoColor = infoColor
         self.titleColor = titleColor
         self.messageColor = messageColor
         self.statusBarHidden = statusBarHidden
-        let bundle = NSBundle(forClass: SwiftMessageBar.self)
-        self.successIcon = successIcon ?? UIImage(named: "icon-success", inBundle: bundle, compatibleWithTraitCollection: nil)
-        self.infoIcon = infoIcon ?? UIImage(named: "icon-info", inBundle: bundle, compatibleWithTraitCollection: nil)
-        self.errorIcon = errorIcon ?? UIImage(named: "icon-error", inBundle: bundle, compatibleWithTraitCollection: nil)
+        let bundle = Bundle(for: SwiftMessageBar.self)
+        self.successIcon = successIcon ?? UIImage(named: "icon-success", in: bundle, compatibleWith: nil)
+        self.infoIcon = infoIcon ?? UIImage(named: "icon-info", in: bundle, compatibleWith: nil)
+        self.errorIcon = errorIcon ?? UIImage(named: "icon-error", in: bundle, compatibleWith: nil)
     }
 
 }
@@ -39,26 +41,26 @@ public final class SwiftMessageBar {
     private var config: MessageBarConfig
 
     public enum MessageType {
-        case Error, Success, Info
+        case error, success, info
         
         func backgroundColor(fromConfig config: MessageBarConfig) -> UIColor {
             switch self {
-            case Error:
+            case error:
                 return config.errorColor
-            case Info:
+            case info:
                 return config.infoColor
-            case Success:
+            case success:
                 return config.successColor
             }
         }
         
         func image(fromConfig config: MessageBarConfig) -> UIImage? {
             switch self {
-            case Error:
+            case error:
                 return config.errorIcon
-            case Info:
+            case info:
                 return config.infoIcon
-            case Success:
+            case success:
                 return config.successIcon
             }
         }
@@ -67,7 +69,7 @@ public final class SwiftMessageBar {
 
     public static let SharedMessageBar = SwiftMessageBar()
     
-    private static let ShowHideDuration: NSTimeInterval = 0.25
+    private static let ShowHideDuration: TimeInterval = 0.25
     
     private var messageWindow: MessageWindow?
     
@@ -75,10 +77,10 @@ public final class SwiftMessageBar {
     
     private func newMessageWindow() -> MessageWindow {
         let messageWindow = MessageWindow()
-        messageWindow.frame = UIApplication.sharedApplication().keyWindow!.frame
-        messageWindow.hidden = false
+        messageWindow.frame = UIApplication.shared().keyWindow!.frame
+        messageWindow.isHidden = false
         messageWindow.windowLevel = UIWindowLevelNormal
-        messageWindow.backgroundColor = UIColor.clearColor()
+        messageWindow.backgroundColor = UIColor.clear()
         let controller = MessageBarController()
         controller.statusBarHidden = config.statusBarHidden
         messageWindow.rootViewController = controller
@@ -100,18 +102,24 @@ public final class SwiftMessageBar {
         config = MessageBarConfig()
     }
     
-    public static func setSharedConfig(config: MessageBarConfig) {
+    public static func setSharedConfig(_ config: MessageBarConfig) {
         SharedMessageBar.config = config
     }
     
-    public static func showMessageWithTitle(title: String? = nil, message: String? = nil, type: MessageType,
-            duration: NSTimeInterval = 3, dismiss: Bool = true, callback: Callback? = nil) -> NSUUID {
-        return SharedMessageBar.showMessageWithTitle(title, message: message, type: type, duration: duration, dismiss: dismiss, callback: callback)
+    public static func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
+                                            duration: TimeInterval = 3, dismiss: Bool = true,
+                                            callback: Callback? = nil) -> UUID {
+        return SharedMessageBar.showMessageWithTitle(title, message: message, type: type, duration: duration,
+                                                     dismiss: dismiss, callback: callback)
     }
 
-    public func showMessageWithTitle(title: String? = nil, message: String? = nil, type: MessageType,
-            duration: NSTimeInterval = 3, dismiss: Bool = true, callback: Callback? = nil) -> NSUUID {
-        let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(fromConfig: config), titleFontColor: config.titleColor, messageFontColor: config.messageColor, icon: type.image(fromConfig: config), duration: duration, dismiss: dismiss, callback: callback)
+    public func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
+                                     duration: TimeInterval = 3, dismiss: Bool = true,
+                                     callback: Callback? = nil) -> UUID {
+        let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(fromConfig: config),
+                              titleFontColor: config.titleColor, messageFontColor: config.messageColor,
+                              icon: type.image(fromConfig: config), duration: duration, dismiss: dismiss,
+                              callback: callback)
         messageQueue.enqueue(message)
         if !isMessageVisible {
             dequeueNextMessage()
@@ -119,7 +127,7 @@ public final class SwiftMessageBar {
         return message.id()
     }
     
-    public func cancelAll(force force: Bool = false) {
+    public func cancelAll(force: Bool = false) {
         guard !isMessageVisible && messageQueue.isEmpty || force else { return }
       
         if let message = visibleMessage {
@@ -129,7 +137,7 @@ public final class SwiftMessageBar {
         messageQueue.removeAll()
     }
 
-    public func cancelWithId(id: NSUUID) {
+    public func cancelWithId(_ id: UUID) {
         if let message = visibleMessage where message.id() == id {
             dismissMessage(message)
         }
@@ -145,54 +153,54 @@ public final class SwiftMessageBar {
             return
         }
         messageBarView.addSubview(message)
-        messageBarView.bringSubviewToFront(message)
+        messageBarView.bringSubview(toFront: message)
         isMessageVisible = true
         message.frame = CGRect(x: 0, y: -message.estimatedHeight, width: message.width, height: message.estimatedHeight)
-        message.hidden = false
+        message.isHidden = false
         message.setNeedsUpdateConstraints()
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapMessage))
         message.addGestureRecognizer(gesture)
         
-        UIView.animateWithDuration(SwiftMessageBar.ShowHideDuration,
+        UIView.animate(withDuration: SwiftMessageBar.ShowHideDuration,
             delay: 0,
-            options: .CurveEaseInOut,
+            options: UIViewAnimationOptions(),
             animations: {
                 message.frame = CGRect(x: message.frame.minX, y: message.frame.minY + message.estimatedHeight,
-                    width: message.width, height: message.estimatedHeight)
+                                       width: message.width, height: message.estimatedHeight)
             }, completion: nil)
         
         if message.dismiss {
-            let time = dispatch_time(DISPATCH_TIME_NOW, (Int64)(message.duration * Double(NSEC_PER_SEC)))
-            dispatch_after(time, dispatch_get_main_queue()) {
+            let time = DispatchTime.now() + Double((Int64)(message.duration * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.main.after(when: time) {
                 self.dismissMessage(message)
             }
         }
     }
     
-    private func dismissMessage(message: Message) {
+    private func dismissMessage(_ message: Message) {
         dismissMessage(message, fromGesture: false)
     }
     
-    @objc func didTapMessage(gesture: UITapGestureRecognizer) {
+    @objc func didTapMessage(_ gesture: UITapGestureRecognizer) {
         let message = gesture.view as! Message
         dismissMessage(message, fromGesture: true)
         tapHandler?()
     }
     
-    private func dismissMessage(message: Message, fromGesture: Bool) {
+    private func dismissMessage(_ message: Message, fromGesture: Bool) {
         if message.isHit {
             return
         }
 
         message.isHit = true
         
-        UIView.animateWithDuration(SwiftMessageBar.ShowHideDuration,
+        UIView.animate(withDuration: SwiftMessageBar.ShowHideDuration,
             delay: 0,
-            options: .CurveEaseInOut,
+            options: UIViewAnimationOptions(),
             animations: {
                 message.frame = CGRect(x: message.frame.minX, y: message.frame.minY - message.estimatedHeight,
-                    width: message.width, height: message.estimatedHeight)
+                                       width: message.width, height: message.estimatedHeight)
             },
             completion: {
                 [weak self] _ in
@@ -216,8 +224,8 @@ public final class SwiftMessageBar {
 
 private class MessageWindow: UIWindow {
     
-    private override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-        var hitView = super.hitTest(point, withEvent: event)
+    private override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        var hitView = super.hitTest(point, with: event)
         if hitView == rootViewController?.view {
             hitView = nil
         }
@@ -228,7 +236,7 @@ private class MessageWindow: UIWindow {
 
 private class MessageBarController: UIViewController {
 
-    var statusBarStyle: UIStatusBarStyle = .Default {
+    var statusBarStyle: UIStatusBarStyle = .default {
         didSet {
             setNeedsStatusBarAppearanceUpdate()
         }
@@ -268,13 +276,13 @@ private struct Queue<T: Identifiable> {
         guard !(left.isEmpty && right.isEmpty) else { return nil }
         
         if left.isEmpty {
-          left = right.reverse()
-          right.removeAll(keepCapacity: true)
+          left = right.reversed()
+          right.removeAll(keepingCapacity: true)
         }
         return left.removeLast()
     }
     
-    mutating func enqueue(newElement: T) {
+    mutating func enqueue(_ newElement: T) {
         right.append(newElement)
     }
   
@@ -283,12 +291,12 @@ private struct Queue<T: Identifiable> {
       right.removeAll()
     }
     
-    mutating func removeWithId(id: NSUUID) {
+    mutating func removeWithId(_ id: UUID) {
       if let idx = left.findWithId(id) {
-        left.removeAtIndex(idx)
+        left.remove(at: idx)
       }
       if let idx = right.findWithId(id) {
-        right.removeAtIndex(idx)
+        right.remove(at: idx)
       }
     }
 
@@ -296,8 +304,8 @@ private struct Queue<T: Identifiable> {
 
 private extension Array where Element: Identifiable {
   
-    func findWithId(id: NSUUID) -> Int? {
-      return enumerate().lazy.filter({ $1.id() == id }).first?.0
+    func findWithId(_ id: UUID) -> Int? {
+      return enumerated().lazy.filter({ $1.id() == id }).first?.0
     }
 
 }
