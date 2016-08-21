@@ -8,11 +8,11 @@ import SwiftMessageBar
 
 class ViewController: UIViewController {
     
-    private var uuid: UUID?
+    fileprivate var uuid: UUID?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let messageBarConfig = MessageBarConfig(successColor: .orange(), statusBarHidden: true)
+        let messageBarConfig = MessageBarConfig(successColor: .orange, statusBarHidden: true)
         SwiftMessageBar.setSharedConfig(messageBarConfig)
     }
     
