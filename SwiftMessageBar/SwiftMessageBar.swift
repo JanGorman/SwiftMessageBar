@@ -162,12 +162,9 @@ public final class SwiftMessageBar {
     let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapMessage))
     message.addGestureRecognizer(gesture)
     
-    UIView.animate(withDuration: SwiftMessageBar.ShowHideDuration,
-                   delay: 0,
-                   options: UIViewAnimationOptions(),
-                   animations: {
-                    message.frame = CGRect(x: message.frame.minX, y: message.frame.minY + message.estimatedHeight,
-                                           width: message.width, height: message.estimatedHeight)
+    UIView.animate(withDuration: SwiftMessageBar.ShowHideDuration, delay: 0, options: [], animations: {
+      message.frame = CGRect(x: message.frame.minX, y: message.frame.minY + message.estimatedHeight,
+                             width: message.width, height: message.estimatedHeight)
       }, completion: nil)
     
     if message.dismiss {
@@ -195,27 +192,22 @@ public final class SwiftMessageBar {
     
     message.isHit = true
     
-    UIView.animate(withDuration: SwiftMessageBar.ShowHideDuration,
-                   delay: 0,
-                   options: UIViewAnimationOptions(),
-                   animations: {
-                    message.frame = CGRect(x: message.frame.minX, y: message.frame.minY - message.estimatedHeight,
-                                           width: message.width, height: message.estimatedHeight)
-      },
-                   completion: {
-                    [weak self] _ in
-                    self?.isMessageVisible = false
-                    message.removeFromSuperview()
-                    
-                    if fromGesture {
-                      message.callback?()
-                    }
-                    
-                    if let messageBar = self , !messageBar.messageQueue.isEmpty {
-                      messageBar.dequeueNextMessage()
-                    } else {
-                      self?.messageWindow = nil
-                    }
+    UIView.animate(withDuration: SwiftMessageBar.ShowHideDuration, delay: 0, options: [], animations: {
+      message.frame = CGRect(x: message.frame.minX, y: message.frame.minY - message.estimatedHeight,
+                             width: message.width, height: message.estimatedHeight)
+      }, completion: { [weak self] _ in
+        self?.isMessageVisible = false
+        message.removeFromSuperview()
+        
+        if fromGesture {
+          message.callback?()
+        }
+        
+        if let messageBar = self , !messageBar.messageQueue.isEmpty {
+          messageBar.dequeueNextMessage()
+        } else {
+          self?.messageWindow = nil
+        }
       }
     )
   }
