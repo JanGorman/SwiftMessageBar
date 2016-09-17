@@ -12,8 +12,10 @@ An iOS message bar, written in Swift
 ## Requirements
 
 - iOS 8+
-- Swift 2 (For Swift 1.2 use a build tagged with 1.x.x)
-- Xcode 7.0+
+- Swift 3 
+- For Swift 2.2 use a build tagged with 2.x.x
+- For Swift 1.2 use a build tagged with 1.x.x
+- Xcode 8.0+ 
 
 ## Installation
 
