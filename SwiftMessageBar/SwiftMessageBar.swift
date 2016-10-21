@@ -216,7 +216,7 @@ public final class SwiftMessageBar {
 
 private class MessageWindow: UIWindow {
   
-  private override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+  override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
     var hitView = super.hitTest(point, with: event)
     if hitView == rootViewController?.view {
       hitView = nil
@@ -240,11 +240,11 @@ private class MessageBarController: UIViewController {
     }
   }
   
-  private override var preferredStatusBarStyle: UIStatusBarStyle {
+  override var preferredStatusBarStyle: UIStatusBarStyle {
     return statusBarStyle
   }
   
-  private override var prefersStatusBarHidden: Bool {
+  override var prefersStatusBarHidden: Bool {
     return statusBarHidden
   }
   
