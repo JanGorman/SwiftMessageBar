@@ -73,6 +73,7 @@ public final class SwiftMessageBar {
   
   private var messageWindow: MessageWindow?
   
+    private var timer: Timer?
   public var tapHandler : (() -> Void)?
   
   private func newMessageWindow() -> MessageWindow {
@@ -131,7 +132,11 @@ public final class SwiftMessageBar {
     guard !isMessageVisible && messageQueue.isEmpty || force else { return }
     
     if let message = visibleMessage {
-      dismissMessage(message)
+        if force {
+            forceDismissMessage(message)
+        }else {
+            dismissMessage(message)
+        }
     }
     isMessageVisible = false
     messageQueue.removeAll()
@@ -168,13 +173,26 @@ public final class SwiftMessageBar {
       }, completion: nil)
     
     if message.dismiss {
-      let time = DispatchTime.now() + Double((Int64)(message.duration * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-      DispatchQueue.main.asyncAfter(deadline: time) {
-        self.dismissMessage(message)
-      }
+        resetTimer()
+        timer = Timer.scheduledTimer(timeInterval: message.duration, target: self, selector: #selector(self.dismiss), userInfo: nil, repeats: true)
     }
+    
   }
   
+  private func resetTimer() {
+    if let timer = self.timer {
+        timer.invalidate()
+    }
+    self.timer = nil
+  }
+    
+  @objc func dismiss() {
+    resetTimer()
+    if let message = visibleMessage {
+        self.dismissMessage(message)
+    }
+  }
+    
   private func dismissMessage(_ message: Message) {
     dismissMessage(message, fromGesture: false)
   }
@@ -185,6 +203,22 @@ public final class SwiftMessageBar {
     tapHandler?()
   }
   
+  private func forceDismissMessage(_ message: Message) {
+    self.isMessageVisible = false
+    message.removeFromSuperview()
+    
+    if !self.messageQueue.isEmpty {
+        guard let message = messageQueue.dequeue() else {
+            self.messageWindow = nil
+            return
+          }
+        forceDismissMessage(message)
+    } else {
+        self.messageWindow = nil
+    }
+    resetTimer()
+   }
+    
   private func dismissMessage(_ message: Message, fromGesture: Bool) {
     if message.isHit {
       return
@@ -193,7 +227,7 @@ public final class SwiftMessageBar {
     message.isHit = true
     
     UIView.animate(withDuration: SwiftMessageBar.ShowHideDuration, delay: 0, options: [], animations: {
-      message.frame = CGRect(x: message.frame.minX, y: message.frame.minY - message.estimatedHeight,
+      message.frame = CGRect(x: message.frame.minX, y: -message.estimatedHeight,
                              width: message.width, height: message.estimatedHeight)
       }, completion: { [weak self] _ in
         self?.isMessageVisible = false
