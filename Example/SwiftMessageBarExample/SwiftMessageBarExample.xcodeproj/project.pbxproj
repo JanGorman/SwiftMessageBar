@@ -12,17 +12,9 @@
 		F2AB59141B28B3B3001DCC74 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2AB59121B28B3B3001DCC74 /* Main.storyboard */; };
 		F2AB59161B28B3B3001DCC74 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2AB59151B28B3B3001DCC74 /* Images.xcassets */; };
 		F2AB59191B28B3B3001DCC74 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2AB59171B28B3B3001DCC74 /* LaunchScreen.xib */; };
-		F2AB59251B28B3B3001DCC74 /* SwiftMessageBarExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AB59241B28B3B3001DCC74 /* SwiftMessageBarExampleTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F2AB591F1B28B3B3001DCC74 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F2AB59011B28B3B3001DCC74 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F2AB59081B28B3B3001DCC74;
-			remoteInfo = SwiftMessageBarExample;
-		};
 		F2AB59331B28B3C9001DCC74 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F2AB592E1B28B3C9001DCC74 /* SwiftMessageBar.xcodeproj */;
@@ -54,21 +46,11 @@
 		F2AB59131B28B3B3001DCC74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F2AB59151B28B3B3001DCC74 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F2AB59181B28B3B3001DCC74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		F2AB591E1B28B3B3001DCC74 /* SwiftMessageBarExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftMessageBarExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F2AB59231B28B3B3001DCC74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F2AB59241B28B3B3001DCC74 /* SwiftMessageBarExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMessageBarExampleTests.swift; sourceTree = "<group>"; };
 		F2AB592E1B28B3C9001DCC74 /* SwiftMessageBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftMessageBar.xcodeproj; path = ../../SwiftMessageBar.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F2AB59061B28B3B3001DCC74 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F2AB591B1B28B3B3001DCC74 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -83,7 +65,6 @@
 			children = (
 				F2AB592E1B28B3C9001DCC74 /* SwiftMessageBar.xcodeproj */,
 				F2AB590B1B28B3B3001DCC74 /* SwiftMessageBarExample */,
-				F2AB59211B28B3B3001DCC74 /* SwiftMessageBarExampleTests */,
 				F2AB590A1B28B3B3001DCC74 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -92,7 +73,6 @@
 			isa = PBXGroup;
 			children = (
 				F2AB59091B28B3B3001DCC74 /* SwiftMessageBarExample.app */,
-				F2AB591E1B28B3B3001DCC74 /* SwiftMessageBarExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -114,23 +94,6 @@
 			isa = PBXGroup;
 			children = (
 				F2AB590D1B28B3B3001DCC74 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		F2AB59211B28B3B3001DCC74 /* SwiftMessageBarExampleTests */ = {
-			isa = PBXGroup;
-			children = (
-				F2AB59241B28B3B3001DCC74 /* SwiftMessageBarExampleTests.swift */,
-				F2AB59221B28B3B3001DCC74 /* Supporting Files */,
-			);
-			path = SwiftMessageBarExampleTests;
-			sourceTree = "<group>";
-		};
-		F2AB59221B28B3B3001DCC74 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F2AB59231B28B3B3001DCC74 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -165,24 +128,6 @@
 			productReference = F2AB59091B28B3B3001DCC74 /* SwiftMessageBarExample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F2AB591D1B28B3B3001DCC74 /* SwiftMessageBarExampleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F2AB592B1B28B3B3001DCC74 /* Build configuration list for PBXNativeTarget "SwiftMessageBarExampleTests" */;
-			buildPhases = (
-				F2AB591A1B28B3B3001DCC74 /* Sources */,
-				F2AB591B1B28B3B3001DCC74 /* Frameworks */,
-				F2AB591C1B28B3B3001DCC74 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F2AB59201B28B3B3001DCC74 /* PBXTargetDependency */,
-			);
-			name = SwiftMessageBarExampleTests;
-			productName = SwiftMessageBarExampleTests;
-			productReference = F2AB591E1B28B3B3001DCC74 /* SwiftMessageBarExampleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -196,11 +141,6 @@
 					F2AB59081B28B3B3001DCC74 = {
 						CreatedOnToolsVersion = 6.3.2;
 						LastSwiftMigration = 0800;
-					};
-					F2AB591D1B28B3B3001DCC74 = {
-						CreatedOnToolsVersion = 6.3.2;
-						LastSwiftMigration = 0800;
-						TestTargetID = F2AB59081B28B3B3001DCC74;
 					};
 				};
 			};
@@ -224,7 +164,6 @@
 			projectRoot = "";
 			targets = (
 				F2AB59081B28B3B3001DCC74 /* SwiftMessageBarExample */,
-				F2AB591D1B28B3B3001DCC74 /* SwiftMessageBarExampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -257,13 +196,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F2AB591C1B28B3B3001DCC74 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -276,22 +208,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F2AB591A1B28B3B3001DCC74 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F2AB59251B28B3B3001DCC74 /* SwiftMessageBarExampleTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F2AB59201B28B3B3001DCC74 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F2AB59081B28B3B3001DCC74 /* SwiftMessageBarExample */;
-			targetProxy = F2AB591F1B28B3B3001DCC74 /* PBXContainerItemProxy */;
-		};
 		F2AB59381B28B3D1001DCC74 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftMessageBar;
@@ -430,44 +349,6 @@
 			};
 			name = Release;
 		};
-		F2AB592C1B28B3B3001DCC74 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SwiftMessageBarExampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftMessageBarExample.app/SwiftMessageBarExample";
-			};
-			name = Debug;
-		};
-		F2AB592D1B28B3B3001DCC74 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SwiftMessageBarExampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftMessageBarExample.app/SwiftMessageBarExample";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -485,15 +366,6 @@
 			buildConfigurations = (
 				F2AB59291B28B3B3001DCC74 /* Debug */,
 				F2AB592A1B28B3B3001DCC74 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F2AB592B1B28B3B3001DCC74 /* Build configuration list for PBXNativeTarget "SwiftMessageBarExampleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F2AB592C1B28B3B3001DCC74 /* Debug */,
-				F2AB592D1B28B3B3001DCC74 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
