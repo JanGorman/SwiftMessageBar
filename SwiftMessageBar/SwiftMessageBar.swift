@@ -19,7 +19,8 @@ public struct MessageBarConfig {
   
   public init(errorColor: UIColor = UIColor.red, successColor: UIColor = .green, infoColor: UIColor = .blue,
               titleColor: UIColor = .white, messageColor: UIColor = .white, statusBarHidden: Bool = false,
-              successIcon: UIImage? = nil, infoIcon: UIImage? = nil, errorIcon: UIImage? = nil) {
+              successIcon: UIImage? = nil, infoIcon: UIImage? = nil, errorIcon: UIImage? = nil,
+              languageDirection: NSLocale.LanguageDirection = .leftToRight) {
     self.errorColor = errorColor
     self.successColor = successColor
     self.infoColor = infoColor
@@ -39,7 +40,6 @@ public typealias Callback = () -> Void
 public final class SwiftMessageBar {
   
   private var config: MessageBarConfig
-  
   public enum MessageType {
     case error, success, info
     
@@ -110,25 +110,31 @@ public final class SwiftMessageBar {
   
   public static func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
                                           duration: TimeInterval = 3, dismiss: Bool = true,
-                                          callback: Callback? = nil) -> UUID {
+                                          languageDirection: NSLocale.LanguageDirection = .leftToRight,
+                                          callback: Callback? = nil ) -> UUID {
     return SharedMessageBar.showMessageWithTitle(title, message: message, type: type, duration: duration,
-                                                 dismiss: dismiss, callback: callback)
+                                                 dismiss: dismiss, languageDirection: languageDirection,
+                                                 callback: callback)
   }
   
   public func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
                                    duration: TimeInterval = 3, dismiss: Bool = true,
+                                   languageDirection: NSLocale.LanguageDirection = .leftToRight,
                                    callback: Callback? = nil) -> UUID {
     let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(fromConfig: config),
                           titleFontColor: config.titleColor, messageFontColor: config.messageColor,
                           icon: type.image(fromConfig: config), duration: duration, dismiss: dismiss,
-                          callback: callback)
+                          callback: callback, languageDirection: languageDirection)
+    if languageDirection == .rightToLeft {
+      message.flipHorizontal()
+    }
     messageQueue.enqueue(message)
     if !isMessageVisible {
       dequeueNextMessage()
     }
     return message.id()
   }
-  
+
   public func cancelAll(force: Bool = false) {
     guard !isMessageVisible && messageQueue.isEmpty || force else { return }
     

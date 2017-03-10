@@ -27,7 +27,7 @@ final class Message: UIView {
   private(set) var callback: Callback?
   private(set) var duration: TimeInterval!
   private(set) var dismiss: Bool = true
-  
+  private var languageDirection: NSLocale.LanguageDirection!
   private let titleFont = UIFont.boldSystemFont(ofSize: 16)
   private let messageFont = UIFont.systemFont(ofSize: 14)
   
@@ -38,7 +38,8 @@ final class Message: UIView {
   }
   
   init(title: String?, message: String?, backgroundColor: UIColor, titleFontColor: UIColor, messageFontColor: UIColor,
-       icon: UIImage?, duration: TimeInterval, dismiss: Bool = true, callback: Callback?) {
+       icon: UIImage?, duration: TimeInterval, dismiss: Bool = true, callback: Callback?,
+       languageDirection: NSLocale.LanguageDirection) {
     self.title = title
     self.message = message
     self.duration = duration
@@ -47,6 +48,7 @@ final class Message: UIView {
     self.messageFontColor = messageFontColor
     self.icon = icon
     self.dismiss = dismiss
+    self.languageDirection = languageDirection
     
     super.init(frame: CGRect.zero)
     
@@ -60,6 +62,13 @@ final class Message: UIView {
     let titleLabel = initTitle()
     let messageLabel = initMessage()
     
+    if languageDirection == .rightToLeft {
+      titleLabel.textAlignment = .right
+      messageLabel.textAlignment = .right
+      titleLabel.flipHorizontal()
+      messageLabel.flipHorizontal()
+      iconImageView.flipHorizontal()
+    }
     let views = ["icon": iconImageView, "title": titleLabel, "message": messageLabel]
     let metrics = [
       "iconTop": Message.padding,
@@ -210,7 +219,7 @@ final class Message: UIView {
   var availableWidth: CGFloat {
     return width - Message.padding * 2 - Message.iconSize
   }
-  
+
 }
 
 extension Message: Identifiable {
@@ -226,5 +235,8 @@ extension UIView {
   func usesAutoLayout(_ usesAutoLayout: Bool) {
     translatesAutoresizingMaskIntoConstraints = !usesAutoLayout
   }
-  
+    
+  func flipHorizontal() {
+    layer.setAffineTransform(CGAffineTransform(scaleX: -1, y: 1))
+  }
 }
