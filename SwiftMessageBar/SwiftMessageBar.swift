@@ -104,10 +104,21 @@ public final class SwiftMessageBar {
     config = MessageBarConfig()
   }
   
+  /// Set a message bar configuration used by all displayed messages.
   public static func setSharedConfig(_ config: MessageBarConfig) {
     SharedMessageBar.config = config
   }
   
+  /// Display a message
+  ///
+  /// - Parameters:
+  ///     - title: An optional title
+  ///     - message: An optional message
+  ///     - type: The message type
+  ///     - duration: The time interval in seconds to show the message for
+  ///     - dismiss: Does the message automatically dismiss or not
+  ///     - callback: An optional callback to execute when the user taps on a message to dismiss it.
+  /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
   public static func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
                                           duration: TimeInterval = 3, dismiss: Bool = true,
                                           callback: Callback? = nil) -> UUID {
@@ -115,6 +126,16 @@ public final class SwiftMessageBar {
                                                  dismiss: dismiss, callback: callback)
   }
   
+  /// Display a message
+  ///
+  /// - Parameters:
+  ///     - title: An optional title
+  ///     - message: An optional message
+  ///     - type: The message type
+  ///     - duration: The time interval in seconds to show the message for
+  ///     - dismiss: Does the message automatically dismiss or not
+  ///     - callback: An optional callback to execute when the user taps on a message to dismiss it.
+  /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
   public func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
                                    duration: TimeInterval = 3, dismiss: Bool = true,
                                    callback: Callback? = nil) -> UUID {
@@ -129,6 +150,9 @@ public final class SwiftMessageBar {
     return message.id()
   }
   
+  /// Cancels the display of all messages.
+  ///
+  /// - Parameter force: A boolean to force immediate dismissal (without animation). Defaults to `false`
   public func cancelAll(force: Bool = false) {
     guard !isMessageVisible && messageQueue.isEmpty || force else { return }
     
@@ -145,6 +169,9 @@ public final class SwiftMessageBar {
     messageQueue.removeAll()
   }
   
+  /// Cancels the display of a specific message
+  ///
+  /// - Parameter id: The UUID of the message to cancel.
   public func cancelWithId(_ id: UUID) {
     if let message = visibleMessage , message.id() == id {
       dismissMessage(message)
@@ -187,7 +214,7 @@ public final class SwiftMessageBar {
     timer = nil
   }
     
-  @objc func dismiss() {
+  @objc private func dismiss() {
     resetTimer()
     if let message = visibleMessage {
       dismissMessage(message)

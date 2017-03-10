@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		F22ADD2E1B8CB23F00EBA839 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22ADD2D1B8CB23F00EBA839 /* Message.swift */; };
 		F2AB58E81B28B33C001DCC74 /* SwiftMessageBar.h in Headers */ = {isa = PBXBuildFile; fileRef = F2AB58E71B28B33C001DCC74 /* SwiftMessageBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F2AB58EE1B28B33D001DCC74 /* SwiftMessageBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2AB58E21B28B33C001DCC74 /* SwiftMessageBar.framework */; };
-		F2AB58F51B28B33D001DCC74 /* SwiftMessageBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AB58F41B28B33D001DCC74 /* SwiftMessageBarTests.swift */; };
 		F2AB593A1B28B45A001DCC74 /* SwiftMessageBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AB59391B28B45A001DCC74 /* SwiftMessageBar.swift */; };
 		F2ABF2E21B2DD123005CB292 /* icon-success@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ABF2DC1B2DD123005CB292 /* icon-success@1x.png */; };
 		F2ABF2E31B2DD123005CB292 /* icon-success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ABF2DD1B2DD123005CB292 /* icon-success@2x.png */; };
@@ -23,24 +21,11 @@
 		F2ABF2ED1B2DD166005CB292 /* icon-info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ABF2EA1B2DD166005CB292 /* icon-info@2x.png */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		F2AB58EF1B28B33D001DCC74 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F2AB58D91B28B33C001DCC74 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F2AB58E11B28B33C001DCC74;
-			remoteInfo = SwiftMessageBar;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		F22ADD2D1B8CB23F00EBA839 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		F2AB58E21B28B33C001DCC74 /* SwiftMessageBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftMessageBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2AB58E61B28B33C001DCC74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2AB58E71B28B33C001DCC74 /* SwiftMessageBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftMessageBar.h; sourceTree = "<group>"; };
-		F2AB58ED1B28B33D001DCC74 /* SwiftMessageBarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftMessageBarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F2AB58F31B28B33D001DCC74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F2AB58F41B28B33D001DCC74 /* SwiftMessageBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMessageBarTests.swift; sourceTree = "<group>"; };
 		F2AB59391B28B45A001DCC74 /* SwiftMessageBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMessageBar.swift; sourceTree = "<group>"; };
 		F2ABF2DC1B2DD123005CB292 /* icon-success@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-success@1x.png"; sourceTree = "<group>"; };
 		F2ABF2DD1B2DD123005CB292 /* icon-success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-success@2x.png"; sourceTree = "<group>"; };
@@ -61,14 +46,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F2AB58EA1B28B33D001DCC74 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F2AB58EE1B28B33D001DCC74 /* SwiftMessageBar.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -76,7 +53,6 @@
 			isa = PBXGroup;
 			children = (
 				F2AB58E41B28B33C001DCC74 /* SwiftMessageBar */,
-				F2AB58F11B28B33D001DCC74 /* SwiftMessageBarTests */,
 				F2AB58E31B28B33C001DCC74 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,7 +61,6 @@
 			isa = PBXGroup;
 			children = (
 				F2AB58E21B28B33C001DCC74 /* SwiftMessageBar.framework */,
-				F2AB58ED1B28B33D001DCC74 /* SwiftMessageBarTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -114,23 +89,6 @@
 				F2ABF2E01B2DD123005CB292 /* icon-error@2x.png */,
 				F2ABF2E11B2DD123005CB292 /* icon-error@3x.png */,
 				F2AB58E61B28B33C001DCC74 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		F2AB58F11B28B33D001DCC74 /* SwiftMessageBarTests */ = {
-			isa = PBXGroup;
-			children = (
-				F2AB58F41B28B33D001DCC74 /* SwiftMessageBarTests.swift */,
-				F2AB58F21B28B33D001DCC74 /* Supporting Files */,
-			);
-			path = SwiftMessageBarTests;
-			sourceTree = "<group>";
-		};
-		F2AB58F21B28B33D001DCC74 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F2AB58F31B28B33D001DCC74 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -167,24 +125,6 @@
 			productReference = F2AB58E21B28B33C001DCC74 /* SwiftMessageBar.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		F2AB58EC1B28B33D001DCC74 /* SwiftMessageBarTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F2AB58FB1B28B33D001DCC74 /* Build configuration list for PBXNativeTarget "SwiftMessageBarTests" */;
-			buildPhases = (
-				F2AB58E91B28B33D001DCC74 /* Sources */,
-				F2AB58EA1B28B33D001DCC74 /* Frameworks */,
-				F2AB58EB1B28B33D001DCC74 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F2AB58F01B28B33D001DCC74 /* PBXTargetDependency */,
-			);
-			name = SwiftMessageBarTests;
-			productName = SwiftMessageBarTests;
-			productReference = F2AB58ED1B28B33D001DCC74 /* SwiftMessageBarTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -197,10 +137,6 @@
 				ORGANIZATIONNAME = Schnaub;
 				TargetAttributes = {
 					F2AB58E11B28B33C001DCC74 = {
-						CreatedOnToolsVersion = 6.3.2;
-						LastSwiftMigration = 0820;
-					};
-					F2AB58EC1B28B33D001DCC74 = {
 						CreatedOnToolsVersion = 6.3.2;
 						LastSwiftMigration = 0820;
 					};
@@ -219,7 +155,6 @@
 			projectRoot = "";
 			targets = (
 				F2AB58E11B28B33C001DCC74 /* SwiftMessageBar */,
-				F2AB58EC1B28B33D001DCC74 /* SwiftMessageBarTests */,
 			);
 		};
 /* End PBXProject section */
@@ -241,13 +176,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F2AB58EB1B28B33D001DCC74 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -260,23 +188,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F2AB58E91B28B33D001DCC74 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F2AB58F51B28B33D001DCC74 /* SwiftMessageBarTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		F2AB58F01B28B33D001DCC74 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F2AB58E11B28B33C001DCC74 /* SwiftMessageBar */;
-			targetProxy = F2AB58EF1B28B33D001DCC74 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		F2AB58F61B28B33D001DCC74 /* Debug */ = {
@@ -415,34 +327,6 @@
 			};
 			name = Release;
 		};
-		F2AB58FC1B28B33D001DCC74 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SwiftMessageBarTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		F2AB58FD1B28B33D001DCC74 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = SwiftMessageBarTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -460,15 +344,6 @@
 			buildConfigurations = (
 				F2AB58F91B28B33D001DCC74 /* Debug */,
 				F2AB58FA1B28B33D001DCC74 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F2AB58FB1B28B33D001DCC74 /* Build configuration list for PBXNativeTarget "SwiftMessageBarTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F2AB58FC1B28B33D001DCC74 /* Debug */,
-				F2AB58FD1B28B33D001DCC74 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
