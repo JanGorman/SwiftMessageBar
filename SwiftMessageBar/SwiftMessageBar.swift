@@ -73,7 +73,8 @@ public final class SwiftMessageBar {
   
   private var messageWindow: MessageWindow?
   
-    private var timer: Timer?
+  private var timer: Timer?
+    
   public var tapHandler : (() -> Void)?
   
   private func newMessageWindow() -> MessageWindow {
@@ -132,12 +133,14 @@ public final class SwiftMessageBar {
     guard !isMessageVisible && messageQueue.isEmpty || force else { return }
     
     if let message = visibleMessage {
-        if force {
-            forceDismissMessage(message)
-        }else {
-            dismissMessage(message)
-        }
+      if force {
+        message.removeFromSuperview()
+        messageWindow = nil
+      } else {
+        dismissMessage(message)
+      }
     }
+    resetTimer()
     isMessageVisible = false
     messageQueue.removeAll()
   }
@@ -173,23 +176,21 @@ public final class SwiftMessageBar {
       }, completion: nil)
     
     if message.dismiss {
-        resetTimer()
-        timer = Timer.scheduledTimer(timeInterval: message.duration, target: self, selector: #selector(self.dismiss), userInfo: nil, repeats: true)
+      resetTimer()
+      timer = Timer.scheduledTimer(timeInterval: message.duration, target: self, selector: #selector(dismiss),
+                                     userInfo: nil, repeats: false)
     }
-    
   }
   
   private func resetTimer() {
-    if let timer = self.timer {
-        timer.invalidate()
-    }
-    self.timer = nil
+    timer?.invalidate()
+    timer = nil
   }
     
   @objc func dismiss() {
     resetTimer()
     if let message = visibleMessage {
-        self.dismissMessage(message)
+      dismissMessage(message)
     }
   }
     
@@ -202,22 +203,6 @@ public final class SwiftMessageBar {
     dismissMessage(message, fromGesture: true)
     tapHandler?()
   }
-  
-  private func forceDismissMessage(_ message: Message) {
-    self.isMessageVisible = false
-    message.removeFromSuperview()
-    
-    if !self.messageQueue.isEmpty {
-        guard let message = messageQueue.dequeue() else {
-            self.messageWindow = nil
-            return
-          }
-        forceDismissMessage(message)
-    } else {
-        self.messageWindow = nil
-    }
-    resetTimer()
-   }
     
   private func dismissMessage(_ message: Message, fromGesture: Bool) {
     if message.isHit {
