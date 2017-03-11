@@ -121,7 +121,7 @@ public final class SwiftMessageBar {
   /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
   public static func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
                                           duration: TimeInterval = 3, dismiss: Bool = true,
-                                          languageDirection: NSLocale.LanguageDirection = .leftToRight,
+                                          languageDirection: NSLocale.LanguageDirection = .unknown,
                                           callback: Callback? = nil ) -> UUID {
     return SharedMessageBar.showMessageWithTitle(title, message: message, type: type, duration: duration,
                                                  dismiss: dismiss, languageDirection: languageDirection,
@@ -140,7 +140,7 @@ public final class SwiftMessageBar {
   /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
   public func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
                                    duration: TimeInterval = 3, dismiss: Bool = true,
-                                   languageDirection: NSLocale.LanguageDirection = .leftToRight,
+                                   languageDirection: NSLocale.LanguageDirection = .unknown,
                                    callback: Callback? = nil) -> UUID {
     let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(fromConfig: config),
                           titleFontColor: config.titleColor, messageFontColor: config.messageColor,
