@@ -117,6 +117,8 @@ public final class SwiftMessageBar {
   ///     - type: The message type
   ///     - duration: The time interval in seconds to show the message for
   ///     - dismiss: Does the message automatically dismiss or not
+  ///     - languageDirection: Set an optional language direction if you require RTL support outside of what the system provides
+  ///                          i.e. no need to set this parameter when NSLocale already is set to the proper languageDirection
   ///     - callback: An optional callback to execute when the user taps on a message to dismiss it.
   /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
   public static func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
@@ -136,6 +138,8 @@ public final class SwiftMessageBar {
   ///     - type: The message type
   ///     - duration: The time interval in seconds to show the message for
   ///     - dismiss: Does the message automatically dismiss or not
+  ///     - languageDirection: Set an optional language direction if you require RTL support outside of what the system provides
+  ///                          i.e. no need to set this parameter when NSLocale already is set to the proper languageDirection
   ///     - callback: An optional callback to execute when the user taps on a message to dismiss it.
   /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
   public func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
