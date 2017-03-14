@@ -262,7 +262,10 @@ public final class SwiftMessageBar {
         if let messageBar = self , !messageBar.messageQueue.isEmpty {
           messageBar.dequeueNextMessage()
         } else {
-          self?.messageWindow = nil
+            self?.resetTimer()
+            self?.isMessageVisible = false
+            self?.messageQueue.removeAll()
+            self?.messageWindow = nil
         }
       }
     )
