@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SwiftMessageBar"
-  s.version      = "3.1.1"
+  s.version      = "3.1.2"
   s.summary      = "A Swift Message Bar"
 
   s.description  = <<-DESC
