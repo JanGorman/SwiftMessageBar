@@ -121,6 +121,7 @@ public final class SwiftMessageBar {
   ///                          i.e. no need to set this parameter when NSLocale already is set to the proper languageDirection
   ///     - callback: An optional callback to execute when the user taps on a message to dismiss it.
   /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
+  @discardableResult
   public static func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
                                           duration: TimeInterval = 3, dismiss: Bool = true,
                                           languageDirection: NSLocale.LanguageDirection = .unknown,
@@ -142,6 +143,7 @@ public final class SwiftMessageBar {
   ///                          i.e. no need to set this parameter when NSLocale already is set to the proper languageDirection
   ///     - callback: An optional callback to execute when the user taps on a message to dismiss it.
   /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
+  @discardableResult
   public func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
                                    duration: TimeInterval = 3, dismiss: Bool = true,
                                    languageDirection: NSLocale.LanguageDirection = .unknown,
