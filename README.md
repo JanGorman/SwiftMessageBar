@@ -7,7 +7,7 @@
 
 An iOS message bar, written in Swift
 
-![image](https://dl.dropboxusercontent.com/u/512759/SwiftMessageBar-2016.06.08.gif)
+![image](https://www.dropbox.com/s/m0vcdcor6hw4e7a/SwiftMessageBar-2016.06.08.gif?raw=1)
 
 ## Requirements
 
