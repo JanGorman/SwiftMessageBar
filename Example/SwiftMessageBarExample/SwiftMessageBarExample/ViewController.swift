@@ -15,14 +15,14 @@ class ViewController: UIViewController {
     let messageBarConfig = MessageBarConfig(successColor: .orange, statusBarHidden: true)
     SwiftMessageBar.setSharedConfig(messageBarConfig)
   }
-  
+
   @IBAction private func showSuccess(_ sender: AnyObject) {
     let message = "A really long message can go here, to provide a description for the user"
     uuid = SwiftMessageBar.showMessageWithTitle(nil, message: message, type: .success, duration: 3, dismiss: false) {
       print("oh hai")
     }
   }
-  
+
   @IBAction private func showError(_ sender: AnyObject) {
     let message = "A really long message can go here, to provide a description for the user"
     uuid = SwiftMessageBar.showMessageWithTitle("Error", message: message, type: .error, duration: 3) {
@@ -36,12 +36,12 @@ class ViewController: UIViewController {
       print("oh hai")
     }
   }
-  
+
   @IBAction private func clearAll(_ sender: AnyObject) {
     SwiftMessageBar.SharedMessageBar.cancelAll(force: true)
     uuid = nil
   }
-  
+
   @IBAction private func clearCurrent(_ sender: AnyObject) {
     if let id = uuid {
       SwiftMessageBar.SharedMessageBar.cancelWithId(id)

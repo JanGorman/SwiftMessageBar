@@ -130,9 +130,9 @@ final class Message: UIView {
     
     if let title = title {
       let attributes = [
-        NSFontAttributeName : titleFont,
-        NSForegroundColorAttributeName: titleFontColor,
-        NSParagraphStyleAttributeName: paragraphStyle
+        NSAttributedStringKey.font : titleFont,
+        NSAttributedStringKey.foregroundColor: titleFontColor,
+        NSAttributedStringKey.paragraphStyle: paragraphStyle
       ]
       titleLabel.attributedText = NSAttributedString(string: title, attributes: attributes)
     }
@@ -147,9 +147,9 @@ final class Message: UIView {
     
     if let message = message {
       let attributes = [
-        NSFontAttributeName : messageFont,
-        NSForegroundColorAttributeName: messageFontColor,
-        NSParagraphStyleAttributeName: paragraphStyle
+        NSAttributedStringKey.font : messageFont,
+        NSAttributedStringKey.foregroundColor: messageFontColor,
+        NSAttributedStringKey.paragraphStyle: paragraphStyle
       ]
       messageLabel.attributedText = NSAttributedString(string: message, attributes: attributes)
     }
@@ -182,7 +182,7 @@ final class Message: UIView {
   
   var titleSize: CGSize {
     let boundedSize = CGSize(width: availableWidth, height: CGFloat.greatestFiniteMagnitude)
-    let titleFontAttributes = [NSFontAttributeName: titleFont]
+    let titleFontAttributes = [NSAttributedStringKey.font: titleFont]
     if let size = title?.boundingRect(with: boundedSize,
                                       options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin],
                                       attributes: titleFontAttributes, context: nil).size {
@@ -193,7 +193,7 @@ final class Message: UIView {
   
   var messageSize: CGSize {
     let boundedSize = CGSize(width: availableWidth, height: CGFloat.greatestFiniteMagnitude)
-    let titleFontAttributes = [NSFontAttributeName: messageFont]
+    let titleFontAttributes = [NSAttributedStringKey.font: messageFont]
     if let size = message?.boundingRect(with: boundedSize,
                                         options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin],
                                         attributes: titleFontAttributes, context: nil).size {
