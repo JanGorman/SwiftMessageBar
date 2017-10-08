@@ -35,7 +35,7 @@ The included sample code shows how to use the message bar. There are three diffe
 
 ```swift
 enum MessageType {
-    case Error, Success, Info
+    case error, success, info
 }
 ```
 
@@ -45,7 +45,7 @@ To display a message:
 import SwiftMessageBar
 
 @IBAction func showSuccess(sender: AnyObject) {
-	SwiftMessageBar.showMessageWithTitle("Success", message: "The Message Body", type: .Success)
+    SwiftMessageBar.showMessageWithTitle("Success", message: "The Message Body", type: .Success)
 }
 ```
 
