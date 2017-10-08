@@ -11,7 +11,7 @@ An iOS message bar, written in Swift
 
 ## Requirements
 
-- iOS 8+
+- iOS 9.3+
 - Swift 4
 - Xcode 9+ 
 
@@ -51,7 +51,11 @@ import SwiftMessageBar
 
 You can customize the duration of each message and also pass in a tap handler closure that is executed when a user taps on the message.
 
-To customize the look of the messages, create a custom `MessageBarConfig` and set it on the shared messagebar. You can adjust the background and font colors, and pass in custom images to display.
+To customize the look of the messages, create a custom `MessageBarConfig` and set it on the shared messagebar. You can adjust colors, fonts as well as custom images. `MessageBarConfig` comes with a Builder class for easy configuration:
+
+```swift
+let config = MessageBarConfig.Builder()
+```
 
 ## Licence
 

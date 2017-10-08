@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SwiftMessageBar"
-  s.version      = "4.0.0"
+  s.version      = "4.1.0"
   s.summary      = "A Swift Message Bar"
 
   s.description  = <<-DESC
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.authors            = { "Jan Gorman" => "https://github.com/JanGorman/", "Ramy Kfoury" => "https://github.com/ramy-kfoury/" }
   s.social_media_url   = "http://twitter.com/JanGorman"
 
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "9.3"
 
   s.source       = { :git => "https://github.com/JanGorman/SwiftMessageBar.git", :tag => s.version }
 

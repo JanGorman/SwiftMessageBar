@@ -1,14 +1,13 @@
 //
-//  Created by Jan Gorman on 25/08/15.
 //  Copyright (c) 2015 Schnaub. All rights reserved.
 //
 
 import UIKit
 
 protocol Identifiable {
-  
-  func id() -> UUID
-  
+
+  var id: UUID { get }
+
 }
 
 final class Message: UIView {
@@ -28,8 +27,8 @@ final class Message: UIView {
   private(set) var duration: TimeInterval!
   private(set) var dismiss: Bool = true
   private var languageDirection: NSLocale.LanguageDirection!
-  private let titleFont = UIFont.boldSystemFont(ofSize: 16)
-  private let messageFont = UIFont.systemFont(ofSize: 14)
+  private var titleFont: UIFont!
+  private var messageFont: UIFont!
   
   private var paragraphStyle: NSMutableParagraphStyle {
     let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
@@ -39,7 +38,7 @@ final class Message: UIView {
   
   init(title: String?, message: String?, backgroundColor: UIColor, titleFontColor: UIColor, messageFontColor: UIColor,
        icon: UIImage?, duration: TimeInterval, dismiss: Bool = true, callback: Callback?,
-       languageDirection: NSLocale.LanguageDirection) {
+       languageDirection: NSLocale.LanguageDirection, titleFont: UIFont, messageFont: UIFont) {
     self.title = title
     self.message = message
     self.duration = duration
@@ -49,6 +48,8 @@ final class Message: UIView {
     self.icon = icon
     self.dismiss = dismiss
     self.languageDirection = languageDirection
+    self.titleFont = titleFont
+    self.messageFont = messageFont
     
     super.init(frame: CGRect.zero)
     
@@ -82,7 +83,7 @@ final class Message: UIView {
       "width": Message.iconSize,
       "height": Message.iconSize
     ]
-    
+
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[icon(==width)]", options: [],
                                                   metrics: metrics, views: views))
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[icon(==height)]", options: [],
@@ -129,10 +130,10 @@ final class Message: UIView {
     addSubview(titleLabel)
     
     if let title = title {
-      let attributes = [
-        NSAttributedStringKey.font : titleFont,
-        NSAttributedStringKey.foregroundColor: titleFontColor,
-        NSAttributedStringKey.paragraphStyle: paragraphStyle
+      let attributes: [NSAttributedStringKey: Any] = [
+        .font : titleFont,
+        .foregroundColor: titleFontColor,
+        .paragraphStyle: paragraphStyle
       ]
       titleLabel.attributedText = NSAttributedString(string: title, attributes: attributes)
     }
@@ -146,10 +147,10 @@ final class Message: UIView {
     addSubview(messageLabel)
     
     if let message = message {
-      let attributes = [
-        NSAttributedStringKey.font : messageFont,
-        NSAttributedStringKey.foregroundColor: messageFontColor,
-        NSAttributedStringKey.paragraphStyle: paragraphStyle
+      let attributes: [NSAttributedStringKey: Any] = [
+        .font : messageFont,
+        .foregroundColor: messageFontColor,
+        .paragraphStyle: paragraphStyle
       ]
       messageLabel.attributedText = NSAttributedString(string: message, attributes: attributes)
     }
@@ -182,7 +183,7 @@ final class Message: UIView {
   
   var titleSize: CGSize {
     let boundedSize = CGSize(width: availableWidth, height: CGFloat.greatestFiniteMagnitude)
-    let titleFontAttributes = [NSAttributedStringKey.font: titleFont]
+    let titleFontAttributes: [NSAttributedStringKey: Any] = [.font: titleFont]
     if let size = title?.boundingRect(with: boundedSize,
                                       options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin],
                                       attributes: titleFontAttributes, context: nil).size {
@@ -193,7 +194,7 @@ final class Message: UIView {
   
   var messageSize: CGSize {
     let boundedSize = CGSize(width: availableWidth, height: CGFloat.greatestFiniteMagnitude)
-    let titleFontAttributes = [NSAttributedStringKey.font: messageFont]
+    let titleFontAttributes: [NSAttributedStringKey: Any] = [.font: messageFont]
     if let size = message?.boundingRect(with: boundedSize,
                                         options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin],
                                         attributes: titleFontAttributes, context: nil).size {
@@ -223,11 +224,11 @@ final class Message: UIView {
 }
 
 extension Message: Identifiable {
-  
-  internal func id() -> UUID {
+
+  var id: UUID {
     return uuid
   }
-  
+
 }
 
 extension UIView {
@@ -239,4 +240,5 @@ extension UIView {
   func flipHorizontal() {
     layer.setAffineTransform(CGAffineTransform(scaleX: -1, y: 1))
   }
+
 }

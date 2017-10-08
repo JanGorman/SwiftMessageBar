@@ -1,36 +1,142 @@
 //
-//  Created by Jan Gorman on 10/06/15.
 //  Copyright (c) 2015 Schnaub. All rights reserved.
 //
 
 import UIKit
 
 public struct MessageBarConfig {
-  
+
+  public static let defaultErrorColor: UIColor = .red
+  public static let defaultSuccessColor: UIColor = .green
+  public static let defaultInfoColor: UIColor = .blue
+  public static let defaultTitleColor: UIColor = .white
+  public static let defaultMessageColor: UIColor = .white
+  public static let defaultIsStatusBarHidden = false
+  public static let defaultTitleFont: UIFont = .boldSystemFont(ofSize: 16)
+  public static let defaultMessageFont: UIFont = .systemFont(ofSize: 14)
+
   let errorColor: UIColor
   let successColor: UIColor
   let infoColor: UIColor
   let titleColor: UIColor
   let messageColor: UIColor
-  let statusBarHidden: Bool
+  let isStatusBarHidden: Bool
   let successIcon: UIImage?
   let infoIcon: UIImage?
   let errorIcon: UIImage?
-  
-  public init(errorColor: UIColor = UIColor.red, successColor: UIColor = .green, infoColor: UIColor = .blue,
-              titleColor: UIColor = .white, messageColor: UIColor = .white, statusBarHidden: Bool = false,
-              successIcon: UIImage? = nil, infoIcon: UIImage? = nil, errorIcon: UIImage? = nil,
-              languageDirection: NSLocale.LanguageDirection = .leftToRight) {
+  let titleFont: UIFont
+  let messageFont: UIFont
+
+  public init(errorColor: UIColor = MessageBarConfig.defaultErrorColor,
+              successColor: UIColor = MessageBarConfig.defaultSuccessColor,
+              infoColor: UIColor = MessageBarConfig.defaultInfoColor,
+              titleColor: UIColor = MessageBarConfig.defaultTitleColor,
+              messageColor: UIColor = MessageBarConfig.defaultMessageColor,
+              isStatusBarHidden: Bool = MessageBarConfig.defaultIsStatusBarHidden,
+              successIcon: UIImage? = nil,
+              infoIcon: UIImage? = nil,
+              errorIcon: UIImage? = nil,
+              titleFont: UIFont = MessageBarConfig.defaultTitleFont,
+              messageFont: UIFont = MessageBarConfig.defaultMessageFont) {
     self.errorColor = errorColor
     self.successColor = successColor
     self.infoColor = infoColor
     self.titleColor = titleColor
     self.messageColor = messageColor
-    self.statusBarHidden = statusBarHidden
+    self.isStatusBarHidden = isStatusBarHidden
     let bundle = Bundle(for: SwiftMessageBar.self)
     self.successIcon = successIcon ?? UIImage(named: "icon-success", in: bundle, compatibleWith: nil)
     self.infoIcon = infoIcon ?? UIImage(named: "icon-info", in: bundle, compatibleWith: nil)
     self.errorIcon = errorIcon ?? UIImage(named: "icon-error", in: bundle, compatibleWith: nil)
+    self.titleFont = titleFont
+    self.messageFont = messageFont
+  }
+
+  public class Builder {
+
+    private var errorColor: UIColor?
+    private var successColor: UIColor?
+    private var infoColor: UIColor?
+    private var titleColor: UIColor?
+    private var messageColor: UIColor?
+    private var isStatusBarHidden: Bool?
+    private var successIcon: UIImage?
+    private var infoIcon: UIImage?
+    private var errorIcon: UIImage?
+    private var titleFont: UIFont?
+    private var messageFont: UIFont?
+
+    public init() {
+    }
+
+    public func withErrorColor(_ color: UIColor) -> Builder {
+      errorColor = color
+      return self
+    }
+
+    public func withSuccessColor(_ color: UIColor) -> Builder {
+      successColor = color
+      return self
+    }
+
+    public func withInfoColor(_ color: UIColor) -> Builder {
+      infoColor = color
+      return self
+    }
+
+    public func withTitleColor(_ color: UIColor) -> Builder {
+      titleColor = color
+      return self
+    }
+
+    public func withMessageColor(_ color: UIColor) -> Builder {
+      messageColor = color
+      return self
+    }
+
+    public func withStatusBarHidden(_ isHidden: Bool) -> Builder {
+      isStatusBarHidden = isHidden
+      return self
+    }
+
+    public func withSuccessIcon(_ icon: UIImage) -> Builder {
+      successIcon = icon
+      return self
+    }
+
+    public func withInfoIcon(_ icon: UIImage) -> Builder {
+      infoIcon = icon
+      return self
+    }
+
+    public func withErrorIcon(_ icon: UIImage) -> Builder {
+      errorIcon = icon
+      return self
+    }
+
+    public func withTitleFont(_ font: UIFont) -> Builder {
+      titleFont = font
+      return self
+    }
+
+    public func withMessageFont(_ font: UIFont) -> Builder {
+      messageFont = font
+      return self
+    }
+
+    public func build() -> MessageBarConfig {
+      return MessageBarConfig(errorColor: errorColor ?? MessageBarConfig.defaultErrorColor,
+                              successColor: successColor ?? MessageBarConfig.defaultSuccessColor,
+                              infoColor: infoColor ?? MessageBarConfig.defaultInfoColor,
+                              titleColor: titleColor ?? MessageBarConfig.defaultTitleColor,
+                              messageColor: messageColor ?? MessageBarConfig.defaultMessageColor,
+                              isStatusBarHidden: isStatusBarHidden ?? MessageBarConfig.defaultIsStatusBarHidden,
+                              successIcon: successIcon, infoIcon: infoIcon, errorIcon: errorIcon,
+                              titleFont: titleFont ?? MessageBarConfig.defaultTitleFont,
+                              messageFont: messageFont ?? MessageBarConfig.defaultMessageFont)
+    }
+
+
   }
   
 }
@@ -67,12 +173,11 @@ public final class SwiftMessageBar {
     
   }
   
-  public static let SharedMessageBar = SwiftMessageBar()
+  public static let sharedMessageBar = SwiftMessageBar()
   
-  private static let ShowHideDuration: TimeInterval = 0.25
+  private static let showHideDuration: TimeInterval = 0.25
   
   private var messageWindow: MessageWindow?
-  
   private var timer: Timer?
     
   public var tapHandler : (() -> Void)?
@@ -82,9 +187,9 @@ public final class SwiftMessageBar {
     messageWindow.frame = UIApplication.shared.keyWindow!.frame
     messageWindow.isHidden = false
     messageWindow.windowLevel = UIWindowLevelNormal
-    messageWindow.backgroundColor = UIColor.clear
+    messageWindow.backgroundColor = .clear
     let controller = MessageBarController()
-    controller.statusBarHidden = config.statusBarHidden
+    controller.statusBarHidden = config.isStatusBarHidden
     messageWindow.rootViewController = controller
     return messageWindow
   }
@@ -106,7 +211,7 @@ public final class SwiftMessageBar {
   
   /// Set a message bar configuration used by all displayed messages.
   public static func setSharedConfig(_ config: MessageBarConfig) {
-    SharedMessageBar.config = config
+    sharedMessageBar.config = config
   }
   
   /// Display a message
@@ -126,7 +231,7 @@ public final class SwiftMessageBar {
                                           duration: TimeInterval = 3, dismiss: Bool = true,
                                           languageDirection: NSLocale.LanguageDirection = .unknown,
                                           callback: Callback? = nil ) -> UUID {
-    return SharedMessageBar.showMessageWithTitle(title, message: message, type: type, duration: duration,
+    return sharedMessageBar.showMessageWithTitle(title, message: message, type: type, duration: duration,
                                                  dismiss: dismiss, languageDirection: languageDirection,
                                                  callback: callback)
   }
@@ -151,7 +256,8 @@ public final class SwiftMessageBar {
     let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(fromConfig: config),
                           titleFontColor: config.titleColor, messageFontColor: config.messageColor,
                           icon: type.image(fromConfig: config), duration: duration, dismiss: dismiss,
-                          callback: callback, languageDirection: languageDirection)
+                          callback: callback, languageDirection: languageDirection, titleFont: config.titleFont,
+                          messageFont: config.messageFont)
     if languageDirection == .rightToLeft {
       message.flipHorizontal()
     }
@@ -159,7 +265,7 @@ public final class SwiftMessageBar {
     if !isMessageVisible {
       dequeueNextMessage()
     }
-    return message.id()
+    return message.id
   }
   
   /// Cancels the display of all messages.
@@ -185,7 +291,7 @@ public final class SwiftMessageBar {
   ///
   /// - Parameter id: The UUID of the message to cancel.
   public func cancelWithId(_ id: UUID) {
-    if let message = visibleMessage , message.id() == id {
+    if let message = visibleMessage, message.id == id {
       dismissMessage(message)
     }
     messageQueue.removeWithId(id)
@@ -196,9 +302,7 @@ public final class SwiftMessageBar {
   }
   
   private func dequeueNextMessage() {
-    guard let message = messageQueue.dequeue() else {
-      return
-    }
+    guard let message = messageQueue.dequeue() else { return }
     messageBarView.addSubview(message)
     messageBarView.bringSubview(toFront: message)
     isMessageVisible = true
@@ -209,7 +313,7 @@ public final class SwiftMessageBar {
     let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapMessage))
     message.addGestureRecognizer(gesture)
     
-    UIView.animate(withDuration: SwiftMessageBar.ShowHideDuration, delay: 0, options: [], animations: {
+    UIView.animate(withDuration: SwiftMessageBar.showHideDuration, delay: 0, options: [], animations: {
       message.frame = CGRect(x: message.frame.minX, y: message.frame.minY + message.estimatedHeight,
                              width: message.width, height: message.estimatedHeight)
       }, completion: nil)
@@ -217,7 +321,7 @@ public final class SwiftMessageBar {
     if message.dismiss {
       resetTimer()
       timer = Timer.scheduledTimer(timeInterval: message.duration, target: self, selector: #selector(dismiss),
-                                     userInfo: nil, repeats: false)
+                                   userInfo: nil, repeats: false)
     }
   }
   
@@ -250,7 +354,7 @@ public final class SwiftMessageBar {
     
     message.isHit = true
     
-    UIView.animate(withDuration: SwiftMessageBar.ShowHideDuration, delay: 0, options: [], animations: {
+    UIView.animate(withDuration: SwiftMessageBar.showHideDuration, delay: 0, options: [], animations: {
       message.frame = CGRect(x: message.frame.minX, y: -message.estimatedHeight,
                              width: message.width, height: message.estimatedHeight)
       }, completion: { [weak self] _ in
@@ -356,7 +460,7 @@ private struct Queue<T: Identifiable> {
 private extension Array where Element: Identifiable {
   
   func findWithId(_ id: UUID) -> Int? {
-    return enumerated().lazy.filter({ $1.id() == id }).first?.0
+    return enumerated().lazy.first(where: { $1.id == id })?.0
   }
   
 }
