@@ -11,7 +11,7 @@ An iOS message bar, written in Swift
 
 ## Requirements
 
-- iOS 9.3+
+- iOS 8.4+
 - Swift 4
 - Xcode 9+ 
 
