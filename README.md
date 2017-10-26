@@ -65,7 +65,7 @@ SwiftMessageBar.setSharedConfig(config)
 
 ## Licence
 
-Agrume is released under the MIT license. See LICENSE for details
+SwiftMessageBar is released under the MIT license. See LICENSE for details
 
 
 
