@@ -55,10 +55,9 @@ final class Message: UIView {
     
     self.backgroundColor = backgroundColor
     usesAutoLayout(true)
-    initSubviews()
   }
   
-  private func initSubviews() {
+  func configureSubviews() {
     let iconImageView = initIcon()
     let titleLabel = initTitle()
     let messageLabel = initMessage()
@@ -75,14 +74,13 @@ final class Message: UIView {
     }
     let views = ["icon": iconImageView, "title": titleLabel, "message": messageLabel]
     let metrics = [
-      "iconTop": Message.padding,
-      "titleTop": Message.padding,
+      "titleTop": topMargin,
       "right": Message.padding,
-      "bottom": Message.padding,
+      "bottom": bottomMargin,
       "messageLeft": Message.padding + Message.messageOffset,
       "iconLeft": Message.padding,
       
-      "padding": !isTitleEmpty && !isMessageEmpty ? Message.messageOffset : 0,
+      "messageOffset": !isTitleEmpty && !isMessageEmpty ? Message.messageOffset : 0,
       "width": Message.iconSize,
       "height": Message.iconSize
     ]
@@ -96,7 +94,7 @@ final class Message: UIView {
                                                   options: [], metrics: metrics, views: views))
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-iconLeft-[icon]-messageLeft-[message]-right-|",
                                                   options: [], metrics: metrics, views: views))
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-titleTop-[title]-padding-[message]-bottom-|",
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-titleTop-[title]-messageOffset-[message]-bottom-|",
                                                   options: [], metrics: metrics, views: views))
     
     if isTitleEmpty {
@@ -113,7 +111,7 @@ final class Message: UIView {
                                      toItem: iconImageView.superview,
                                      attribute: NSLayoutAttribute.centerY,
                                      multiplier: 1.0,
-                                     constant: 0))
+                                     constant: (topMargin - bottomMargin) / 2.0))
   }
   
   private func initIcon() -> UIImageView {
@@ -173,13 +171,9 @@ final class Message: UIView {
   }
   
   var estimatedHeight: CGFloat {
-    if icon != nil {
-      return max(Message.padding * 2 + titleSize.height + messageSize.height + statusBarOffset,
-                 Message.padding * 2 + Message.iconSize + statusBarOffset)
-      
-    } else {
-      return Message.padding * 2 + titleSize.height + messageSize.height + statusBarOffset
-    }
+      let iconSize = icon == nil ? 0 : Message.iconSize
+      return max(topMargin + titleSize.height + Message.messageOffset + messageSize.height + bottomMargin,
+                 topMargin + iconSize + bottomMargin)
   }
   
   var titleSize: CGSize {
@@ -208,6 +202,14 @@ final class Message: UIView {
     return statusBarFrame.height
   }
   
+  var topMargin: CGFloat {
+    return max(statusBarOffset, Message.padding)
+  }
+
+  var bottomMargin: CGFloat {
+    return Message.padding
+  }
+    
   var width: CGFloat {
     return statusBarFrame.width
   }

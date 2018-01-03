@@ -306,6 +306,7 @@ public final class SwiftMessageBar {
     messageBarView.addSubview(message)
     messageBarView.bringSubview(toFront: message)
     isMessageVisible = true
+    message.configureSubviews()
     message.frame = CGRect(x: 0, y: -message.estimatedHeight, width: message.width, height: message.estimatedHeight)
     message.isHidden = false
     message.setNeedsUpdateConstraints()
