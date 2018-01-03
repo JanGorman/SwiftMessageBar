@@ -84,8 +84,7 @@ final class Message: UIView {
       
       "padding": !isTitleEmpty && !isMessageEmpty ? Message.messageOffset : 0,
       "width": Message.iconSize,
-      "height": Message.iconSize,
-      "zeroHeight": 0
+      "height": Message.iconSize
     ]
 
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[icon(==width)]", options: [],
@@ -101,10 +100,10 @@ final class Message: UIView {
                                                   options: [], metrics: metrics, views: views))
     
     if isTitleEmpty {
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[title(==zeroHeight)]", options: [],
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[title(==0)]", options: [],
                                                       metrics: metrics, views: views))
     } else if isMessageEmpty {
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[message(==zeroHeight)]", options: [],
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[message(==0)]", options: [],
                                                       metrics: metrics, views: views))
     }
     
