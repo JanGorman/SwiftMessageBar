@@ -92,8 +92,6 @@ final class Message: UIView {
                                                   metrics: metrics, views: views))
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[icon(==height)]", options: [],
                                                   metrics: metrics, views: views))
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-iconTop-[icon]", options: [],
-                                                  metrics: metrics, views: views))
     
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-iconLeft-[icon]-messageLeft-[title]-right-|",
                                                   options: [], metrics: metrics, views: views))
@@ -109,6 +107,14 @@ final class Message: UIView {
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[message(==zeroHeight)]", options: [],
                                                       metrics: metrics, views: views))
     }
+    
+    addConstraint(NSLayoutConstraint(item: iconImageView,
+                                     attribute: NSLayoutAttribute.centerY,
+                                     relatedBy: NSLayoutRelation.equal,
+                                     toItem: iconImageView.superview,
+                                     attribute: NSLayoutAttribute.centerY,
+                                     multiplier: 1.0,
+                                     constant: 0))
   }
   
   private func initIcon() -> UIImageView {
