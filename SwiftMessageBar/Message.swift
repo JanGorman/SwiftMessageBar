@@ -63,6 +63,9 @@ final class Message: UIView {
     let titleLabel = initTitle()
     let messageLabel = initMessage()
     
+    let isTitleEmpty = title?.isEmpty ?? true
+    let isMessageEmpty = message?.isEmpty ?? true
+    
     if languageDirection == .rightToLeft {
       titleLabel.textAlignment = .right
       messageLabel.textAlignment = .right
@@ -79,14 +82,17 @@ final class Message: UIView {
       "messageLeft": Message.padding + Message.messageOffset,
       "iconLeft": Message.padding,
       
-      "padding": Message.messageOffset,
+      "padding": !isTitleEmpty && !isMessageEmpty ? Message.messageOffset : 0,
       "width": Message.iconSize,
-      "height": Message.iconSize
+      "height": Message.iconSize,
+      "zeroHeight": 0
     ]
 
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[icon(==width)]", options: [],
                                                   metrics: metrics, views: views))
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[icon(==height)]", options: [],
+                                                  metrics: metrics, views: views))
+    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-iconTop-[icon]", options: [],
                                                   metrics: metrics, views: views))
     
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-iconLeft-[icon]-messageLeft-[title]-right-|",
@@ -96,22 +102,12 @@ final class Message: UIView {
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-titleTop-[title]-padding-[message]-bottom-|",
                                                   options: [], metrics: metrics, views: views))
     
-    if let message = message , !message.isEmpty {
-      addConstraint(NSLayoutConstraint(item: iconImageView,
-                                       attribute: NSLayoutAttribute.centerY,
-                                       relatedBy: NSLayoutRelation.equal,
-                                       toItem: messageLabel,
-                                       attribute: NSLayoutAttribute.centerY,
-                                       multiplier: (title?.isEmpty ?? true) ? 1 : 0.8,
-                                       constant: 0))
-    } else if let title = title , !title.isEmpty {
-      addConstraint(NSLayoutConstraint(item: iconImageView,
-                                       attribute: NSLayoutAttribute.centerY,
-                                       relatedBy: NSLayoutRelation.equal,
-                                       toItem: titleLabel,
-                                       attribute: NSLayoutAttribute.centerY,
-                                       multiplier: 1.0,
-                                       constant: 0))
+    if isTitleEmpty {
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[title(==zeroHeight)]", options: [],
+                                                      metrics: metrics, views: views))
+    } else if isMessageEmpty {
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[message(==zeroHeight)]", options: [],
+                                                      metrics: metrics, views: views))
     }
   }
   
