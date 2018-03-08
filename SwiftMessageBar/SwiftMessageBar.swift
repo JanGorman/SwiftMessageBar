@@ -4,152 +4,153 @@
 
 import UIKit
 
-public struct MessageBarConfig {
-
-  public static let defaultErrorColor: UIColor = .red
-  public static let defaultSuccessColor: UIColor = .green
-  public static let defaultInfoColor: UIColor = .blue
-  public static let defaultTitleColor: UIColor = .white
-  public static let defaultMessageColor: UIColor = .white
-  public static let defaultIsStatusBarHidden = false
-  public static let defaultTitleFont: UIFont = .boldSystemFont(ofSize: 16)
-  public static let defaultMessageFont: UIFont = .systemFont(ofSize: 14)
-
-  let errorColor: UIColor
-  let successColor: UIColor
-  let infoColor: UIColor
-  let titleColor: UIColor
-  let messageColor: UIColor
-  let isStatusBarHidden: Bool
-  let successIcon: UIImage?
-  let infoIcon: UIImage?
-  let errorIcon: UIImage?
-  let titleFont: UIFont
-  let messageFont: UIFont
-
-  public init(errorColor: UIColor = MessageBarConfig.defaultErrorColor,
-              successColor: UIColor = MessageBarConfig.defaultSuccessColor,
-              infoColor: UIColor = MessageBarConfig.defaultInfoColor,
-              titleColor: UIColor = MessageBarConfig.defaultTitleColor,
-              messageColor: UIColor = MessageBarConfig.defaultMessageColor,
-              isStatusBarHidden: Bool = MessageBarConfig.defaultIsStatusBarHidden,
-              successIcon: UIImage? = nil,
-              infoIcon: UIImage? = nil,
-              errorIcon: UIImage? = nil,
-              titleFont: UIFont = MessageBarConfig.defaultTitleFont,
-              messageFont: UIFont = MessageBarConfig.defaultMessageFont) {
-    self.errorColor = errorColor
-    self.successColor = successColor
-    self.infoColor = infoColor
-    self.titleColor = titleColor
-    self.messageColor = messageColor
-    self.isStatusBarHidden = isStatusBarHidden
-    let bundle = Bundle(for: SwiftMessageBar.self)
-    self.successIcon = successIcon ?? UIImage(named: "icon-success", in: bundle, compatibleWith: nil)
-    self.infoIcon = infoIcon ?? UIImage(named: "icon-info", in: bundle, compatibleWith: nil)
-    self.errorIcon = errorIcon ?? UIImage(named: "icon-error", in: bundle, compatibleWith: nil)
-    self.titleFont = titleFont
-    self.messageFont = messageFont
-  }
-
-  public class Builder {
-
-    private var errorColor: UIColor?
-    private var successColor: UIColor?
-    private var infoColor: UIColor?
-    private var titleColor: UIColor?
-    private var messageColor: UIColor?
-    private var isStatusBarHidden: Bool?
-    private var successIcon: UIImage?
-    private var infoIcon: UIImage?
-    private var errorIcon: UIImage?
-    private var titleFont: UIFont?
-    private var messageFont: UIFont?
-
-    public init() {
-    }
-
-    public func withErrorColor(_ color: UIColor) -> Builder {
-      errorColor = color
-      return self
-    }
-
-    public func withSuccessColor(_ color: UIColor) -> Builder {
-      successColor = color
-      return self
-    }
-
-    public func withInfoColor(_ color: UIColor) -> Builder {
-      infoColor = color
-      return self
-    }
-
-    public func withTitleColor(_ color: UIColor) -> Builder {
-      titleColor = color
-      return self
-    }
-
-    public func withMessageColor(_ color: UIColor) -> Builder {
-      messageColor = color
-      return self
-    }
-
-    public func withStatusBarHidden(_ isHidden: Bool) -> Builder {
-      isStatusBarHidden = isHidden
-      return self
-    }
-
-    public func withSuccessIcon(_ icon: UIImage) -> Builder {
-      successIcon = icon
-      return self
-    }
-
-    public func withInfoIcon(_ icon: UIImage) -> Builder {
-      infoIcon = icon
-      return self
-    }
-
-    public func withErrorIcon(_ icon: UIImage) -> Builder {
-      errorIcon = icon
-      return self
-    }
-
-    public func withTitleFont(_ font: UIFont) -> Builder {
-      titleFont = font
-      return self
-    }
-
-    public func withMessageFont(_ font: UIFont) -> Builder {
-      messageFont = font
-      return self
-    }
-
-    public func build() -> MessageBarConfig {
-      return MessageBarConfig(errorColor: errorColor ?? MessageBarConfig.defaultErrorColor,
-                              successColor: successColor ?? MessageBarConfig.defaultSuccessColor,
-                              infoColor: infoColor ?? MessageBarConfig.defaultInfoColor,
-                              titleColor: titleColor ?? MessageBarConfig.defaultTitleColor,
-                              messageColor: messageColor ?? MessageBarConfig.defaultMessageColor,
-                              isStatusBarHidden: isStatusBarHidden ?? MessageBarConfig.defaultIsStatusBarHidden,
-                              successIcon: successIcon, infoIcon: infoIcon, errorIcon: errorIcon,
-                              titleFont: titleFont ?? MessageBarConfig.defaultTitleFont,
-                              messageFont: messageFont ?? MessageBarConfig.defaultMessageFont)
-    }
-
-
-  }
-  
-}
-
 public typealias Callback = () -> Void
 
 public final class SwiftMessageBar {
+
+  public struct Config {
+
+    public struct Defaults {
+      public static let errorColor: UIColor = .red
+      public static let successColor: UIColor = .green
+      public static let infoColor: UIColor = .blue
+      public static let titleColor: UIColor = .white
+      public static let messageColor: UIColor = .white
+      public static let isStatusBarHidden = false
+      public static let titleFont: UIFont = .boldSystemFont(ofSize: 16)
+      public static let messageFont: UIFont = .systemFont(ofSize: 14)
+    }
+
+    let errorColor: UIColor
+    let successColor: UIColor
+    let infoColor: UIColor
+    let titleColor: UIColor
+    let messageColor: UIColor
+    let isStatusBarHidden: Bool
+    let successIcon: UIImage?
+    let infoIcon: UIImage?
+    let errorIcon: UIImage?
+    let titleFont: UIFont
+    let messageFont: UIFont
+
+    public init(errorColor: UIColor = Defaults.errorColor,
+                successColor: UIColor = Defaults.successColor,
+                infoColor: UIColor = Defaults.infoColor,
+                titleColor: UIColor = Defaults.titleColor,
+                messageColor: UIColor = Defaults.messageColor,
+                isStatusBarHidden: Bool = Defaults.isStatusBarHidden,
+                successIcon: UIImage? = nil,
+                infoIcon: UIImage? = nil,
+                errorIcon: UIImage? = nil,
+                titleFont: UIFont = Defaults.titleFont,
+                messageFont: UIFont = Defaults.messageFont) {
+      self.errorColor = errorColor
+      self.successColor = successColor
+      self.infoColor = infoColor
+      self.titleColor = titleColor
+      self.messageColor = messageColor
+      self.isStatusBarHidden = isStatusBarHidden
+      let bundle = Bundle(for: SwiftMessageBar.self)
+      self.successIcon = successIcon ?? UIImage(named: "icon-success", in: bundle, compatibleWith: nil)
+      self.infoIcon = infoIcon ?? UIImage(named: "icon-info", in: bundle, compatibleWith: nil)
+      self.errorIcon = errorIcon ?? UIImage(named: "icon-error", in: bundle, compatibleWith: nil)
+      self.titleFont = titleFont
+      self.messageFont = messageFont
+    }
+
+    public class Builder {
+
+      private var errorColor: UIColor?
+      private var successColor: UIColor?
+      private var infoColor: UIColor?
+      private var titleColor: UIColor?
+      private var messageColor: UIColor?
+      private var isStatusBarHidden: Bool?
+      private var successIcon: UIImage?
+      private var infoIcon: UIImage?
+      private var errorIcon: UIImage?
+      private var titleFont: UIFont?
+      private var messageFont: UIFont?
+
+      public init() {
+      }
+
+      public func withErrorColor(_ color: UIColor) -> Builder {
+        errorColor = color
+        return self
+      }
+
+      public func withSuccessColor(_ color: UIColor) -> Builder {
+        successColor = color
+        return self
+      }
+
+      public func withInfoColor(_ color: UIColor) -> Builder {
+        infoColor = color
+        return self
+      }
+
+      public func withTitleColor(_ color: UIColor) -> Builder {
+        titleColor = color
+        return self
+      }
+
+      public func withMessageColor(_ color: UIColor) -> Builder {
+        messageColor = color
+        return self
+      }
+
+      public func withStatusBarHidden(_ isHidden: Bool) -> Builder {
+        isStatusBarHidden = isHidden
+        return self
+      }
+
+      public func withSuccessIcon(_ icon: UIImage) -> Builder {
+        successIcon = icon
+        return self
+      }
+
+      public func withInfoIcon(_ icon: UIImage) -> Builder {
+        infoIcon = icon
+        return self
+      }
+
+      public func withErrorIcon(_ icon: UIImage) -> Builder {
+        errorIcon = icon
+        return self
+      }
+
+      public func withTitleFont(_ font: UIFont) -> Builder {
+        titleFont = font
+        return self
+      }
+
+      public func withMessageFont(_ font: UIFont) -> Builder {
+        messageFont = font
+        return self
+      }
+
+      public func build() -> Config {
+        return Config(errorColor: errorColor ?? Defaults.errorColor,
+                      successColor: successColor ?? Defaults.successColor,
+                      infoColor: infoColor ?? Defaults.infoColor,
+                      titleColor: titleColor ?? Defaults.titleColor,
+                      messageColor: messageColor ?? Defaults.messageColor,
+                      isStatusBarHidden: isStatusBarHidden ?? Defaults.isStatusBarHidden,
+                      successIcon: successIcon, infoIcon: infoIcon, errorIcon: errorIcon,
+                      titleFont: titleFont ?? Defaults.titleFont,
+                      messageFont: messageFont ?? Defaults.messageFont)
+      }
+
+    }
+
+  }
   
-  private var config: MessageBarConfig
+  private var config: Config
   public enum MessageType {
     case error, success, info
     
-    func backgroundColor(fromConfig config: MessageBarConfig) -> UIColor {
+    func backgroundColor(fromConfig config: Config) -> UIColor {
       switch self {
       case .error:
         return config.errorColor
@@ -160,7 +161,7 @@ public final class SwiftMessageBar {
       }
     }
     
-    func image(fromConfig config: MessageBarConfig) -> UIImage? {
+    func image(fromConfig config: Config) -> UIImage? {
       switch self {
       case .error:
         return config.errorIcon
@@ -206,11 +207,11 @@ public final class SwiftMessageBar {
   
   private init() {
     messageQueue = Queue<Message>()
-    config = MessageBarConfig()
+    config = Config()
   }
   
   /// Set a message bar configuration used by all displayed messages.
-  public static func setSharedConfig(_ config: MessageBarConfig) {
+  public static func setSharedConfig(_ config: Config) {
     sharedMessageBar.config = config
   }
   
@@ -227,13 +228,13 @@ public final class SwiftMessageBar {
   ///     - callback: An optional callback to execute when the user taps on a message to dismiss it.
   /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
   @discardableResult
-  public static func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
-                                          duration: TimeInterval = 3, dismiss: Bool = true,
-                                          languageDirection: NSLocale.LanguageDirection = .unknown,
-                                          callback: Callback? = nil ) -> UUID {
-    return sharedMessageBar.showMessageWithTitle(title, message: message, type: type, duration: duration,
-                                                 dismiss: dismiss, languageDirection: languageDirection,
-                                                 callback: callback)
+  public static func showMessage(withTitle title: String? = nil, message: String? = nil, type: MessageType,
+                                 duration: TimeInterval = 3, dismiss: Bool = true,
+                                 languageDirection: NSLocale.LanguageDirection = .unknown,
+                                 callback: Callback? = nil) -> UUID {
+    return sharedMessageBar.showMessage(withTitle: title, message: message, type: type, duration: duration,
+                                        dismiss: dismiss, languageDirection: languageDirection,
+                                        callback: callback)
   }
   
   /// Display a message
@@ -249,10 +250,10 @@ public final class SwiftMessageBar {
   ///     - callback: An optional callback to execute when the user taps on a message to dismiss it.
   /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
   @discardableResult
-  public func showMessageWithTitle(_ title: String? = nil, message: String? = nil, type: MessageType,
-                                   duration: TimeInterval = 3, dismiss: Bool = true,
-                                   languageDirection: NSLocale.LanguageDirection = .unknown,
-                                   callback: Callback? = nil) -> UUID {
+  public func showMessage(withTitle title: String? = nil, message: String? = nil, type: MessageType,
+                          duration: TimeInterval = 3, dismiss: Bool = true,
+                          languageDirection: NSLocale.LanguageDirection = .unknown,
+                          callback: Callback? = nil) -> UUID {
     let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(fromConfig: config),
                           titleFontColor: config.titleColor, messageFontColor: config.messageColor,
                           icon: type.image(fromConfig: config), duration: duration, dismiss: dismiss,
@@ -290,7 +291,7 @@ public final class SwiftMessageBar {
   /// Cancels the display of a specific message
   ///
   /// - Parameter id: The UUID of the message to cancel.
-  public func cancelWithId(_ id: UUID) {
+  public func cancel(withId id: UUID) {
     if let message = visibleMessage, message.id == id {
       dismissMessage(message)
       messageQueue.removeElement(message)
@@ -315,9 +316,9 @@ public final class SwiftMessageBar {
     message.addGestureRecognizer(gesture)
     
     UIView.animate(withDuration: SwiftMessageBar.showHideDuration, delay: 0, options: [], animations: {
-      message.frame = CGRect(x: message.frame.minX, y: message.frame.minY + message.estimatedHeight,
-                             width: message.width, height: message.estimatedHeight)
-      }, completion: nil)
+      let frame = message.frame.offsetBy(dx: 0, dy: message.estimatedHeight)
+      message.frame = frame
+    }, completion: nil)
     
     if message.dismiss {
       resetTimer()
@@ -331,7 +332,8 @@ public final class SwiftMessageBar {
     timer = nil
   }
     
-  @objc private func dismiss() {
+  @objc
+  private func dismiss() {
     resetTimer()
     if let message = visibleMessage {
       dismissMessage(message)
@@ -342,7 +344,8 @@ public final class SwiftMessageBar {
     dismissMessage(message, fromGesture: false)
   }
   
-  @objc func didTapMessage(_ gesture: UITapGestureRecognizer) {
+  @objc
+  func didTapMessage(_ gesture: UITapGestureRecognizer) {
     let message = gesture.view as! Message
     dismissMessage(message, fromGesture: true)
     tapHandler?()
@@ -356,8 +359,8 @@ public final class SwiftMessageBar {
     message.isHit = true
     
     UIView.animate(withDuration: SwiftMessageBar.showHideDuration, delay: 0, options: [], animations: {
-      message.frame = CGRect(x: message.frame.minX, y: -message.estimatedHeight,
-                             width: message.width, height: message.estimatedHeight)
+      let frame = message.frame.offsetBy(dx: 0, dy: -message.estimatedHeight)
+      message.frame = frame
       }, completion: { [weak self] _ in
         self?.isMessageVisible = false
         message.removeFromSuperview()
@@ -412,48 +415,4 @@ private class MessageBarController: UIViewController {
     return statusBarHidden
   }
   
-}
-
-private struct Queue<T: Equatable> {
-  
-  private var left: [T]
-  private var right: [T]
-  
-  var isEmpty: Bool {
-    return left.isEmpty && right.isEmpty
-  }
-  
-  init() {
-    left = []
-    right = []
-  }
-  
-  mutating func dequeue() -> T? {
-    guard !(left.isEmpty && right.isEmpty) else { return nil }
-    
-    if left.isEmpty {
-      left = right.reversed()
-      right.removeAll(keepingCapacity: true)
-    }
-    return left.removeLast()
-  }
-  
-  mutating func enqueue(_ newElement: T) {
-    right.append(newElement)
-  }
-  
-  mutating func removeAll() {
-    left.removeAll()
-    right.removeAll()
-  }
-
-  mutating func removeElement(_ element: T) {
-    if let idx = left.index(of: element) {
-      left.remove(at: idx)
-    }
-    if let idx = right.index(of: element) {
-      right.remove(at: idx)
-    }
-  }
-
 }
