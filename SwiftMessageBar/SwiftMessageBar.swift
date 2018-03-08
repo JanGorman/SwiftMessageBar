@@ -233,8 +233,7 @@ public final class SwiftMessageBar {
                                  languageDirection: NSLocale.LanguageDirection = .unknown,
                                  callback: Callback? = nil) -> UUID {
     return sharedMessageBar.showMessage(withTitle: title, message: message, type: type, duration: duration,
-                                        dismiss: dismiss, languageDirection: languageDirection,
-                                        callback: callback)
+                                        dismiss: dismiss, languageDirection: languageDirection, callback: callback)
   }
   
   /// Display a message
