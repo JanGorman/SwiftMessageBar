@@ -293,8 +293,8 @@ public final class SwiftMessageBar {
   public func cancelWithId(_ id: UUID) {
     if let message = visibleMessage, message.id == id {
       dismissMessage(message)
+      messageQueue.removeElement(message)
     }
-    messageQueue.removeWithId(id)
   }
   
   private var visibleMessage: Message? {
@@ -414,7 +414,7 @@ private class MessageBarController: UIViewController {
   
 }
 
-private struct Queue<T: Identifiable> {
+private struct Queue<T: Equatable> {
   
   private var left: [T]
   private var right: [T]
@@ -446,22 +446,14 @@ private struct Queue<T: Identifiable> {
     left.removeAll()
     right.removeAll()
   }
-  
-  mutating func removeWithId(_ id: UUID) {
-    if let idx = left.findWithId(id) {
+
+  mutating func removeElement(_ element: T) {
+    if let idx = left.index(of: element) {
       left.remove(at: idx)
     }
-    if let idx = right.findWithId(id) {
+    if let idx = right.index(of: element) {
       right.remove(at: idx)
     }
   }
-  
-}
 
-private extension Array where Element: Identifiable {
-  
-  func findWithId(_ id: UUID) -> Int? {
-    return enumerated().lazy.first(where: { $1.id == id })?.0
-  }
-  
 }

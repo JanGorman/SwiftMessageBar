@@ -224,6 +224,10 @@ final class Message: UIView {
     return width - Message.padding * 2 - Message.iconSize
   }
 
+  static func ==(lhs: Message, rhs: Message) -> Bool {
+    return lhs.id == rhs.id
+  }
+
 }
 
 extension Message: Identifiable {
