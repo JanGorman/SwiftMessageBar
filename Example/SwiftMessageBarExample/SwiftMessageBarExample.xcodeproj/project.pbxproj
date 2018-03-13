@@ -60,7 +60,9 @@
 				F2AB590B1B28B3B3001DCC74 /* SwiftMessageBarExample */,
 				F2AB590A1B28B3B3001DCC74 /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		F2AB590A1B28B3B3001DCC74 /* Products */ = {
 			isa = PBXGroup;

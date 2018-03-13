@@ -59,7 +59,9 @@
 				F2AB58E41B28B33C001DCC74 /* SwiftMessageBar */,
 				F2AB58E31B28B33C001DCC74 /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		F2AB58E31B28B33C001DCC74 /* Products */ = {
 			isa = PBXGroup;

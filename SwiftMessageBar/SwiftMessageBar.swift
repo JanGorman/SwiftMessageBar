@@ -162,17 +162,9 @@ public final class SwiftMessageBar {
     messageWindow.isHidden = false
     messageWindow.windowLevel = UIWindowLevelNormal
     messageWindow.backgroundColor = .clear
-    let controller = MessageBarController()
-    controller.statusBarHidden = config.isStatusBarHidden
-    messageWindow.rootViewController = controller
+    messageWindow.messageBarController.statusBarHidden = config.isStatusBarHidden
+    messageWindow.rootViewController = messageWindow.messageBarController
     return messageWindow
-  }
-  
-  private var messageBarView: UIView {
-    if messageWindow == nil {
-      messageWindow = newMessageWindow()
-    }
-    return (messageWindow?.rootViewController as! MessageBarController).view
   }
   
   private var messageQueue: Queue<Message>
@@ -271,13 +263,22 @@ public final class SwiftMessageBar {
   }
   
   private var visibleMessage: Message? {
-    return messageBarView.subviews.filter({ $0 is Message }).first as? Message
+    return messageWindow?.messageBarView.subviews.flatMap { $0 as? Message }.first
   }
   
   private func dequeueNextMessage() {
     guard let message = messageQueue.dequeue() else { return }
-    messageBarView.addSubview(message)
-    messageBarView.bringSubview(toFront: message)
+    
+    let messageWindow: MessageWindow
+    if let existensWindow = self.messageWindow {
+      messageWindow = existensWindow
+    } else {
+      messageWindow = newMessageWindow()
+      self.messageWindow = messageWindow
+    }
+    
+    messageWindow.messageBarView.addSubview(message)
+    messageWindow.messageBarView.bringSubview(toFront: message)
     isMessageVisible = true
     message.configureSubviews()
     message.frame = CGRect(x: 0, y: -message.estimatedHeight, width: message.width, height: message.estimatedHeight)
@@ -354,6 +355,14 @@ public final class SwiftMessageBar {
 }
 
 private class MessageWindow: UIWindow {
+  
+  lazy var messageBarController: MessageBarController = {
+    return MessageBarController()
+  }()
+  
+  var messageBarView: UIView {
+    return messageBarController.view
+  }
   
   override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
     var hitView = super.hitTest(point, with: event)
