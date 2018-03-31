@@ -263,7 +263,7 @@ public final class SwiftMessageBar {
   }
   
   private var visibleMessage: Message? {
-    return messageWindow?.messageBarView.subviews.flatMap { $0 as? Message }.first
+    return messageWindow?.messageBarView.subviews.compactMap { $0 as? Message }.first
   }
   
   private func dequeueNextMessage() {
