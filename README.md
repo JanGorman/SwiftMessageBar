@@ -63,9 +63,17 @@ let config = SwiftMessageBar.Config.Builder()
 SwiftMessageBar.setSharedConfig(config)
 ```
 
+### Haptic Feedback
+
+Per default SwiftMessageBar provides the user with haptic feedback using [UINotificationFeedbackGenerator](https://developer.apple.com/documentation/uikit/uinotificationfeedbackgenerator). You can opt out of this behaviour by disabling it in the configuration:
+
+```swift
+let config = SwiftMessageBar.Config.Builder()
+    .withHapticFeedbackEnabled(false)
+    .build()
+SwiftMessageBar.setSharedConfig(config)
+```
+
 ## Licence
 
 SwiftMessageBar is released under the MIT license. See LICENSE for details
-
-
-

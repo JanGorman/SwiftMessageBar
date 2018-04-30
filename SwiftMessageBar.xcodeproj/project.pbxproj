@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		77BBDF7E209705E600BDED60 /* DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BBDF7D209705E600BDED60 /* DeviceType.swift */; };
 		77E9E14E205167C100E157F5 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9E14D205167C100E157F5 /* Queue.swift */; };
 		77EBFCB420519D5000AFE1F9 /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBFCB320519D5000AFE1F9 /* MessageType.swift */; };
 		F22ADD2E1B8CB23F00EBA839 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22ADD2D1B8CB23F00EBA839 /* Message.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		77BBDF7D209705E600BDED60 /* DeviceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceType.swift; sourceTree = "<group>"; };
 		77E9E14D205167C100E157F5 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		77EBFCB320519D5000AFE1F9 /* MessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
 		F22ADD2D1B8CB23F00EBA839 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -74,12 +76,13 @@
 		F2AB58E41B28B33C001DCC74 /* SwiftMessageBar */ = {
 			isa = PBXGroup;
 			children = (
-				F2AB58E71B28B33C001DCC74 /* SwiftMessageBar.h */,
-				F2AB58E51B28B33C001DCC74 /* Supporting Files */,
-				F2AB59391B28B45A001DCC74 /* SwiftMessageBar.swift */,
-				77EBFCB320519D5000AFE1F9 /* MessageType.swift */,
+				77BBDF7D209705E600BDED60 /* DeviceType.swift */,
 				F22ADD2D1B8CB23F00EBA839 /* Message.swift */,
+				77EBFCB320519D5000AFE1F9 /* MessageType.swift */,
 				77E9E14D205167C100E157F5 /* Queue.swift */,
+				F2AB58E51B28B33C001DCC74 /* Supporting Files */,
+				F2AB58E71B28B33C001DCC74 /* SwiftMessageBar.h */,
+				F2AB59391B28B45A001DCC74 /* SwiftMessageBar.swift */,
 			);
 			path = SwiftMessageBar;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 				77E9E14E205167C100E157F5 /* Queue.swift in Sources */,
 				F22ADD2E1B8CB23F00EBA839 /* Message.swift in Sources */,
 				77EBFCB420519D5000AFE1F9 /* MessageType.swift in Sources */,
+				77BBDF7E209705E600BDED60 /* DeviceType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

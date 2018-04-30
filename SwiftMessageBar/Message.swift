@@ -15,8 +15,9 @@ final class Message: UIView {
   private static let padding: CGFloat = 10
   private static let messageOffset: CGFloat = 2
   private static let iconSize: CGFloat = 36
-  
-  fileprivate let uuid = UUID()
+
+  private(set) var type: MessageType!
+  private let uuid = UUID()
   private var title: String?
   private var message: String?
   private var titleFontColor: UIColor!
@@ -36,9 +37,10 @@ final class Message: UIView {
     return paragraphStyle
   }
   
-  init(title: String?, message: String?, backgroundColor: UIColor, titleFontColor: UIColor, messageFontColor: UIColor,
-       icon: UIImage?, duration: TimeInterval, dismiss: Bool = true, callback: Callback?,
+  init(type: MessageType, title: String?, message: String?, backgroundColor: UIColor, titleFontColor: UIColor,
+       messageFontColor: UIColor, icon: UIImage?, duration: TimeInterval, dismiss: Bool = true, callback: Callback?,
        languageDirection: NSLocale.LanguageDirection, titleFont: UIFont, messageFont: UIFont) {
+    self.type = type
     self.title = title
     self.message = message
     self.duration = duration

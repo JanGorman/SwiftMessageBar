@@ -2,7 +2,7 @@
 //  Copyright © 2018 Schnaub. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public enum MessageType {
   case error, success, info

@@ -19,6 +19,7 @@ public final class SwiftMessageBar {
       public static let isStatusBarHidden = false
       public static let titleFont: UIFont = .boldSystemFont(ofSize: 16)
       public static let messageFont: UIFont = .systemFont(ofSize: 14)
+      public static let isHapticFeedbackEnabled = true
     }
 
     let errorColor: UIColor
@@ -32,6 +33,7 @@ public final class SwiftMessageBar {
     let errorIcon: UIImage?
     let titleFont: UIFont
     let messageFont: UIFont
+    let isHapticFeedbackEnabled: Bool
 
     public init(errorColor: UIColor = Defaults.errorColor,
                 successColor: UIColor = Defaults.successColor,
@@ -43,7 +45,8 @@ public final class SwiftMessageBar {
                 infoIcon: UIImage? = nil,
                 errorIcon: UIImage? = nil,
                 titleFont: UIFont = Defaults.titleFont,
-                messageFont: UIFont = Defaults.messageFont) {
+                messageFont: UIFont = Defaults.messageFont,
+                isHapticFeedbackEnabled: Bool = Defaults.isHapticFeedbackEnabled) {
       self.errorColor = errorColor
       self.successColor = successColor
       self.infoColor = infoColor
@@ -56,6 +59,7 @@ public final class SwiftMessageBar {
       self.errorIcon = errorIcon ?? UIImage(named: "icon-error", in: bundle, compatibleWith: nil)
       self.titleFont = titleFont
       self.messageFont = messageFont
+      self.isHapticFeedbackEnabled = isHapticFeedbackEnabled
     }
 
     public class Builder {
@@ -71,6 +75,7 @@ public final class SwiftMessageBar {
       private var errorIcon: UIImage?
       private var titleFont: UIFont?
       private var messageFont: UIFont?
+      private var isHapticFeedbackEnabled: Bool?
 
       public init() {
       }
@@ -130,6 +135,11 @@ public final class SwiftMessageBar {
         return self
       }
 
+      public func withHapticFeedbackEnabled(_ isEnabled: Bool) -> Builder {
+        isHapticFeedbackEnabled = isEnabled
+        return self
+      }
+
       public func build() -> Config {
         return Config(errorColor: errorColor ?? Defaults.errorColor,
                       successColor: successColor ?? Defaults.successColor,
@@ -139,7 +149,8 @@ public final class SwiftMessageBar {
                       isStatusBarHidden: isStatusBarHidden ?? Defaults.isStatusBarHidden,
                       successIcon: successIcon, infoIcon: infoIcon, errorIcon: errorIcon,
                       titleFont: titleFont ?? Defaults.titleFont,
-                      messageFont: messageFont ?? Defaults.messageFont)
+                      messageFont: messageFont ?? Defaults.messageFont,
+                      isHapticFeedbackEnabled: isHapticFeedbackEnabled ?? Defaults.isHapticFeedbackEnabled)
       }
 
     }
@@ -218,11 +229,11 @@ public final class SwiftMessageBar {
                           duration: TimeInterval = 3, dismiss: Bool = true,
                           languageDirection: NSLocale.LanguageDirection = .unknown,
                           callback: Callback? = nil) -> UUID {
-    let message = Message(title: title, message: message, backgroundColor: type.backgroundColor(fromConfig: config),
-                          titleFontColor: config.titleColor, messageFontColor: config.messageColor,
-                          icon: type.image(fromConfig: config), duration: duration, dismiss: dismiss,
-                          callback: callback, languageDirection: languageDirection, titleFont: config.titleFont,
-                          messageFont: config.messageFont)
+    let message = Message(type: type, title: title, message: message,
+                          backgroundColor: type.backgroundColor(fromConfig: config), titleFontColor: config.titleColor,
+                          messageFontColor: config.messageColor, icon: type.image(fromConfig: config), duration: duration,
+                          dismiss: dismiss, callback: callback, languageDirection: languageDirection,
+                          titleFont: config.titleFont, messageFont: config.messageFont)
     if languageDirection == .rightToLeft {
       message.flipHorizontal()
     }
@@ -287,16 +298,32 @@ public final class SwiftMessageBar {
     
     let gesture = UITapGestureRecognizer(target: self, action: #selector(tap))
     message.addGestureRecognizer(gesture)
-    
-    UIView.animate(withDuration: SwiftMessageBar.showHideDuration, delay: 0, options: [], animations: {
+
+    UIView.animate(withDuration: SwiftMessageBar.showHideDuration, animations: {
       let frame = message.frame.offsetBy(dx: 0, dy: message.estimatedHeight)
       message.frame = frame
-    }, completion: nil)
-    
+    }, completion: { _ in
+      self.provideHapticFeedback(for: message)
+    })
+
     if message.dismiss {
       resetTimer()
       timer = Timer.scheduledTimer(timeInterval: message.duration, target: self, selector: #selector(dismiss),
                                    userInfo: nil, repeats: false)
+    }
+  }
+
+  private func provideHapticFeedback(for message: Message) {
+    if #available(iOS 10.0, *), config.isHapticFeedbackEnabled && DeviceType.isPhone {
+      let generator = UINotificationFeedbackGenerator()
+      switch message.type! {
+      case .error:
+        generator.notificationOccurred(.error)
+      case .info:
+        generator.notificationOccurred(.warning)
+      case .success:
+        generator.notificationOccurred(.success)
+      }
     }
   }
   
