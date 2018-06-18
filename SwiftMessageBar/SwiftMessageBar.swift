@@ -169,7 +169,7 @@ public final class SwiftMessageBar {
   
   private func newMessageWindow() -> MessageWindow {
     let messageWindow = MessageWindow()
-    messageWindow.frame = UIApplication.shared.keyWindow!.frame
+    messageWindow.frame = UIScreen.main.bounds
     messageWindow.isHidden = false
     messageWindow.windowLevel = UIWindowLevelNormal
     messageWindow.backgroundColor = .clear
