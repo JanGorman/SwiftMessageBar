@@ -217,7 +217,7 @@ final class Message: UIView {
   }
   
   var statusBarFrame: CGRect {
-    let windowFrame = UIApplication.shared.keyWindow!.frame
+    let windowFrame = UIScreen.main.bounds
     let statusFrame = UIApplication.shared.statusBarFrame
     return CGRect(x: windowFrame.minX, y: windowFrame.minY, width: windowFrame.width, height: statusFrame.height)
   }
