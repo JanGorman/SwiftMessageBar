@@ -108,10 +108,10 @@ final class Message: UIView {
     }
     
     addConstraint(NSLayoutConstraint(item: iconImageView,
-                                     attribute: NSLayoutAttribute.centerY,
-                                     relatedBy: NSLayoutRelation.equal,
+                                     attribute: .centerY,
+                                     relatedBy: .equal,
                                      toItem: iconImageView.superview,
-                                     attribute: NSLayoutAttribute.centerY,
+                                     attribute: .centerY,
                                      multiplier: 1.0,
                                      constant: (topMargin - bottomMargin) / 2.0))
   }
@@ -131,7 +131,7 @@ final class Message: UIView {
     addSubview(titleLabel)
     
     if let title = title {
-      let attributes: [NSAttributedStringKey: Any] = [
+      let attributes: [NSAttributedString.Key: Any] = [
         .font : titleFont,
         .foregroundColor: titleFontColor,
         .paragraphStyle: paragraphStyle
@@ -148,7 +148,7 @@ final class Message: UIView {
     addSubview(messageLabel)
     
     if let message = message {
-      let attributes: [NSAttributedStringKey: Any] = [
+      let attributes: [NSAttributedString.Key: Any] = [
         .font : messageFont,
         .foregroundColor: messageFontColor,
         .paragraphStyle: paragraphStyle
@@ -180,7 +180,7 @@ final class Message: UIView {
   
   var titleSize: CGSize {
     let boundedSize = CGSize(width: availableWidth, height: CGFloat.greatestFiniteMagnitude)
-    let titleFontAttributes: [NSAttributedStringKey: Any] = [.font: titleFont]
+    let titleFontAttributes: [NSAttributedString.Key: Any] = [.font: titleFont]
     if let size = title?.boundingRect(with: boundedSize,
                                       options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin],
                                       attributes: titleFontAttributes, context: nil).size {
@@ -191,7 +191,7 @@ final class Message: UIView {
   
   var messageSize: CGSize {
     let boundedSize = CGSize(width: availableWidth, height: CGFloat.greatestFiniteMagnitude)
-    let titleFontAttributes: [NSAttributedStringKey: Any] = [.font: messageFont]
+    let titleFontAttributes: [NSAttributedString.Key: Any] = [.font: messageFont]
     if let size = message?.boundingRect(with: boundedSize,
                                         options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin],
                                         attributes: titleFontAttributes, context: nil).size {

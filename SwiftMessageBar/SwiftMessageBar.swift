@@ -171,7 +171,7 @@ public final class SwiftMessageBar {
     let messageWindow = MessageWindow()
     messageWindow.frame = UIScreen.main.bounds
     messageWindow.isHidden = false
-    messageWindow.windowLevel = UIWindowLevelNormal
+    messageWindow.windowLevel = .normal
     messageWindow.backgroundColor = .clear
     messageWindow.messageBarController.statusBarHidden = config.isStatusBarHidden
     messageWindow.rootViewController = messageWindow.messageBarController
@@ -289,7 +289,7 @@ public final class SwiftMessageBar {
     }
     
     messageWindow.messageBarView.addSubview(message)
-    messageWindow.messageBarView.bringSubview(toFront: message)
+    messageWindow.messageBarView.bringSubviewToFront(message)
     isMessageVisible = true
     message.configureSubviews()
     message.frame = CGRect(x: 0, y: -message.estimatedHeight, width: message.width, height: message.estimatedHeight)
