@@ -60,13 +60,10 @@ final class Message: UIView {
   }
   
   func configureSubviews() {
-    let iconImageView = initIcon()
-    let titleLabel = initTitle()
-    let messageLabel = initMessage()
-    
-    let isTitleEmpty = title?.isEmpty ?? true
-    let isMessageEmpty = message?.isEmpty ?? true
-    
+    let iconImageView = makeIconView()
+    let titleLabel = makeTitleLabel()
+    let messageLabel = makeMessageLabel()
+
     if languageDirection == .rightToLeft {
       titleLabel.textAlignment = .right
       messageLabel.textAlignment = .right
@@ -74,62 +71,34 @@ final class Message: UIView {
       messageLabel.flipHorizontal()
       iconImageView.flipHorizontal()
     }
-    let views = ["icon": iconImageView, "title": titleLabel, "message": messageLabel]
-    let metrics = [
-      "titleTop": topMargin,
-      "right": Message.padding,
-      "bottom": bottomMargin,
-      "messageLeft": Message.padding + Message.messageOffset,
-      "iconLeft": Message.padding,
-      
-      "messageOffset": !isTitleEmpty && !isMessageEmpty ? Message.messageOffset : 0,
-      "width": Message.iconSize,
-      "height": Message.iconSize
-    ]
 
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[icon(==width)]", options: [],
-                                                  metrics: metrics, views: views))
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[icon(==height)]", options: [],
-                                                  metrics: metrics, views: views))
+    let textStackView = makeTextStackView(with: titleLabel, messageLabel: messageLabel)
     
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-iconLeft-[icon]-messageLeft-[title]-right-|",
-                                                  options: [], metrics: metrics, views: views))
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-iconLeft-[icon]-messageLeft-[message]-right-|",
-                                                  options: [], metrics: metrics, views: views))
-    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-titleTop-[title]-messageOffset-[message]-bottom-|",
-                                                  options: [], metrics: metrics, views: views))
-    
-    if isTitleEmpty {
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[title(==0)]", options: [],
-                                                      metrics: metrics, views: views))
-    } else if isMessageEmpty {
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[message(==0)]", options: [],
-                                                      metrics: metrics, views: views))
-    }
-    
-    addConstraint(NSLayoutConstraint(item: iconImageView,
-                                     attribute: .centerY,
-                                     relatedBy: .equal,
-                                     toItem: iconImageView.superview,
-                                     attribute: .centerY,
-                                     multiplier: 1.0,
-                                     constant: (topMargin - bottomMargin) / 2.0))
+    let parentStackView: UIStackView = {
+      let stackView = UIStackView(arrangedSubviews: [iconImageView, textStackView])
+      stackView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+      stackView.isLayoutMarginsRelativeArrangement = true
+      stackView.axis = .horizontal
+      stackView.spacing = 15
+      stackView.distribution = .fillProportionally
+      return stackView
+    }()
+    parentStackView.usesAutoLayout(true)
+    addSubview(parentStackView, constrainedTo: self)
   }
   
-  private func initIcon() -> UIImageView {
+  private func makeIconView() -> UIImageView {
     let iconImageView = UIImageView()
+    iconImageView.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
+    iconImageView.contentMode = .center
     iconImageView.image = icon
-    iconImageView.usesAutoLayout(true)
-    addSubview(iconImageView)
     return iconImageView
   }
   
-  private func initTitle() -> UILabel {
+  private func makeTitleLabel() -> UILabel {
     let titleLabel = UILabel()
     titleLabel.numberOfLines = 0
-    titleLabel.usesAutoLayout(true)
-    addSubview(titleLabel)
-    
+
     if let title = title {
       let attributes: [NSAttributedString.Key: Any] = [
         .font : titleFont,
@@ -141,12 +110,10 @@ final class Message: UIView {
     return titleLabel
   }
   
-  private func initMessage() -> UILabel {
+  private func makeMessageLabel() -> UILabel {
     let messageLabel = UILabel()
     messageLabel.numberOfLines = 0
-    messageLabel.usesAutoLayout(true)
-    addSubview(messageLabel)
-    
+
     if let message = message {
       let attributes: [NSAttributedString.Key: Any] = [
         .font : messageFont,
@@ -156,6 +123,26 @@ final class Message: UIView {
       messageLabel.attributedText = NSAttributedString(string: message, attributes: attributes)
     }
     return messageLabel
+  }
+
+  private func makeTextStackView(with titleLabel: UILabel, messageLabel: UILabel) -> UIStackView {
+
+    let isTitleEmpty = title?.isEmpty ?? true
+    let isMessageEmpty = message?.isEmpty ?? true
+
+    let stackView = UIStackView()
+    if !isTitleEmpty {
+      stackView.addArrangedSubview(titleLabel)
+    }
+    if !isMessageEmpty {
+      stackView.addArrangedSubview(messageLabel)
+    }
+
+    stackView.usesAutoLayout(true)
+    stackView.axis = .vertical
+    stackView.spacing = 1
+    stackView.distribution = .fill
+    return stackView
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -171,13 +158,13 @@ final class Message: UIView {
   override var intrinsicContentSize: CGSize {
     return CGSize(width: statusBarFrame.width, height: estimatedHeight)
   }
-  
+
   var estimatedHeight: CGFloat {
       let iconSize = icon == nil ? 0 : Message.iconSize
       return max(topMargin + titleSize.height + Message.messageOffset + messageSize.height + bottomMargin,
                  topMargin + iconSize + bottomMargin)
   }
-  
+
   var titleSize: CGSize {
     let boundedSize = CGSize(width: availableWidth, height: CGFloat.greatestFiniteMagnitude)
     let titleFontAttributes: [NSAttributedString.Key: Any] = [.font: titleFont]
@@ -250,4 +237,18 @@ extension UIView {
     layer.setAffineTransform(CGAffineTransform(scaleX: -1, y: 1))
   }
 
+  func addSubview(_ subviews: UIView,
+                  constrainedTo anchorView: UIView) {
+    addSubview(subviews)
+    subviews.usesAutoLayout(true)
+
+    NSLayoutConstraint.activate([
+      subviews.centerXAnchor.constraint(equalTo: anchorView.centerXAnchor),
+      subviews.centerYAnchor.constraint(equalTo: anchorView.centerYAnchor),
+      subviews.widthAnchor.constraint(equalTo:  anchorView.widthAnchor),
+      subviews.heightAnchor.constraint(equalTo: anchorView.heightAnchor)])
+
+  }
+
 }
+
