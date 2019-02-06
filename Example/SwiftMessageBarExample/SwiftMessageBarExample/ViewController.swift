@@ -48,4 +48,24 @@ class ViewController: UIViewController {
     }
   }
 
+  @IBAction func showSuccessWithAccesoryView(_ sender: UIButton) {
+    let message = "A really long message can go here, to provide a description for the user"
+    let button = UIButton(type: .roundedRect)
+    button.frame = CGRect(x: 0, y: 0, width: 180, height: 100)
+    button.setTitle("Button", for: .normal)
+    button.tintColor = .orange
+    button.backgroundColor = .white
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.layer.cornerRadius = 6
+    button.addTarget(self, action: #selector(handleButtonTap), for: .touchUpInside)
+
+    uuid = SwiftMessageBar.showMessage(withTitle: nil, message: message, type: .success, duration: 3, dismiss: false, accessoryView: button ) {
+      print("Dismiss callback")
+    }
+  }
+  
+  @objc func handleButtonTap() {
+    print("button tapped")
+  }
+
 }

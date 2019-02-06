@@ -1,7 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="15A178w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -13,42 +18,45 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3H-aA-9F1">
-                                <rect key="frame" x="249" y="397" width="102" height="30"/>
-                                <animations/>
+                                <rect key="frame" x="137.5" y="426" width="100" height="30"/>
                                 <state key="normal" title="Show Success">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="showSuccess:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="UXp-O5-5af"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nha-ta-9BD" userLabel="Show Succes with custom view">
+                                <rect key="frame" x="67.5" y="464" width="240" height="30"/>
+                                <state key="normal" title="Show Succes With Accessory View"/>
+                                <connections>
+                                    <action selector="showSuccessWithAccesoryView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="An7-y7-UDw"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tfK-dL-iQe">
-                                <rect key="frame" x="266" y="435" width="69" height="30"/>
-                                <animations/>
+                                <rect key="frame" x="153.5" y="502" width="68" height="30"/>
                                 <state key="normal" title="Show Info">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="showInfo:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="0IS-En-Vtu"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vTD-O1-rRw">
-                                <rect key="frame" x="262" y="473" width="77" height="30"/>
-                                <animations/>
+                                <rect key="frame" x="149.5" y="540" width="76" height="30"/>
                                 <state key="normal" title="Show Error">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="showError:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="dfc-Cu-ILl"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tgG-aC-S2q">
-                                <rect key="frame" x="245" y="511" width="110" height="30"/>
-                                <animations/>
+                                <rect key="frame" x="132.5" y="578" width="110" height="30"/>
                                 <state key="normal" title="Clear Messages">
                                     <color key="titleColor" red="0.96326452493667603" green="0.096623696386814117" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -58,19 +66,17 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EGE-TM-z4L">
-                                <rect key="frame" x="254" y="549" width="92" height="30"/>
-                                <animations/>
+                                <rect key="frame" x="141.5" y="616" width="92" height="30"/>
                                 <state key="normal" title="Clear Current">
-                                    <color key="titleColor" red="0.96326452493667603" green="0.096623696386814117" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.94059276580810547" green="0.0" blue="0.02498987689614296" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="clearCurrent:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Zc0-4F-4Rk"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="vTD-O1-rRw" secondAttribute="centerX" id="2Pw-Rj-x4i"/>
                             <constraint firstItem="tgG-aC-S2q" firstAttribute="top" secondItem="vTD-O1-rRw" secondAttribute="bottom" constant="8" id="47L-d1-JEj"/>
@@ -79,9 +85,11 @@
                             <constraint firstItem="EGE-TM-z4L" firstAttribute="top" secondItem="tgG-aC-S2q" secondAttribute="bottom" constant="8" id="H3Y-hp-4gv"/>
                             <constraint firstAttribute="centerX" secondItem="tfK-dL-iQe" secondAttribute="centerX" id="MZv-wF-YQk"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="vTD-O1-rRw" secondAttribute="bottom" constant="97" id="RX8-LJ-8Gq"/>
+                            <constraint firstItem="tfK-dL-iQe" firstAttribute="top" secondItem="nha-ta-9BD" secondAttribute="bottom" constant="8" id="UnV-p0-unb"/>
                             <constraint firstItem="vTD-O1-rRw" firstAttribute="top" secondItem="tfK-dL-iQe" secondAttribute="bottom" constant="8" id="fUI-GQ-Zoy"/>
                             <constraint firstAttribute="centerX" secondItem="EGE-TM-z4L" secondAttribute="centerX" id="hj6-wm-cik"/>
-                            <constraint firstItem="tfK-dL-iQe" firstAttribute="top" secondItem="g3H-aA-9F1" secondAttribute="bottom" constant="8" id="lZg-Nx-Cwn"/>
+                            <constraint firstItem="nha-ta-9BD" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="u0y-PX-D4M"/>
+                            <constraint firstItem="nha-ta-9BD" firstAttribute="top" secondItem="g3H-aA-9F1" secondAttribute="bottom" constant="8" id="yl9-Pz-aHD"/>
                         </constraints>
                     </view>
                 </viewController>
