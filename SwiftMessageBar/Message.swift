@@ -30,6 +30,18 @@ final class Message: UIView {
   private var languageDirection: NSLocale.LanguageDirection!
   private var titleFont: UIFont!
   private var messageFont: UIFont!
+  private var accessoryView: UIView?
+
+  public lazy var contentView: UIStackView = {
+    let contentView = UIStackView(frame: bounds)
+    contentView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    contentView.isLayoutMarginsRelativeArrangement = true
+    contentView.axis = .horizontal
+    contentView.spacing = 10
+
+    usesAutoLayout(true)
+    return contentView
+  }()
   
   private var paragraphStyle: NSMutableParagraphStyle {
     let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
@@ -39,7 +51,7 @@ final class Message: UIView {
   
   init(type: MessageType, title: String?, message: String?, backgroundColor: UIColor, titleFontColor: UIColor,
        messageFontColor: UIColor, icon: UIImage?, duration: TimeInterval, dismiss: Bool = true, callback: Callback?,
-       languageDirection: NSLocale.LanguageDirection, titleFont: UIFont, messageFont: UIFont) {
+       languageDirection: NSLocale.LanguageDirection, titleFont: UIFont, messageFont: UIFont, accessoryView: UIView? = nil) {
     self.type = type
     self.title = title
     self.message = message
@@ -52,6 +64,7 @@ final class Message: UIView {
     self.languageDirection = languageDirection
     self.titleFont = titleFont
     self.messageFont = messageFont
+    self.accessoryView = accessoryView
     
     super.init(frame: CGRect.zero)
     
@@ -70,21 +83,18 @@ final class Message: UIView {
       titleLabel.flipHorizontal()
       messageLabel.flipHorizontal()
       iconImageView.flipHorizontal()
+      accessoryView?.flipHorizontal()
     }
 
     let textStackView = makeTextStackView(with: titleLabel, messageLabel: messageLabel)
-    
-    let parentStackView: UIStackView = {
-      let stackView = UIStackView(arrangedSubviews: [iconImageView, textStackView])
-      stackView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-      stackView.isLayoutMarginsRelativeArrangement = true
-      stackView.axis = .horizontal
-      stackView.spacing = 15
-      stackView.distribution = .fillProportionally
-      return stackView
-    }()
-    parentStackView.usesAutoLayout(true)
-    addSubview(parentStackView, constrainedTo: self)
+    contentView.addArrangedSubview(iconImageView)
+    contentView.addArrangedSubview(textStackView)
+
+    if let accessoryView = accessoryView {
+      accessoryView.setContentCompressionResistancePriority(.required, for: .horizontal)
+      contentView.addArrangedSubview(accessoryView)
+    }
+    addSubview(contentView, constrainedTo: self)
   }
   
   private func makeIconView() -> UIImageView {
@@ -92,6 +102,7 @@ final class Message: UIView {
     iconImageView.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
     iconImageView.contentMode = .center
     iconImageView.image = icon
+    iconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
     return iconImageView
   }
   
@@ -130,7 +141,7 @@ final class Message: UIView {
     let isTitleEmpty = title?.isEmpty ?? true
     let isMessageEmpty = message?.isEmpty ?? true
 
-    let stackView = UIStackView()
+    let stackView = UIStackView(frame: bounds)
     if !isTitleEmpty {
       stackView.addArrangedSubview(titleLabel)
     }
@@ -154,69 +165,13 @@ final class Message: UIView {
                                                              metrics: nil, views: ["view": self]))
     super.updateConstraints()
   }
-  
-  override var intrinsicContentSize: CGSize {
-    return CGSize(width: statusBarFrame.width, height: estimatedHeight)
-  }
 
   var estimatedHeight: CGFloat {
-      let iconSize = icon == nil ? 0 : Message.iconSize
-      return max(topMargin + titleSize.height + Message.messageOffset + messageSize.height + bottomMargin,
-                 topMargin + iconSize + bottomMargin)
+    return self.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
   }
-
-  var titleSize: CGSize {
-    let boundedSize = CGSize(width: availableWidth, height: CGFloat.greatestFiniteMagnitude)
-    let titleFontAttributes: [NSAttributedString.Key: Any] = [.font: titleFont]
-    if let size = title?.boundingRect(with: boundedSize,
-                                      options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin],
-                                      attributes: titleFontAttributes, context: nil).size {
-      return CGSize(width: ceil(size.width), height: ceil(size.height))
-    }
-    return .zero
+  var estimatedWidth: CGFloat {
+    return self.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).width
   }
-  
-  var messageSize: CGSize {
-    let boundedSize = CGSize(width: availableWidth, height: CGFloat.greatestFiniteMagnitude)
-    let titleFontAttributes: [NSAttributedString.Key: Any] = [.font: messageFont]
-    if let size = message?.boundingRect(with: boundedSize,
-                                        options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin],
-                                        attributes: titleFontAttributes, context: nil).size {
-      return CGSize(width: ceil(size.width), height: ceil(size.height))
-    }
-    return .zero
-  }
-  
-  var statusBarOffset: CGFloat {
-    return statusBarFrame.height
-  }
-  
-  var topMargin: CGFloat {
-    return max(statusBarOffset, Message.padding)
-  }
-
-  var bottomMargin: CGFloat {
-    return Message.padding
-  }
-    
-  var width: CGFloat {
-    return statusBarFrame.width
-  }
-  
-  var statusBarFrame: CGRect {
-    let windowFrame = UIScreen.main.bounds
-    let statusFrame = UIApplication.shared.statusBarFrame
-    return CGRect(x: windowFrame.minX, y: windowFrame.minY, width: windowFrame.width, height: statusFrame.height)
-  }
-  
-  var availableWidth: CGFloat {
-    return width - Message.padding * 2 - Message.iconSize
-  }
-
-  static func ==(lhs: Message, rhs: Message) -> Bool {
-    return lhs.id == rhs.id
-  }
-
 }
 
 extension Message: Identifiable {
