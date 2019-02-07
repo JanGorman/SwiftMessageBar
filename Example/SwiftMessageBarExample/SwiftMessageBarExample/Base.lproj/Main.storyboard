@@ -27,14 +27,14 @@
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="showSuccess:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="UXp-O5-5af"/>
+                                    <action selector="showSuccess" destination="vXZ-lx-hvc" eventType="touchUpInside" id="LcG-Pk-Pd8"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nha-ta-9BD" userLabel="Show Succes with custom view">
                                 <rect key="frame" x="67.5" y="464" width="240" height="30"/>
                                 <state key="normal" title="Show Succes With Accessory View"/>
                                 <connections>
-                                    <action selector="showSuccessWithAccesoryView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="An7-y7-UDw"/>
+                                    <action selector="showSuccessWithAccesoryView" destination="vXZ-lx-hvc" eventType="touchUpInside" id="e3k-x5-dIy"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tfK-dL-iQe">
@@ -43,7 +43,7 @@
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="showInfo:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="0IS-En-Vtu"/>
+                                    <action selector="showInfo" destination="vXZ-lx-hvc" eventType="touchUpInside" id="sSJ-3z-lvi"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vTD-O1-rRw">
@@ -52,7 +52,7 @@
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="showError:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="dfc-Cu-ILl"/>
+                                    <action selector="showError" destination="vXZ-lx-hvc" eventType="touchUpInside" id="xga-jW-viM"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tgG-aC-S2q">
@@ -62,7 +62,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="clearAll:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="pqO-1x-qOR"/>
+                                    <action selector="clearAll" destination="vXZ-lx-hvc" eventType="touchUpInside" id="acw-re-8lv"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EGE-TM-z4L">
@@ -72,7 +72,7 @@
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="clearCurrent:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Zc0-4F-4Rk"/>
+                                    <action selector="clearCurrent" destination="vXZ-lx-hvc" eventType="touchUpInside" id="DhZ-cG-jZf"/>
                                 </connections>
                             </button>
                         </subviews>
