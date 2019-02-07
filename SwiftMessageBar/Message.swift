@@ -12,8 +12,6 @@ protocol Identifiable {
 
 final class Message: UIView {
 
-  private static let iconSize: CGFloat = 36
-
   private(set) var type: MessageType!
   private let uuid = UUID()
   private var title: String?
@@ -21,10 +19,10 @@ final class Message: UIView {
   private var titleFontColor: UIColor!
   private var messageFontColor: UIColor!
   private var icon: UIImage?
-  var isHit: Bool = false
+  var isHit = false
   private(set) var callback: Callback?
   private(set) var duration: TimeInterval!
-  private(set) var dismiss: Bool = true
+  private(set) var dismiss = true
   private var languageDirection: NSLocale.LanguageDirection!
   private var titleFont: UIFont!
   private var messageFont: UIFont!
@@ -49,7 +47,7 @@ final class Message: UIView {
   
   init(type: MessageType, title: String?, message: String?, backgroundColor: UIColor, titleFontColor: UIColor,
        messageFontColor: UIColor, icon: UIImage?, duration: TimeInterval, dismiss: Bool = true, callback: Callback?,
-       languageDirection: NSLocale.LanguageDirection, titleFont: UIFont, messageFont: UIFont, accessoryView: UIView? = nil) {
+       languageDirection: NSLocale.LanguageDirection, titleFont: UIFont, messageFont: UIFont, accessoryView: UIView?) {
     self.type = type
     self.title = title
     self.message = message
@@ -64,7 +62,7 @@ final class Message: UIView {
     self.messageFont = messageFont
     self.accessoryView = accessoryView
     
-    super.init(frame: CGRect.zero)
+    super.init(frame: .zero)
     
     self.backgroundColor = backgroundColor
     usesAutoLayout(true)
@@ -89,18 +87,17 @@ final class Message: UIView {
     contentStackView.addArrangedSubview(textStackView)
 
     if let accessoryView = accessoryView {
-      let wrapperUIView = makeWrapperUIView(for: accessoryView)
-      contentStackView.addArrangedSubview(wrapperUIView)
+      contentStackView.addArrangedSubview(makeWrapperView(for: accessoryView))
     }
+
     addSubview(contentStackView, constrainedTo: self)
   }
   
   private func makeIconView() -> UIImageView {
-    let iconImageView = UIImageView()
-    iconImageView.frame = CGRect(origin: .zero, size: CGSize(width: Message.iconSize, height: Message.iconSize))
+    let iconImageView = UIImageView(image: icon)
     iconImageView.contentMode = .center
-    iconImageView.image = icon
     iconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
+    iconImageView.setContentHuggingPriority(.required, for: .horizontal)
     return iconImageView
   }
   
@@ -153,8 +150,8 @@ final class Message: UIView {
     return stackView
   }
 
-  func makeWrapperUIView(for view: UIView) -> UIView {
-    let wrapper = UIView(frame: CGRect(origin: .zero, size: view.bounds.size))
+  private func makeWrapperView(for view: UIView) -> UIView {
+    let wrapper = UIView(frame: view.bounds)
 
     view.setContentCompressionResistancePriority(.required, for: .horizontal)
     wrapper.addSubview(view)
@@ -173,17 +170,17 @@ final class Message: UIView {
   }
   
   override func updateConstraints() {
-    superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]-0-|", options: [],
-                                                             metrics: nil, views: ["view": self]))
+    if let superview = superview {
+      NSLayoutConstraint.activate([
+        superview.widthAnchor.constraint(equalTo: widthAnchor),
+        superview.leftAnchor.constraint(equalTo: leftAnchor)
+      ])
+    }
     super.updateConstraints()
   }
 
   var estimatedHeight: CGFloat {
     return self.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-  }
-
-  var estimatedWidth: CGFloat {
-    return self.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).width
   }
 }
 
@@ -196,17 +193,16 @@ extension Message: Identifiable {
 }
 
 extension UIView {
-  
-  func usesAutoLayout(_ usesAutoLayout: Bool) {
-    translatesAutoresizingMaskIntoConstraints = !usesAutoLayout
-  }
-    
+
   func flipHorizontal() {
     layer.setAffineTransform(CGAffineTransform(scaleX: -1, y: 1))
   }
 
-  func addSubview(_ subview: UIView,
-                  constrainedTo anchorView: UIView) {
+  fileprivate func usesAutoLayout(_ usesAutoLayout: Bool) {
+    translatesAutoresizingMaskIntoConstraints = !usesAutoLayout
+  }
+
+  fileprivate func addSubview(_ subview: UIView, constrainedTo anchorView: UIView) {
     addSubview(subview)
     subview.usesAutoLayout(true)
 
