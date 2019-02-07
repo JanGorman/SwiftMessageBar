@@ -11,9 +11,7 @@ protocol Identifiable {
 }
 
 final class Message: UIView {
-  
-  private static let padding: CGFloat = 10
-  private static let messageOffset: CGFloat = 2
+
   private static let iconSize: CGFloat = 36
 
   private(set) var type: MessageType!
@@ -32,7 +30,7 @@ final class Message: UIView {
   private var messageFont: UIFont!
   private var accessoryView: UIView?
 
-  public lazy var contentView: UIStackView = {
+  public lazy var contentStackView: UIStackView = {
     let contentView = UIStackView(frame: bounds)
     contentView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     contentView.isLayoutMarginsRelativeArrangement = true
@@ -87,19 +85,19 @@ final class Message: UIView {
     }
 
     let textStackView = makeTextStackView(with: titleLabel, messageLabel: messageLabel)
-    contentView.addArrangedSubview(iconImageView)
-    contentView.addArrangedSubview(textStackView)
+    contentStackView.addArrangedSubview(iconImageView)
+    contentStackView.addArrangedSubview(textStackView)
 
     if let accessoryView = accessoryView {
-      accessoryView.setContentCompressionResistancePriority(.required, for: .horizontal)
-      contentView.addArrangedSubview(accessoryView)
+      let wrapperUIView = makeWrapperUIView(for: accessoryView)
+      contentStackView.addArrangedSubview(wrapperUIView)
     }
-    addSubview(contentView, constrainedTo: self)
+    addSubview(contentStackView, constrainedTo: self)
   }
   
   private func makeIconView() -> UIImageView {
     let iconImageView = UIImageView()
-    iconImageView.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
+    iconImageView.frame = CGRect(origin: .zero, size: CGSize(width: Message.iconSize, height: Message.iconSize))
     iconImageView.contentMode = .center
     iconImageView.image = icon
     iconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -155,6 +153,21 @@ final class Message: UIView {
     stackView.distribution = .fill
     return stackView
   }
+
+  func makeWrapperUIView(for view: UIView) -> UIView {
+    let wrapper = UIView(frame: CGRect(origin: .zero, size: view.bounds.size))
+
+    view.setContentCompressionResistancePriority(.required, for: .horizontal)
+    wrapper.addSubview(view)
+    wrapper.contentMode = .center
+    NSLayoutConstraint.activate([
+      view.centerYAnchor.constraint(equalTo: wrapper.centerYAnchor),
+      view.centerXAnchor.constraint(equalTo: wrapper.centerXAnchor),
+      view.widthAnchor.constraint(equalTo:  wrapper.widthAnchor)])
+
+    view.usesAutoLayout(true)
+    return wrapper
+  }
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
@@ -192,17 +205,16 @@ extension UIView {
     layer.setAffineTransform(CGAffineTransform(scaleX: -1, y: 1))
   }
 
-  func addSubview(_ subviews: UIView,
+  func addSubview(_ subview: UIView,
                   constrainedTo anchorView: UIView) {
-    addSubview(subviews)
-    subviews.usesAutoLayout(true)
+    addSubview(subview)
+    subview.usesAutoLayout(true)
 
     NSLayoutConstraint.activate([
-      subviews.centerXAnchor.constraint(equalTo: anchorView.centerXAnchor),
-      subviews.centerYAnchor.constraint(equalTo: anchorView.centerYAnchor),
-      subviews.widthAnchor.constraint(equalTo:  anchorView.widthAnchor),
-      subviews.heightAnchor.constraint(equalTo: anchorView.heightAnchor)])
-
+      subview.centerXAnchor.constraint(equalTo: anchorView.centerXAnchor),
+      subview.centerYAnchor.constraint(equalTo: anchorView.centerYAnchor),
+      subview.widthAnchor.constraint(equalTo:  anchorView.widthAnchor),
+      subview.heightAnchor.constraint(equalTo: anchorView.heightAnchor)])
   }
 
 }
