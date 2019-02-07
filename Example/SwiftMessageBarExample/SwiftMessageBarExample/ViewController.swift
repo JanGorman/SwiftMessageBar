@@ -48,7 +48,7 @@ class ViewController: UIViewController {
     }
   }
 
-  @IBAction func showSuccessWithAccesoryView() {
+  @IBAction private func showSuccessWithAccesoryView() {
     let message = "A really long message can go here, to provide a description for the user"
     let button = UIButton(type: .roundedRect)
     button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
