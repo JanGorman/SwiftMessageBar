@@ -135,7 +135,6 @@ final class Message: UIView {
   }
 
   private func makeTextStackView(with titleLabel: UILabel, messageLabel: UILabel) -> UIStackView {
-
     let isTitleEmpty = title?.isEmpty ?? true
     let isMessageEmpty = message?.isEmpty ?? true
 
@@ -182,6 +181,7 @@ final class Message: UIView {
   var estimatedHeight: CGFloat {
     return self.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
   }
+
   var estimatedWidth: CGFloat {
     return self.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).width
   }
@@ -216,6 +216,5 @@ extension UIView {
       subview.widthAnchor.constraint(equalTo:  anchorView.widthAnchor),
       subview.heightAnchor.constraint(equalTo: anchorView.heightAnchor)])
   }
-
 }
 
