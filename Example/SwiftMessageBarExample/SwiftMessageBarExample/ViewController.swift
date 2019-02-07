@@ -53,7 +53,7 @@ class ViewController: UIViewController {
     let button = UIButton(type: .roundedRect)
     button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     button.setContentHuggingPriority(.required, for: .horizontal)
-    button.setTitle("Open asasda", for: .normal)
+    button.setTitle("Open", for: .normal)
     button.tintColor = .orange
     button.backgroundColor = .white
     button.layer.cornerRadius = 6
