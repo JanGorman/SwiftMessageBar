@@ -201,6 +201,7 @@ public final class SwiftMessageBar {
   ///     - dismiss: Does the message automatically dismiss or not
   ///     - languageDirection: Set an optional language direction if you require RTL support outside of what the system provides
   ///                          i.e. no need to set this parameter when NSLocale already is set to the proper languageDirection
+  ///     - accessoryView: An optional view to show in the right of the Message Bar
   ///     - callback: An optional callback to execute when the user taps on a message to dismiss it.
   /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
   @discardableResult
@@ -223,6 +224,7 @@ public final class SwiftMessageBar {
   ///     - dismiss: Does the message automatically dismiss or not
   ///     - languageDirection: Set an optional language direction if you require RTL support outside of what the system provides
   ///                          i.e. no need to set this parameter when NSLocale already is set to the proper languageDirection
+  ///     - accessoryView: An optional view to show in the right of the Message Bar
   ///     - callback: An optional callback to execute when the user taps on a message to dismiss it.
   /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
   @discardableResult
