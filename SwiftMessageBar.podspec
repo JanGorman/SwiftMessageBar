@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.authors            = { "Jan Gorman" => "https://github.com/JanGorman/", "Ramy Kfoury" => "https://github.com/ramy-kfoury/" }
   s.social_media_url   = "http://twitter.com/JanGorman"
 
-  s.platform     = :ios, "8.4"
+  s.platform     = :ios, "9.0"
 
   s.source       = { :git => "https://github.com/JanGorman/SwiftMessageBar.git", :tag => s.version }
 

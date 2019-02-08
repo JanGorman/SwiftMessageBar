@@ -201,15 +201,17 @@ public final class SwiftMessageBar {
   ///     - dismiss: Does the message automatically dismiss or not
   ///     - languageDirection: Set an optional language direction if you require RTL support outside of what the system provides
   ///                          i.e. no need to set this parameter when NSLocale already is set to the proper languageDirection
+  ///     - accessoryView: An optional view to show in the right of the Message Bar
   ///     - callback: An optional callback to execute when the user taps on a message to dismiss it.
   /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
   @discardableResult
   public static func showMessage(withTitle title: String? = nil, message: String? = nil, type: MessageType,
                                  duration: TimeInterval = 3, dismiss: Bool = true,
                                  languageDirection: NSLocale.LanguageDirection = .unknown,
+                                 accessoryView: UIView? = nil,
                                  callback: Callback? = nil) -> UUID {
     return sharedMessageBar.showMessage(withTitle: title, message: message, type: type, duration: duration,
-                                        dismiss: dismiss, languageDirection: languageDirection, callback: callback)
+                                        dismiss: dismiss, languageDirection: languageDirection, accessoryView: accessoryView, callback: callback)
   }
   
   /// Display a message
@@ -222,18 +224,20 @@ public final class SwiftMessageBar {
   ///     - dismiss: Does the message automatically dismiss or not
   ///     - languageDirection: Set an optional language direction if you require RTL support outside of what the system provides
   ///                          i.e. no need to set this parameter when NSLocale already is set to the proper languageDirection
+  ///     - accessoryView: An optional view to show in the right of the Message Bar
   ///     - callback: An optional callback to execute when the user taps on a message to dismiss it.
   /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
   @discardableResult
   public func showMessage(withTitle title: String? = nil, message: String? = nil, type: MessageType,
                           duration: TimeInterval = 3, dismiss: Bool = true,
                           languageDirection: NSLocale.LanguageDirection = .unknown,
+                          accessoryView: UIView? = nil,
                           callback: Callback? = nil) -> UUID {
     let message = Message(type: type, title: title, message: message,
                           backgroundColor: type.backgroundColor(fromConfig: config), titleFontColor: config.titleColor,
                           messageFontColor: config.messageColor, icon: type.image(fromConfig: config), duration: duration,
                           dismiss: dismiss, callback: callback, languageDirection: languageDirection,
-                          titleFont: config.titleFont, messageFont: config.messageFont)
+                          titleFont: config.titleFont, messageFont: config.messageFont, accessoryView: accessoryView)
     if languageDirection == .rightToLeft {
       message.flipHorizontal()
     }
@@ -292,7 +296,6 @@ public final class SwiftMessageBar {
     messageWindow.messageBarView.bringSubviewToFront(message)
     isMessageVisible = true
     message.configureSubviews()
-    message.frame = CGRect(x: 0, y: -message.estimatedHeight, width: message.width, height: message.estimatedHeight)
     message.isHidden = false
     message.setNeedsUpdateConstraints()
     
