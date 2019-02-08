@@ -34,8 +34,6 @@ final class Message: UIView {
     contentView.isLayoutMarginsRelativeArrangement = true
     contentView.axis = .horizontal
     contentView.spacing = 10
-
-    usesAutoLayout(true)
     return contentView
   }()
   
