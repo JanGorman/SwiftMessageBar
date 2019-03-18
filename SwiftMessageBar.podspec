@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
 
-  s.name          = "SwiftMessageBar"
-  s.version       = "5.3.0"
-  s.summary       = "A Swift Message Bar"
+  s.name          = 'SwiftMessageBar'
+  s.version       = '5.4.1'
+  s.summary       = 'A Swift Message Bar'
   s.swift_version = '4.2'
 
   s.description  = <<-DESC
@@ -14,16 +14,16 @@ Pod::Spec.new do |s|
                    * Finally, don't worry about the indent, CocoaPods strips it!
                    DESC
 
-  s.homepage     = "https://github.com/JanGorman/SwiftMessageBar"
-  s.license      = "MIT"
-  s.authors            = { "Jan Gorman" => "https://github.com/JanGorman/", "Ramy Kfoury" => "https://github.com/ramy-kfoury/" }
-  s.social_media_url   = "http://twitter.com/JanGorman"
+  s.homepage     = 'https://github.com/JanGorman/SwiftMessageBar'
+  s.license      = 'MIT'
+  s.authors            = { 'Jan Gorman' => 'https://github.com/JanGorman/', 'Ramy Kfoury' => 'https://github.com/ramy-kfoury/' }
+  s.social_media_url   = 'http://twitter.com/JanGorman'
 
-  s.platform     = :ios, "9.0"
+  s.platform     = :ios, '9.0'
 
-  s.source       = { :git => "https://github.com/JanGorman/SwiftMessageBar.git", :tag => s.version }
+  s.source       = { :git => 'https://github.com/JanGorman/SwiftMessageBar.git', :tag => s.version }
 
-  s.source_files  = "SwiftMessageBar/*.swift"
-  s.resources = "SwiftMessageBar/*.png"
+  s.source_files  = 'SwiftMessageBar/*.swift'
+  s.resources = 'SwiftMessageBar/*.png'
 
 end
