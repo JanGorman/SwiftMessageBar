@@ -203,12 +203,11 @@ extension UIView {
   fileprivate func addSubview(_ subview: UIView, constrainedTo anchorView: UIView) {
     addSubview(subview)
     subview.usesAutoLayout(true)
-
+    
     NSLayoutConstraint.activate([
-      subview.centerXAnchor.constraint(equalTo: anchorView.centerXAnchor),
-      subview.centerYAnchor.constraint(equalTo: anchorView.centerYAnchor),
       subview.widthAnchor.constraint(equalTo:  anchorView.widthAnchor),
-      subview.heightAnchor.constraint(equalTo: anchorView.heightAnchor)])
+      subview.heightAnchor.constraint(equalTo: anchorView.heightAnchor)
+    ])
   }
 }
 
