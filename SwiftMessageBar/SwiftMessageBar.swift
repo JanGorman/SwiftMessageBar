@@ -295,19 +295,27 @@ public final class SwiftMessageBar {
     messageWindow.messageBarView.addSubview(message)
     messageWindow.messageBarView.bringSubviewToFront(message)
     isMessageVisible = true
-    message.configureSubviews()
-    message.isHidden = false
+    
+    if #available(iOS 11, *) {
+      message.configureSubviews(topAnchor: messageWindow.messageBarView.safeAreaLayoutGuide.topAnchor)
+    } else {
+      message.configureSubviews(topAnchor: messageWindow.messageBarController.topLayoutGuide.bottomAnchor)
+    }
+    
     message.setNeedsUpdateConstraints()
     
     let gesture = UITapGestureRecognizer(target: self, action: #selector(tap))
     message.addGestureRecognizer(gesture)
-
-    UIView.animate(withDuration: SwiftMessageBar.showHideDuration, animations: {
-      let frame = message.frame.offsetBy(dx: 0, dy: message.estimatedHeight)
-      message.frame = frame
-    }, completion: { _ in
-      self.provideHapticFeedback(for: message)
-    })
+    
+    message.transform = CGAffineTransform(translationX: 0, y: -messageWindow.frame.height)
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+      message.transform = CGAffineTransform(translationX: 0, y: -message.frame.height)
+      UIView.animate(withDuration: SwiftMessageBar.showHideDuration, animations: {
+        message.transform = .identity
+      }, completion: { _ in
+        self.provideHapticFeedback(for: message)
+      })
+    }
 
     if message.dismiss {
       resetTimer()
@@ -362,9 +370,8 @@ public final class SwiftMessageBar {
     message.isHit = true
     
     UIView.animate(withDuration: SwiftMessageBar.showHideDuration, delay: 0, options: [], animations: {
-      let frame = message.frame.offsetBy(dx: 0, dy: -message.estimatedHeight)
-      message.frame = frame
-      }, completion: { [weak self] _ in
+      message.transform = CGAffineTransform(translationX: 0, y: -message.frame.height)
+    }, completion: { [weak self] _ in
         self?.isMessageVisible = false
         message.removeFromSuperview()
         
