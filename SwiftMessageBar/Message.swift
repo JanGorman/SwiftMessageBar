@@ -30,7 +30,7 @@ final class Message: UIView {
 
   public lazy var contentStackView: UIStackView = {
     let contentView = UIStackView(frame: bounds)
-    contentView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    contentView.layoutMargins = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
     contentView.isLayoutMarginsRelativeArrangement = true
     contentView.axis = .horizontal
     contentView.spacing = 10
@@ -66,7 +66,7 @@ final class Message: UIView {
     usesAutoLayout(true)
   }
   
-  func configureSubviews() {
+  func configureSubviews(topAnchor: NSLayoutYAxisAnchor) {
     let iconImageView = makeIconView()
     let titleLabel = makeTitleLabel()
     let messageLabel = makeMessageLabel()
@@ -88,7 +88,18 @@ final class Message: UIView {
       contentStackView.addArrangedSubview(makeWrapperView(for: accessoryView))
     }
 
-    addSubview(contentStackView, constrainedTo: self)
+    addSubview(contentStackView)
+    configureConstraints(withTopAnchor: topAnchor)
+  }
+  
+  private func configureConstraints(withTopAnchor topAnchor: NSLayoutYAxisAnchor) {
+    contentStackView.usesAutoLayout(true)
+    NSLayoutConstraint.activate([
+      contentStackView.rightAnchor.constraint(equalTo: rightAnchor),
+      contentStackView.leftAnchor.constraint(equalTo: leftAnchor),
+      contentStackView.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor),
+      contentStackView.topAnchor.constraint(equalTo: topAnchor),
+    ])
   }
   
   private func makeIconView() -> UIImageView {
@@ -157,7 +168,7 @@ final class Message: UIView {
     NSLayoutConstraint.activate([
       view.centerYAnchor.constraint(equalTo: wrapper.centerYAnchor),
       view.centerXAnchor.constraint(equalTo: wrapper.centerXAnchor),
-      view.widthAnchor.constraint(equalTo:  wrapper.widthAnchor)])
+      view.widthAnchor.constraint(equalTo: wrapper.widthAnchor)])
 
     view.usesAutoLayout(true)
     return wrapper
@@ -170,8 +181,9 @@ final class Message: UIView {
   override func updateConstraints() {
     if let superview = superview {
       NSLayoutConstraint.activate([
-        superview.widthAnchor.constraint(equalTo: widthAnchor),
-        superview.leftAnchor.constraint(equalTo: leftAnchor)
+        rightAnchor.constraint(equalTo: superview.rightAnchor),
+        leftAnchor.constraint(equalTo: superview.leftAnchor),
+        topAnchor.constraint(equalTo: superview.topAnchor)
       ])
     }
     super.updateConstraints()
@@ -198,17 +210,6 @@ extension UIView {
 
   fileprivate func usesAutoLayout(_ usesAutoLayout: Bool) {
     translatesAutoresizingMaskIntoConstraints = !usesAutoLayout
-  }
-
-  fileprivate func addSubview(_ subview: UIView, constrainedTo anchorView: UIView) {
-    addSubview(subview)
-    subview.usesAutoLayout(true)
-
-    NSLayoutConstraint.activate([
-      subview.centerXAnchor.constraint(equalTo: anchorView.centerXAnchor),
-      subview.centerYAnchor.constraint(equalTo: anchorView.centerYAnchor),
-      subview.widthAnchor.constraint(equalTo:  anchorView.widthAnchor),
-      subview.heightAnchor.constraint(equalTo: anchorView.heightAnchor)])
   }
 }
 

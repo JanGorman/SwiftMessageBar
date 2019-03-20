@@ -30,7 +30,7 @@
                                     <action selector="showSuccess" destination="vXZ-lx-hvc" eventType="touchUpInside" id="LcG-Pk-Pd8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nha-ta-9BD" userLabel="Show Succes with custom view">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nha-ta-9BD" userLabel="Show Success with custom view">
                                 <rect key="frame" x="67.5" y="464" width="240" height="30"/>
                                 <state key="normal" title="Show Succes With Accessory View"/>
                                 <connections>
