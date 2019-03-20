@@ -95,10 +95,10 @@ final class Message: UIView {
   private func configureConstraints(withTopAnchor topAnchor: NSLayoutYAxisAnchor) {
     contentStackView.usesAutoLayout(true)
     NSLayoutConstraint.activate([
-      contentStackView.rightAnchor.constraint(equalTo:  rightAnchor),
-      contentStackView.leftAnchor.constraint(equalTo:  leftAnchor),
+      contentStackView.rightAnchor.constraint(equalTo: rightAnchor),
+      contentStackView.leftAnchor.constraint(equalTo: leftAnchor),
       contentStackView.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor),
-      contentStackView.topAnchor.constraint(equalTo:  topAnchor),
+      contentStackView.topAnchor.constraint(equalTo: topAnchor),
     ])
   }
   
@@ -168,7 +168,7 @@ final class Message: UIView {
     NSLayoutConstraint.activate([
       view.centerYAnchor.constraint(equalTo: wrapper.centerYAnchor),
       view.centerXAnchor.constraint(equalTo: wrapper.centerXAnchor),
-      view.widthAnchor.constraint(equalTo:  wrapper.widthAnchor)])
+      view.widthAnchor.constraint(equalTo: wrapper.widthAnchor)])
 
     view.usesAutoLayout(true)
     return wrapper
