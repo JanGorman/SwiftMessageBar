@@ -38,10 +38,10 @@ struct Queue<T: Equatable> {
   }
 
   mutating func removeElement(_ element: T) {
-    if let idx = left.index(of: element) {
+    if let idx = left.firstIndex(of: element) {
       left.remove(at: idx)
     }
-    if let idx = right.index(of: element) {
+    if let idx = right.firstIndex(of: element) {
       right.remove(at: idx)
     }
   }

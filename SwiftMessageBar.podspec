@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
 
   s.name          = 'SwiftMessageBar'
-  s.version       = '5.4.2'
+  s.version       = '5.5.0'
   s.summary       = 'A Swift Message Bar'
-  s.swift_version = '4.2'
+  s.swift_version = '5.0'
 
   s.description  = <<-DESC
                    A longer description of SwiftMessageBar in Markdown format.
@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.authors            = { 'Jan Gorman' => 'https://github.com/JanGorman/', 'Ramy Kfoury' => 'https://github.com/ramy-kfoury/' }
   s.social_media_url   = 'http://twitter.com/JanGorman'
 
-  s.platform     = :ios, '9.0'
+  s.platform     = :ios, '10.0'
 
   s.source       = { :git => 'https://github.com/JanGorman/SwiftMessageBar.git', :tag => s.version }
 

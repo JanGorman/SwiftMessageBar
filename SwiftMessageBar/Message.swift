@@ -116,8 +116,8 @@ final class Message: UIView {
 
     if let title = title {
       let attributes: [NSAttributedString.Key: Any] = [
-        .font : titleFont,
-        .foregroundColor: titleFontColor,
+        .font : titleFont!,
+        .foregroundColor: titleFontColor!,
         .paragraphStyle: paragraphStyle
       ]
       titleLabel.attributedText = NSAttributedString(string: title, attributes: attributes)
@@ -131,8 +131,8 @@ final class Message: UIView {
 
     if let message = message {
       let attributes: [NSAttributedString.Key: Any] = [
-        .font : messageFont,
-        .foregroundColor: messageFontColor,
+        .font : messageFont!,
+        .foregroundColor: messageFontColor!,
         .paragraphStyle: paragraphStyle
       ]
       messageLabel.attributedText = NSAttributedString(string: message, attributes: attributes)
