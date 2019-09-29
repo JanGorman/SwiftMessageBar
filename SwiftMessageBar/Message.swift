@@ -4,12 +4,6 @@
 
 import UIKit
 
-protocol Identifiable {
-
-  var id: UUID { get }
-
-}
-
 final class Message: UIView {
 
   private(set) var type: MessageType!
@@ -197,7 +191,7 @@ final class Message: UIView {
 extension Message: Identifiable {
 
   var id: UUID {
-    return uuid
+    uuid
   }
 
 }

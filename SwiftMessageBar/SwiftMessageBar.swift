@@ -141,16 +141,16 @@ public final class SwiftMessageBar {
       }
 
       public func build() -> Config {
-        return Config(errorColor: errorColor ?? Defaults.errorColor,
-                      successColor: successColor ?? Defaults.successColor,
-                      infoColor: infoColor ?? Defaults.infoColor,
-                      titleColor: titleColor ?? Defaults.titleColor,
-                      messageColor: messageColor ?? Defaults.messageColor,
-                      isStatusBarHidden: isStatusBarHidden ?? Defaults.isStatusBarHidden,
-                      successIcon: successIcon, infoIcon: infoIcon, errorIcon: errorIcon,
-                      titleFont: titleFont ?? Defaults.titleFont,
-                      messageFont: messageFont ?? Defaults.messageFont,
-                      isHapticFeedbackEnabled: isHapticFeedbackEnabled ?? Defaults.isHapticFeedbackEnabled)
+        Config(errorColor: errorColor ?? Defaults.errorColor,
+               successColor: successColor ?? Defaults.successColor,
+               infoColor: infoColor ?? Defaults.infoColor,
+               titleColor: titleColor ?? Defaults.titleColor,
+               messageColor: messageColor ?? Defaults.messageColor,
+               isStatusBarHidden: isStatusBarHidden ?? Defaults.isStatusBarHidden,
+               successIcon: successIcon, infoIcon: infoIcon, errorIcon: errorIcon,
+               titleFont: titleFont ?? Defaults.titleFont,
+               messageFont: messageFont ?? Defaults.messageFont,
+               isHapticFeedbackEnabled: isHapticFeedbackEnabled ?? Defaults.isHapticFeedbackEnabled)
       }
 
     }
@@ -210,8 +210,8 @@ public final class SwiftMessageBar {
                                  languageDirection: NSLocale.LanguageDirection = .unknown,
                                  accessoryView: UIView? = nil,
                                  callback: Callback? = nil) -> UUID {
-    return sharedMessageBar.showMessage(withTitle: title, message: message, type: type, duration: duration,
-                                        dismiss: dismiss, languageDirection: languageDirection, accessoryView: accessoryView, callback: callback)
+    sharedMessageBar.showMessage(withTitle: title, message: message, type: type, duration: duration, dismiss: dismiss,
+                                 languageDirection: languageDirection, accessoryView: accessoryView, callback: callback)
   }
   
   /// Display a message
@@ -278,7 +278,7 @@ public final class SwiftMessageBar {
   }
   
   private var visibleMessage: Message? {
-    return messageWindow?.messageBarView.subviews.compactMap { $0 as? Message }.first
+    messageWindow?.messageBarView.subviews.compactMap { $0 as? Message }.first
   }
   
   private func dequeueNextMessage() {
@@ -393,12 +393,10 @@ public final class SwiftMessageBar {
 
 private class MessageWindow: UIWindow {
   
-  lazy var messageBarController: MessageBarController = {
-    return MessageBarController()
-  }()
+  lazy var messageBarController = MessageBarController()
   
   var messageBarView: UIView {
-    return messageBarController.view
+    messageBarController.view
   }
   
   override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
@@ -426,11 +424,11 @@ private class MessageBarController: UIViewController {
   }
   
   override var preferredStatusBarStyle: UIStatusBarStyle {
-    return statusBarStyle
+    statusBarStyle
   }
   
   override var prefersStatusBarHidden: Bool {
-    return statusBarHidden
+    statusBarHidden
   }
   
 }
