@@ -10,7 +10,7 @@ struct Queue<T: Equatable> {
   private var right: [T]
 
   var isEmpty: Bool {
-    return left.isEmpty && right.isEmpty
+    left.isEmpty && right.isEmpty
   }
 
   init() {

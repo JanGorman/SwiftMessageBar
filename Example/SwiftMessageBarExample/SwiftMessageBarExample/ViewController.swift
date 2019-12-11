@@ -65,7 +65,7 @@ class ViewController: UIViewController {
   }
   
   @objc private func handleButtonTap() {
-    print("button tapped")
+    print("Button tapped")
   }
 
 }

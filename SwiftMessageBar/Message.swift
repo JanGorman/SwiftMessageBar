@@ -6,6 +6,8 @@ import UIKit
 
 final class Message: UIView {
 
+  var isHit = false
+
   private(set) var type: MessageType!
   private let uuid = UUID()
   private var title: String?
@@ -13,7 +15,6 @@ final class Message: UIView {
   private var titleFontColor: UIColor!
   private var messageFontColor: UIColor!
   private var icon: UIImage?
-  var isHit = false
   private(set) var callback: Callback?
   private(set) var duration: TimeInterval!
   private(set) var dismiss = true
@@ -184,7 +185,7 @@ final class Message: UIView {
   }
 
   var estimatedHeight: CGFloat {
-    return self.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+    self.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
   }
 }
 
