@@ -20,7 +20,7 @@ public final class SwiftMessageBar {
       public static let titleFont: UIFont = .boldSystemFont(ofSize: 16)
       public static let messageFont: UIFont = .systemFont(ofSize: 14)
       public static let isHapticFeedbackEnabled = true
-      public static let windowLevel = UIWindow.Level.normal
+      public static let windowLevel:UIWindow.Level = .normal
     }
 
     let errorColor: UIColor
