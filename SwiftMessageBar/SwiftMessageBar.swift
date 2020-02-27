@@ -20,6 +20,7 @@ public final class SwiftMessageBar {
       public static let titleFont: UIFont = .boldSystemFont(ofSize: 16)
       public static let messageFont: UIFont = .systemFont(ofSize: 14)
       public static let isHapticFeedbackEnabled = true
+      public static let windowLevel = UIWindow.Level.normal
     }
 
     let errorColor: UIColor
@@ -34,6 +35,7 @@ public final class SwiftMessageBar {
     let titleFont: UIFont
     let messageFont: UIFont
     let isHapticFeedbackEnabled: Bool
+    let windowLevel: UIWindow.Level
 
     public init(errorColor: UIColor = Defaults.errorColor,
                 successColor: UIColor = Defaults.successColor,
@@ -46,7 +48,8 @@ public final class SwiftMessageBar {
                 errorIcon: UIImage? = nil,
                 titleFont: UIFont = Defaults.titleFont,
                 messageFont: UIFont = Defaults.messageFont,
-                isHapticFeedbackEnabled: Bool = Defaults.isHapticFeedbackEnabled) {
+                isHapticFeedbackEnabled: Bool = Defaults.isHapticFeedbackEnabled,
+                windowLevel: UIWindow.Level = Defaults.windowLevel) {
       self.errorColor = errorColor
       self.successColor = successColor
       self.infoColor = infoColor
@@ -60,6 +63,7 @@ public final class SwiftMessageBar {
       self.titleFont = titleFont
       self.messageFont = messageFont
       self.isHapticFeedbackEnabled = isHapticFeedbackEnabled
+      self.windowLevel = windowLevel
     }
 
     public class Builder {
@@ -76,6 +80,7 @@ public final class SwiftMessageBar {
       private var titleFont: UIFont?
       private var messageFont: UIFont?
       private var isHapticFeedbackEnabled: Bool?
+      private var windowLevel: UIWindow.Level?
 
       public init() {
       }
@@ -140,6 +145,11 @@ public final class SwiftMessageBar {
         return self
       }
 
+      public func withWindowLevel(_ level: UIWindow.Level) -> Builder {
+        windowLevel = level
+        return self
+      }
+
       public func build() -> Config {
         Config(errorColor: errorColor ?? Defaults.errorColor,
                successColor: successColor ?? Defaults.successColor,
@@ -150,7 +160,8 @@ public final class SwiftMessageBar {
                successIcon: successIcon, infoIcon: infoIcon, errorIcon: errorIcon,
                titleFont: titleFont ?? Defaults.titleFont,
                messageFont: messageFont ?? Defaults.messageFont,
-               isHapticFeedbackEnabled: isHapticFeedbackEnabled ?? Defaults.isHapticFeedbackEnabled)
+               isHapticFeedbackEnabled: isHapticFeedbackEnabled ?? Defaults.isHapticFeedbackEnabled,
+               windowLevel: windowLevel ?? Defaults.windowLevel)
       }
 
     }
@@ -171,7 +182,7 @@ public final class SwiftMessageBar {
     let messageWindow = MessageWindow()
     messageWindow.frame = UIScreen.main.bounds
     messageWindow.isHidden = false
-    messageWindow.windowLevel = .normal
+    messageWindow.windowLevel = config.windowLevel
     messageWindow.backgroundColor = .clear
     messageWindow.messageBarController.statusBarHidden = config.isStatusBarHidden
     messageWindow.rootViewController = messageWindow.messageBarController
