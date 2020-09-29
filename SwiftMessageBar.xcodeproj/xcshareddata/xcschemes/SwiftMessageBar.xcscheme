@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1020"
+   LastUpgradeVersion = "1200"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F2AB58EC1B28B33D001DCC74"
+               BlueprintIdentifier = "F283F61825237BAC003DB4CF"
                BuildableName = "SwiftMessageBarTests.xctest"
                BlueprintName = "SwiftMessageBarTests"
                ReferencedContainer = "container:SwiftMessageBar.xcodeproj">
@@ -40,19 +40,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F2AB58EC1B28B33D001DCC74"
-               BuildableName = "SwiftMessageBarTests.xctest"
-               BlueprintName = "SwiftMessageBarTests"
-               ReferencedContainer = "container:SwiftMessageBar.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-      </Testables>
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
@@ -62,8 +51,18 @@
             ReferencedContainer = "container:SwiftMessageBar.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
+      <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F283F61825237BAC003DB4CF"
+               BuildableName = "SwiftMessageBarTests.xctest"
+               BlueprintName = "SwiftMessageBarTests"
+               ReferencedContainer = "container:SwiftMessageBar.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -84,8 +83,6 @@
             ReferencedContainer = "container:SwiftMessageBar.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

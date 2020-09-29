@@ -19,7 +19,9 @@ struct Queue<T: Equatable> {
   }
 
   mutating func dequeue() -> T? {
-    guard !(left.isEmpty && right.isEmpty) else { return nil }
+    guard !(left.isEmpty && right.isEmpty) else {
+      return nil
+    }
 
     if left.isEmpty {
       left = right.reversed()

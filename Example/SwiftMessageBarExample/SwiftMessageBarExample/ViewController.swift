@@ -5,7 +5,7 @@
 import UIKit
 import SwiftMessageBar
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
   private var uuid: UUID?
   
@@ -50,22 +50,19 @@ class ViewController: UIViewController {
 
   @IBAction private func showSuccessWithAccesoryView() {
     let message = "A really long message can go here, to provide a description for the user"
-    let button = UIButton(type: .roundedRect)
+    let button = UIButton(type: .roundedRect, primaryAction: UIAction { _ in
+      print("Button tapped")
+    })
     button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     button.setContentHuggingPriority(.required, for: .horizontal)
     button.setTitle("Open", for: .normal)
     button.tintColor = .orange
     button.backgroundColor = .white
     button.layer.cornerRadius = 6
-    button.addTarget(self, action: #selector(handleButtonTap), for: .touchUpInside)
 
     uuid = SwiftMessageBar.showMessage(withTitle: nil, message: message, type: .success, duration: 3, dismiss: false, accessoryView: button ) {
       print("Dismiss callback")
     }
-  }
-  
-  @objc private func handleButtonTap() {
-    print("Button tapped")
   }
 
 }

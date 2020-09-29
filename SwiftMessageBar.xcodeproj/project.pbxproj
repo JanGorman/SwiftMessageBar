@@ -11,6 +11,8 @@
 		77E9E14E205167C100E157F5 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9E14D205167C100E157F5 /* Queue.swift */; };
 		77EBFCB420519D5000AFE1F9 /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EBFCB320519D5000AFE1F9 /* MessageType.swift */; };
 		F22ADD2E1B8CB23F00EBA839 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22ADD2D1B8CB23F00EBA839 /* Message.swift */; };
+		F283F61C25237BAC003DB4CF /* QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F283F61B25237BAC003DB4CF /* QueueTests.swift */; };
+		F283F61E25237BAC003DB4CF /* SwiftMessageBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2AB58E21B28B33C001DCC74 /* SwiftMessageBar.framework */; };
 		F2AB58E81B28B33C001DCC74 /* SwiftMessageBar.h in Headers */ = {isa = PBXBuildFile; fileRef = F2AB58E71B28B33C001DCC74 /* SwiftMessageBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F2AB593A1B28B45A001DCC74 /* SwiftMessageBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AB59391B28B45A001DCC74 /* SwiftMessageBar.swift */; };
 		F2ABF2E21B2DD123005CB292 /* icon-success@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ABF2DC1B2DD123005CB292 /* icon-success@1x.png */; };
@@ -24,11 +26,24 @@
 		F2ABF2ED1B2DD166005CB292 /* icon-info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F2ABF2EA1B2DD166005CB292 /* icon-info@2x.png */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F283F61F25237BAC003DB4CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2AB58D91B28B33C001DCC74 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F2AB58E11B28B33C001DCC74;
+			remoteInfo = SwiftMessageBar;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		77BBDF7D209705E600BDED60 /* DeviceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceType.swift; sourceTree = "<group>"; };
 		77E9E14D205167C100E157F5 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		77EBFCB320519D5000AFE1F9 /* MessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
 		F22ADD2D1B8CB23F00EBA839 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		F283F61925237BAC003DB4CF /* SwiftMessageBarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftMessageBarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F283F61B25237BAC003DB4CF /* QueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueTests.swift; sourceTree = "<group>"; };
+		F283F61D25237BAC003DB4CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2AB58E21B28B33C001DCC74 /* SwiftMessageBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftMessageBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2AB58E61B28B33C001DCC74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2AB58E71B28B33C001DCC74 /* SwiftMessageBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftMessageBar.h; sourceTree = "<group>"; };
@@ -45,6 +60,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F283F61625237BAC003DB4CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F283F61E25237BAC003DB4CF /* SwiftMessageBar.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F2AB58DE1B28B33C001DCC74 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -55,10 +78,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F283F61A25237BAC003DB4CF /* SwiftMessageBarTests */ = {
+			isa = PBXGroup;
+			children = (
+				F283F61B25237BAC003DB4CF /* QueueTests.swift */,
+				F283F61D25237BAC003DB4CF /* Info.plist */,
+			);
+			path = SwiftMessageBarTests;
+			sourceTree = "<group>";
+		};
 		F2AB58D81B28B33C001DCC74 = {
 			isa = PBXGroup;
 			children = (
 				F2AB58E41B28B33C001DCC74 /* SwiftMessageBar */,
+				F283F61A25237BAC003DB4CF /* SwiftMessageBarTests */,
 				F2AB58E31B28B33C001DCC74 /* Products */,
 			);
 			indentWidth = 2;
@@ -69,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				F2AB58E21B28B33C001DCC74 /* SwiftMessageBar.framework */,
+				F283F61925237BAC003DB4CF /* SwiftMessageBarTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -118,6 +152,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		F283F61825237BAC003DB4CF /* SwiftMessageBarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F283F62325237BAC003DB4CF /* Build configuration list for PBXNativeTarget "SwiftMessageBarTests" */;
+			buildPhases = (
+				F283F61525237BAC003DB4CF /* Sources */,
+				F283F61625237BAC003DB4CF /* Frameworks */,
+				F283F61725237BAC003DB4CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F283F62025237BAC003DB4CF /* PBXTargetDependency */,
+			);
+			name = SwiftMessageBarTests;
+			productName = SwiftMessageBarTests;
+			productReference = F283F61925237BAC003DB4CF /* SwiftMessageBarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		F2AB58E11B28B33C001DCC74 /* SwiftMessageBar */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F2AB58F81B28B33D001DCC74 /* Build configuration list for PBXNativeTarget "SwiftMessageBar" */;
@@ -143,10 +195,15 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0700;
-				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 1020;
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = Schnaub;
 				TargetAttributes = {
+					F283F61825237BAC003DB4CF = {
+						CreatedOnToolsVersion = 12.0;
+						DevelopmentTeam = CPRVB9W254;
+						ProvisioningStyle = Automatic;
+					};
 					F2AB58E11B28B33C001DCC74 = {
 						CreatedOnToolsVersion = 6.3.2;
 						LastSwiftMigration = 1020;
@@ -167,11 +224,19 @@
 			projectRoot = "";
 			targets = (
 				F2AB58E11B28B33C001DCC74 /* SwiftMessageBar */,
+				F283F61825237BAC003DB4CF /* SwiftMessageBarTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F283F61725237BAC003DB4CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F2AB58E01B28B33C001DCC74 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -191,6 +256,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F283F61525237BAC003DB4CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F283F61C25237BAC003DB4CF /* QueueTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F2AB58DD1B28B33C001DCC74 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -205,7 +278,64 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F283F62025237BAC003DB4CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F2AB58E11B28B33C001DCC74 /* SwiftMessageBar */;
+			targetProxy = F283F61F25237BAC003DB4CF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		F283F62125237BAC003DB4CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = CPRVB9W254;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SwiftMessageBarTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.schnaub.SwiftMessageBarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F283F62225237BAC003DB4CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CPRVB9W254;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SwiftMessageBarTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.schnaub.SwiftMessageBarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		F2AB58F61B28B33D001DCC74 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -229,6 +359,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -255,7 +386,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -290,6 +421,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -309,7 +441,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -332,7 +464,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SwiftMessageBar/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -353,7 +485,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SwiftMessageBar/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.schnaub.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -365,6 +497,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F283F62325237BAC003DB4CF /* Build configuration list for PBXNativeTarget "SwiftMessageBarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F283F62125237BAC003DB4CF /* Debug */,
+				F283F62225237BAC003DB4CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F2AB58DC1B28B33C001DCC74 /* Build configuration list for PBXProject "SwiftMessageBar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
