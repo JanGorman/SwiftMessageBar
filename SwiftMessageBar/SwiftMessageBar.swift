@@ -2,6 +2,7 @@
 //  Copyright (c) 2015 Schnaub. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 public typealias Callback = () -> Void
@@ -56,7 +57,12 @@ public final class SwiftMessageBar {
       self.titleColor = titleColor
       self.messageColor = messageColor
       self.isStatusBarHidden = isStatusBarHidden
-      let bundle = Bundle(for: SwiftMessageBar.self)
+      let bundle: Bundle
+      #if SWIFT_PACKAGE
+      bundle = Bundle.module
+      #else
+      bundle = Bundle(for: SwiftMessageBar.self)
+      #endif
       self.successIcon = successIcon ?? UIImage(named: "icon-success", in: bundle, compatibleWith: nil)
       self.infoIcon = infoIcon ?? UIImage(named: "icon-info", in: bundle, compatibleWith: nil)
       self.errorIcon = errorIcon ?? UIImage(named: "icon-error", in: bundle, compatibleWith: nil)
