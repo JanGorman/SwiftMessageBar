@@ -38,9 +38,22 @@ final class Message: UIView {
     return paragraphStyle
   }
   
-  init(type: MessageType, title: String?, message: String?, backgroundColor: UIColor, titleFontColor: UIColor,
-       messageFontColor: UIColor, icon: UIImage?, duration: TimeInterval, dismiss: Bool = true, callback: Callback?,
-       languageDirection: NSLocale.LanguageDirection, titleFont: UIFont, messageFont: UIFont, accessoryView: UIView?) {
+    init(
+        type: MessageType,
+        title: String?,
+        message: String?,
+        backgroundColor: UIColor,
+        titleFontColor: UIColor,
+        messageFontColor: UIColor,
+        icon: UIImage?,
+        duration: TimeInterval,
+        dismiss: Bool = true,
+        callback: Callback?,
+        languageDirection: NSLocale.LanguageDirection,
+        titleFont: UIFont,
+        messageFont: UIFont,
+        accessoryView: UIView?
+    ) {
     self.type = type
     self.title = title
     self.message = message

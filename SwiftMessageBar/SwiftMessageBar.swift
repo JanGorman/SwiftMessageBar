@@ -2,7 +2,6 @@
 //  Copyright (c) 2015 Schnaub. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 public typealias Callback = () -> Void
@@ -38,19 +37,21 @@ public final class SwiftMessageBar {
     let isHapticFeedbackEnabled: Bool
     let windowLevel: UIWindow.Level
 
-    public init(errorColor: UIColor = Defaults.errorColor,
-                successColor: UIColor = Defaults.successColor,
-                infoColor: UIColor = Defaults.infoColor,
-                titleColor: UIColor = Defaults.titleColor,
-                messageColor: UIColor = Defaults.messageColor,
-                isStatusBarHidden: Bool = Defaults.isStatusBarHidden,
-                successIcon: UIImage? = nil,
-                infoIcon: UIImage? = nil,
-                errorIcon: UIImage? = nil,
-                titleFont: UIFont = Defaults.titleFont,
-                messageFont: UIFont = Defaults.messageFont,
-                isHapticFeedbackEnabled: Bool = Defaults.isHapticFeedbackEnabled,
-                windowLevel: UIWindow.Level = Defaults.windowLevel) {
+    public init(
+        errorColor: UIColor = Defaults.errorColor,
+        successColor: UIColor = Defaults.successColor,
+        infoColor: UIColor = Defaults.infoColor,
+        titleColor: UIColor = Defaults.titleColor,
+        messageColor: UIColor = Defaults.messageColor,
+        isStatusBarHidden: Bool = Defaults.isStatusBarHidden,
+        successIcon: UIImage? = nil,
+        infoIcon: UIImage? = nil,
+        errorIcon: UIImage? = nil,
+        titleFont: UIFont = Defaults.titleFont,
+        messageFont: UIFont = Defaults.messageFont,
+        isHapticFeedbackEnabled: Bool = Defaults.isHapticFeedbackEnabled,
+        windowLevel: UIWindow.Level = Defaults.windowLevel
+    ) {
       self.errorColor = errorColor
       self.successColor = successColor
       self.infoColor = infoColor
@@ -88,8 +89,7 @@ public final class SwiftMessageBar {
       private var isHapticFeedbackEnabled: Bool?
       private var windowLevel: UIWindow.Level?
 
-      public init() {
-      }
+      public init() {}
 
       public func withErrorColor(_ color: UIColor) -> Builder {
         errorColor = color
@@ -157,17 +157,19 @@ public final class SwiftMessageBar {
       }
 
       public func build() -> Config {
-        Config(errorColor: errorColor ?? Defaults.errorColor,
-               successColor: successColor ?? Defaults.successColor,
-               infoColor: infoColor ?? Defaults.infoColor,
-               titleColor: titleColor ?? Defaults.titleColor,
-               messageColor: messageColor ?? Defaults.messageColor,
-               isStatusBarHidden: isStatusBarHidden ?? Defaults.isStatusBarHidden,
-               successIcon: successIcon, infoIcon: infoIcon, errorIcon: errorIcon,
-               titleFont: titleFont ?? Defaults.titleFont,
-               messageFont: messageFont ?? Defaults.messageFont,
-               isHapticFeedbackEnabled: isHapticFeedbackEnabled ?? Defaults.isHapticFeedbackEnabled,
-               windowLevel: windowLevel ?? Defaults.windowLevel)
+        Config(
+            errorColor: errorColor ?? Defaults.errorColor,
+            successColor: successColor ?? Defaults.successColor,
+            infoColor: infoColor ?? Defaults.infoColor,
+            titleColor: titleColor ?? Defaults.titleColor,
+            messageColor: messageColor ?? Defaults.messageColor,
+            isStatusBarHidden: isStatusBarHidden ?? Defaults.isStatusBarHidden,
+            successIcon: successIcon, infoIcon: infoIcon, errorIcon: errorIcon,
+            titleFont: titleFont ?? Defaults.titleFont,
+            messageFont: messageFont ?? Defaults.messageFont,
+            isHapticFeedbackEnabled: isHapticFeedbackEnabled ?? Defaults.isHapticFeedbackEnabled,
+            windowLevel: windowLevel ?? Defaults.windowLevel
+        )
       }
 
     }
@@ -222,13 +224,26 @@ public final class SwiftMessageBar {
   ///     - callback: An optional callback to execute when the user taps on a message to dismiss it.
   /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
   @discardableResult
-  public static func showMessage(withTitle title: String? = nil, message: String? = nil, type: MessageType,
-                                 duration: TimeInterval = 3, dismiss: Bool = true,
-                                 languageDirection: NSLocale.LanguageDirection = .unknown,
-                                 accessoryView: UIView? = nil,
-                                 callback: Callback? = nil) -> UUID {
-    sharedMessageBar.showMessage(withTitle: title, message: message, type: type, duration: duration, dismiss: dismiss,
-                                 languageDirection: languageDirection, accessoryView: accessoryView, callback: callback)
+  public static func showMessage(
+    withTitle title: String? = nil,
+    message: String? = nil,
+    type: MessageType,
+    duration: TimeInterval = 3,
+    dismiss: Bool = true,
+    languageDirection: NSLocale.LanguageDirection = .unknown,
+    accessoryView: UIView? = nil,
+    callback: Callback? = nil
+  ) -> UUID {
+      sharedMessageBar.showMessage(
+        withTitle: title,
+        message: message,
+        type: type,
+        duration: duration,
+        dismiss: dismiss,
+        languageDirection: languageDirection,
+        accessoryView: accessoryView,
+        callback: callback
+      )
   }
   
   /// Display a message
@@ -245,16 +260,32 @@ public final class SwiftMessageBar {
   ///     - callback: An optional callback to execute when the user taps on a message to dismiss it.
   /// - Returns: A UUID for the message. Can be used to cancel the display of a specific message
   @discardableResult
-  public func showMessage(withTitle title: String? = nil, message: String? = nil, type: MessageType,
-                          duration: TimeInterval = 3, dismiss: Bool = true,
-                          languageDirection: NSLocale.LanguageDirection = .unknown,
-                          accessoryView: UIView? = nil,
-                          callback: Callback? = nil) -> UUID {
-    let message = Message(type: type, title: title, message: message,
-                          backgroundColor: type.backgroundColor(fromConfig: config), titleFontColor: config.titleColor,
-                          messageFontColor: config.messageColor, icon: type.image(fromConfig: config), duration: duration,
-                          dismiss: dismiss, callback: callback, languageDirection: languageDirection,
-                          titleFont: config.titleFont, messageFont: config.messageFont, accessoryView: accessoryView)
+    public func showMessage(
+        withTitle title: String? = nil,
+        message: String? = nil,
+        type: MessageType,
+        duration: TimeInterval = 3,
+        dismiss: Bool = true,
+        languageDirection: NSLocale.LanguageDirection = .unknown,
+        accessoryView: UIView? = nil,
+        callback: Callback? = nil
+    ) -> UUID {
+        let message = Message(
+            type: type,
+            title: title,
+            message: message,
+            backgroundColor: type.backgroundColor(fromConfig: config),
+            titleFontColor: config.titleColor,
+            messageFontColor: config.messageColor,
+            icon: type.image(fromConfig: config),
+            duration: duration,
+            dismiss: dismiss,
+            callback: callback,
+            languageDirection: languageDirection,
+            titleFont: config.titleFont,
+            messageFont: config.messageFont,
+            accessoryView: accessoryView
+        )
     if languageDirection == .rightToLeft {
       message.flipHorizontal()
     }
@@ -327,17 +358,26 @@ public final class SwiftMessageBar {
     message.transform = CGAffineTransform(translationX: 0, y: -messageWindow.frame.height)
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
       message.transform = CGAffineTransform(translationX: 0, y: -message.frame.height)
-      UIView.animate(withDuration: SwiftMessageBar.showHideDuration, animations: {
-        message.transform = .identity
-      }, completion: { _ in
-        self.provideHapticFeedback(for: message)
-      })
+        UIView.animate(
+            withDuration: SwiftMessageBar.showHideDuration,
+            animations: {
+                message.transform = .identity
+            },
+            completion: { _ in
+                self.provideHapticFeedback(for: message)
+            }
+        )
     }
 
     if message.dismiss {
       resetTimer()
-      timer = Timer.scheduledTimer(timeInterval: message.duration, target: self, selector: #selector(dismiss),
-                                   userInfo: nil, repeats: false)
+        timer = Timer.scheduledTimer(
+            timeInterval: message.duration,
+            target: self,
+            selector: #selector(dismiss),
+            userInfo: nil,
+            repeats: false
+        )
     }
   }
 
@@ -386,23 +426,29 @@ public final class SwiftMessageBar {
     
     message.isHit = true
     
-    UIView.animate(withDuration: SwiftMessageBar.showHideDuration, delay: 0, options: [], animations: {
-      message.transform = CGAffineTransform(translationX: 0, y: -message.frame.height)
-    }, completion: { [weak self] _ in
+    UIView.animate(
+    withDuration: SwiftMessageBar.showHideDuration,
+    delay: 0,
+    options: [],
+    animations: {
+        message.transform = CGAffineTransform(translationX: 0, y: -message.frame.height)
+    },
+    completion: { [weak self] _ in
         self?.isMessageVisible = false
         message.removeFromSuperview()
-        
+
         if fromGesture {
-          message.callback?()
+            message.callback?()
         }
-        
-        if let messageBar = self , !messageBar.messageQueue.isEmpty {
-          messageBar.dequeueNextMessage()
+
+        if let messageBar = self ,
+            !messageBar.messageQueue.isEmpty {
+            messageBar.dequeueNextMessage()
         } else {
-          self?.resetTimer()
-          self?.messageWindow = nil
+            self?.resetTimer()
+            self?.messageWindow = nil
         }
-      }
+    }
     )
   }
   
@@ -448,4 +494,8 @@ private class MessageBarController: UIViewController {
     statusBarHidden
   }
   
+}
+
+private enum DeviceType {
+  static let isPhone = UIDevice.current.userInterfaceIdiom == .phone
 }

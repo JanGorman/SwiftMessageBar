@@ -1,5 +1,4 @@
 // swift-tools-version: 5.9
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
@@ -11,7 +10,8 @@ let package = Package(
     products: [
         .library(
             name: "SwiftMessageBar",
-            targets: ["SwiftMessageBar"]),
+            targets: ["SwiftMessageBar"]
+        ),
     ],
     targets: [
         .target(
